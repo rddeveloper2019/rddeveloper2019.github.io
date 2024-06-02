@@ -6,10 +6,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Текст писать тут
-        </p>
+        <p>Имя: Ридван Джалилов</p>
+        <p>Должность: Фронтенд-разработчик</p>
+        <p>Опыт: 2022-2024</p>
+        <p>Технологии: JS, TS, ionic, AngularJS, Cordova, NodeJS</p>
+        <p>Цель: Fullstack Javascript Development (React|Node)</p>
       </header>
     </div>
   );
