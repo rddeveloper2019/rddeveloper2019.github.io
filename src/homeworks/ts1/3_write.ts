@@ -1,34 +1,51 @@
-type Category = { id: string; name: string; photo?: string };
+import { Category, Operation, OperationType, Product } from './types';
 
-type Product = {
-  id: string;
-  name: string;
-  photo: string;
-  desc?: string;
-  createdAt: string;
-  oldPrice?: number;
-  price: number;
-  category: Category;
+const categories = ['sport', 'education', 'travel', 'hobby', 'dance', 'zoo', 'bdsm'];
+const getRandomId = (): string => Math.random().toString(36).substring(7);
+const getRandomName = (prefix?: string): string => `${prefix} ${Math.floor(Math.random() * 100)}`;
+
+const getRandomCategory = (): string => categories[Math.floor(Math.random() * categories.length)];
+const getPhoto = (notnull?: boolean): string | undefined =>
+  notnull || Math.random() < 0.5 ? 'https://picsum.photos/200' : undefined;
+const getRandomDesc = (entity?: string): string | undefined =>
+  entity && Math.random() < 0.5 ? `Description for ${entity}` : undefined;
+const getRandomNotNullNumber = (additional?: number): number => Math.floor(Math.random() * 100) + additional || 0;
+const getRandomNumber = (): number | undefined => (Math.random() < 0.5 ? getRandomNotNullNumber() : undefined);
+export const createRandomCategory = (): Category => {
+  return {
+    id: getRandomId(),
+    name: getRandomCategory(),
+    photo: getPhoto(),
+  };
 };
 
-type Operation = Cost | Profit;
+export const createRandomOperation = (createdAt: string): Operation => {
+  const type = Math.random() < 0.5 ? OperationType.COST : OperationType.PROFIT;
+  const id = getRandomId();
+  const name = getRandomName('Operation');
+  const desc = getRandomDesc(name);
+  const amount = getRandomNotNullNumber();
+  const category = createRandomCategory();
 
-type BaseOperation = { id: string; name: string; desc?: string; createdAt: string; amount: number; category: Category };
-
-type Cost = BaseOperation & { type: 'Cost' };
-type Profit = BaseOperation & { type: 'Profit' };
-const createRandomProduct = (createdAt: string): Product => {
-  const randomId = Math.random().toString(36).substring(7);
-  const randomName = `Product ${Math.floor(Math.random() * 100)}`;
-  const randomPhoto = 'https://picsum.photos/200';
-  const randomDesc = Math.random() < 0.5 ? `Description for ${randomName}` : undefined;
-  const randomOldPrice = Math.random() < 0.5 ? Math.floor(Math.random() * 100) : undefined;
-  const randomPrice = Math.floor(Math.random() * 100) + randomOldPrice || 0 * 1.3;
-  const randomCategory: Category = {
-    id: Math.random().toString(36).substring(7),
-    name: `Category ${Math.floor(Math.random() * 10)}`,
-    photo: 'https://picsum.photos/200',
+  return {
+    id,
+    name,
+    desc,
+    createdAt,
+    amount,
+    category,
+    type,
   };
+};
+
+export const createRandomProduct = (createdAt: string): Product => {
+  const randomId = getRandomId();
+  const randomName = getRandomName('Product');
+  const randomPhoto = getPhoto(true);
+  const randomDesc = getRandomDesc(randomName);
+  const randomOldPrice = getRandomNumber();
+  const randomPrice = getRandomNotNullNumber(randomOldPrice);
+  const randomCategory = createRandomCategory();
 
   return {
     id: randomId,
@@ -45,3 +62,7 @@ const createRandomProduct = (createdAt: string): Product => {
 // Пример использования
 const randomProduct = createRandomProduct('2022-05-15');
 console.log(randomProduct);
+const randomOperation = createRandomOperation('2022-05-15');
+console.log(randomOperation);
+const randomCategory = createRandomCategory();
+console.log(randomCategory);
