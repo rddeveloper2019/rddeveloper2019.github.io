@@ -1,56 +1,47 @@
-/**
- * Функции написанные здесь пригодятся на последующих уроках
- * С помощью этих функций мы будем добавлять элементы в список для проверки динамической загрузки
- * Поэтому в идеале чтобы функции возвращали случайные данные, но в то же время не абракадабру.
- * В целом сделайте так, как вам будет удобно.
- * */
+type Category = { id: string; name: string; photo?: string };
 
-/**
- * Нужно создать тип Category, он будет использоваться ниже.
- * Категория содержит
- * - id (строка)
- * - name (строка)
- * - photo (строка, необязательно)
- *
- * Продукт (Product) содержит
- * - id (строка)
- * - name (строка)
- * - photo (строка)
- * - desc (строка, необязательно)
- * - createdAt (строка)
- * - oldPrice (число, необязательно)
- * - price (число)
- * - category (Категория)
- *
- * Операция (Operation) может быть либо тратой (Cost), либо доходом (Profit)
- *
- * Трата (Cost) содержит
- * - id (строка)
- * - name (строка)
- * - desc (строка, необязательно)
- * - createdAt (строка)
- * - amount (число)
- * - category (Категория)
- * - type ('Cost')
- *
- * Доход (Profit) содержит
- * - id (строка)
- * - name (строка)
- * - desc (строка, необязательно)
- * - createdAt (строка)
- * - amount (число)
- * - category (Категория)
- * - type ('Profit')
- * */
+type Product = {
+  id: string;
+  name: string;
+  photo: string;
+  desc?: string;
+  createdAt: string;
+  oldPrice?: number;
+  price: number;
+  category: Category;
+};
 
-/**
- * Создает случайный продукт (Product).
- * Принимает дату создания (строка)
- * */
-// export const createRandomProduct = (createdAt: string) => {};
+type Operation = Cost | Profit;
 
-/**
- * Создает случайную операцию (Operation).
- * Принимает дату создания (строка)
- * */
-// export const createRandomOperation = (createdAt: string) => {};
+type BaseOperation = { id: string; name: string; desc?: string; createdAt: string; amount: number; category: Category };
+
+type Cost = BaseOperation & { type: 'Cost' };
+type Profit = BaseOperation & { type: 'Profit' };
+const createRandomProduct = (createdAt: string): Product => {
+  const randomId = Math.random().toString(36).substring(7);
+  const randomName = `Product ${Math.floor(Math.random() * 100)}`;
+  const randomPhoto = 'https://picsum.photos/200';
+  const randomDesc = Math.random() < 0.5 ? `Description for ${randomName}` : undefined;
+  const randomOldPrice = Math.random() < 0.5 ? Math.floor(Math.random() * 100) : undefined;
+  const randomPrice = Math.floor(Math.random() * 100) + randomOldPrice || 0 * 1.3;
+  const randomCategory: Category = {
+    id: Math.random().toString(36).substring(7),
+    name: `Category ${Math.floor(Math.random() * 10)}`,
+    photo: 'https://picsum.photos/200',
+  };
+
+  return {
+    id: randomId,
+    name: randomName,
+    photo: randomPhoto,
+    desc: randomDesc,
+    createdAt: createdAt,
+    oldPrice: randomOldPrice,
+    price: randomPrice,
+    category: randomCategory,
+  };
+};
+
+// Пример использования
+const randomProduct = createRandomProduct('2022-05-15');
+console.log(randomProduct);
