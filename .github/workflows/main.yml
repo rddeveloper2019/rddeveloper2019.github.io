@@ -51,7 +51,7 @@ jobs:
 
       # Публикуем Storybook на Github Pages
       - name: Deploy Storybook to Github Pages
-        uses: JamesIves/github-pages-deploy-action@4.2.1
+        uses: JamesIves/github-pages-deploy-action@4.6.1
         with:
           branch: gh-pages
           folder: storybook-static
