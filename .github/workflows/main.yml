@@ -26,7 +26,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Устанавливаем зависимости
       - name: Install dependencies
         run: npm install
 
