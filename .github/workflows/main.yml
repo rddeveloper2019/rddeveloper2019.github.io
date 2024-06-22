@@ -56,8 +56,8 @@ jobs:
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
           branch: gh-pages
-          folder: storybook-static
           commit-message: "Automatically publish Storybook"
+          path: "./storybook-static"
 
       # Останавливаем выполнение строго при неудачных тестах
       - name: Fail on failed tests
