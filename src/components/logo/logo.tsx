@@ -1,11 +1,12 @@
 import styles from './logo.module.scss';
-import React from 'react';
+import React, { FC } from 'react';
 import cn from 'clsx';
+import { LogoPropTypes, Size } from './types';
 
-const Logo = ({ image = '', color = '#eeeaea', size = 'medium' }) => {
+const Logo: FC<LogoPropTypes> = ({ image = '', color = '#eeeaea', size = Size.MEDIUM }) => {
   return (
     <div
-      className={cn(styles.logo, styles[size])}
+      className={cn(styles.logo, size && styles[size])}
       style={{ backgroundColor: color, alignItems: image ? 'flex-end' : 'center' }}
     >
       {image && <img src={image} alt="logo" />}
