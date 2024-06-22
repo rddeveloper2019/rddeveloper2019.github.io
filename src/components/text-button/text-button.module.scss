@@ -1,0 +1,23 @@
+.text-button {
+  text-transform: uppercase;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  padding: 10px 15px;
+}
+
+.default {
+  color: #2a2929;
+}
+.primary {
+  color: #2196f3;
+}
+.secondary {
+  color: #e10050;
+}
+.disabled {
+  color: #9c9c9c;
+}
+.link {
+  color: #9c9c9c;
+}
