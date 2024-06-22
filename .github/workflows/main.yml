@@ -48,7 +48,7 @@ jobs:
 
       # Собираем Storybook
       - name: Build Storybook
-        run: npm run build-storybook
+        run: storybook build
 
       # Публикуем Storybook на Github Pages
       - name: Deploy Storybook to Github Pages
