@@ -40,7 +40,7 @@ jobs:
 
 #      # Публикуем приложение на Github Pages
 #      - name: Deploy to Github Pages
-#        uses: JamesIves/github-pages-deploy-action@4.2.1
+#        uses: uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
 #        with:
 #          branch: gh-pages
 #          folder: dist
@@ -54,7 +54,7 @@ jobs:
 
       # Публикуем Storybook на Github Pages
       - name: Deploy Storybook to Github Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
           branch: gh-pages
           folder: storybook-static
