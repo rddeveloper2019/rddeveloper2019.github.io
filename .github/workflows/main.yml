@@ -52,6 +52,7 @@ jobs:
           npm run build-storybook
 
 
+
       # Публикуем Storybook на Github Pages
       - name: Deploy Storybook to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
