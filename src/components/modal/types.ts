@@ -7,4 +7,5 @@ export type ModalPropSTypes = {
   cancelButtonText?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
+  backgroundClickHandler?: () => void;
 };

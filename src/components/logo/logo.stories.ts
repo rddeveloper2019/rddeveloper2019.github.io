@@ -28,20 +28,20 @@ export const WithImage = {
 export const Large = {
   args: {
     image: 'https://png.pngtree.com/png-clipart/20230508/original/pngtree-happy-dog-png-image_9151232.png',
-    size: 'large',
+    size: Size.LARGE,
   },
 };
 
 export const Medium = {
   args: {
     image: 'https://png.pngtree.com/png-clipart/20230508/original/pngtree-happy-dog-png-image_9151232.png',
-    size: 'medium',
+    size: Size.MEDIUM,
   },
 };
 export const CustomColor = {
   args: {
     image: 'https://png.pngtree.com/png-clipart/20230508/original/pngtree-happy-dog-png-image_9151232.png',
-    size: 'large',
+    size: Size.LARGE,
     color: 'pink',
   },
 };

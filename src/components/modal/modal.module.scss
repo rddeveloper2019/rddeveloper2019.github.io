@@ -1,5 +1,7 @@
+@use 'src/theme/variables';
+
 .wrapper {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: variables.$modal-background;
   padding: 50px;
   height: 100vh;
   z-index: 10;
@@ -11,9 +13,9 @@
 
 .modal {
   width: 50%;
-  background: #ffffff;
+  background: variables.$background-main;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: variables.$main-shadow;
   padding: 16px;
   z-index: 11;
 }

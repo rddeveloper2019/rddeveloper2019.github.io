@@ -1,11 +1,12 @@
+@use 'src/theme/variables';
+
 .logo {
-  border-radius: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: variables.$main-shadow;
 
   img {
     width: 80%;
@@ -16,7 +17,7 @@
 .circle {
   width: 70%;
   height: 70%;
-  border: 2px solid red;
+  border: 2px solid variables.$element-red;
   border-radius: 50%;
 }
 
