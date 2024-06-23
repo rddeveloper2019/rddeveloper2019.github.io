@@ -19,15 +19,22 @@ const Modal: FC<ModalPropSTypes> = ({
   }
 
   const onClick = (event: any) => {
-    console.log(event);
-    if (event?.target?.tagName === 'BUTTON') {
-      return;
-    }
+    event?.preventDefault();
+    event?.stopPropagation();
     backgroundClickHandler();
   };
+
+  const preventClick = (e: any) => {
+    if (e?.target?.tagName !== 'BUTTON') {
+      e?.preventDefault();
+      e?.stopPropagation();
+      return;
+    }
+  };
+
   return (
     <div className={cn(styles.wrapper)} onClick={onClick}>
-      <div className={cn(styles.modal)}>
+      <div className={cn(styles.modal)} onClick={preventClick}>
         {children}
         <div className={cn(styles.buttons)}>
           {onCancel && (
