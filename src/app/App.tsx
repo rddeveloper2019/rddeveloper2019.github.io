@@ -21,7 +21,6 @@ function App() {
   return (
     <div>
       <Header />
-      <img src="https://zverovod.info/wp-content/uploads/2020/09/33.jpg" alt="" />
     </div>
   );
 }
