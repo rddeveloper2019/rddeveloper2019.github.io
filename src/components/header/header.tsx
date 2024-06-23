@@ -1,10 +1,9 @@
 import styles from './header.module.scss';
 import React from 'react';
 import cn from 'clsx';
-import TextButton from 'src/components/text-button/text-button';
-import Logo from 'src/components/logo/logo';
-import { TextButtonState } from 'src/components/text-button/types';
-// import Logo from '../logo/logo.tsx';
+import TextButton from '../text-button/text-button';
+import Logo from '../logo/logo';
+import { TextButtonState } from '../text-button/types';
 
 const Header = () => {
   return (
