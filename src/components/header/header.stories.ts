@@ -6,7 +6,6 @@ const meta: Meta<typeof Header> = {
   component: Header,
   tags: ['autodocs'],
 };
-
 export default meta;
 
 export const Default = {

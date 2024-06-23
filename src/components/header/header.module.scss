@@ -1,4 +1,4 @@
-@use "src/theme/variables";
+@use 'src/theme/variables';
 
 .header {
   background-color: variables.$background-primary;
@@ -12,12 +12,12 @@
 }
 
 .nav {
-  button{
+  button {
     font-size: variables.$font-size-m;
   }
 }
 
-.logo-block{
+.logo-block {
   display: flex;
   align-items: center;
   gap: 16px;
