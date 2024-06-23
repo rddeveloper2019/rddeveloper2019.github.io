@@ -20,9 +20,9 @@ const ModalContentExample = () => {
 function App() {
   return (
     <div>
-      {/*<Modal visible={true}>*/}
-      {/*  <ModalContentExample />*/}
-      {/*</Modal>*/}
+      <Modal visible={true}>
+        <ModalContentExample />
+      </Modal>
     </div>
   );
 }
