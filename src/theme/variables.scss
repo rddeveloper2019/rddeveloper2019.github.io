@@ -1,6 +1,7 @@
 :root {
   //backgrounds
   --background-main: #ffffff;
+  --background-primary: #2196F3;
   --background-black-40: rgba(0, 0, 0, 0.4);
 
   //shadows
@@ -12,14 +13,22 @@
   --color-secondary: #e10050;
   --color-disabled: #9c9c9c;
   --color-link: #9c9c9c;
+  --color-white: #ffffff;
 
   //element color
   --main-red: #e10050;
+
+  //fonts sizes
+  --font-size-main: 18px;
+  --font-size-xl: 22px;
+  --font-size-m: 16px;
+  --font-size-sm: 14px;
 }
 
 //backgrounds
 $background-main: var(--background-main);
 $modal-background: var(--background-black-40);
+$background-primary: var(--background-primary);
 
 //shadows
 $main-shadow: var(--main-shadow);
@@ -30,6 +39,17 @@ $color-primary: var(--color-primary);
 $color-secondary: var(--color-secondary);
 $color-disabled: var(--color-disabled);
 $color-link: var(--color-link);
+$color-white: var(--color-white);
 
 //element-colors
 $element-red: var(--main-red);
+
+//fonts-sizes
+$font-size-main: var(--font-size-main);
+$font-size-xl: var(--font-size-xl);
+$font-size-m: var(--font-size-m);
+$font-size-sm: var(--font-size-sm);
+
+
+//safe area
+$safe-area-top: 66px;

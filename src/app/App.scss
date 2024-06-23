@@ -1,0 +1,5 @@
+@use "../theme/variables";
+
+.App {
+  font-size: variables.$font-size-main;
+}

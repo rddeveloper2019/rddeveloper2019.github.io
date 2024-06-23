@@ -6,6 +6,7 @@ export enum TextButtonState {
   SECONDARY = 'secondary',
   DISABLED = 'disabled',
   LINK = 'link',
+  WHITE = 'white',
 }
 
 export type TextButtonPropsTypes = {

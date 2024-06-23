@@ -1,6 +1,8 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
+import '../theme/fonts.scss';
 import Logo from 'src/components/logo/logo';
+import Header from 'src/components/header/header';
 import { Size } from 'src/components/logo/types';
 import Modal from '../components/modal/modal';
 
@@ -17,10 +19,9 @@ const ModalContentExample = () => {
 };
 function App() {
   return (
-    <div className="App">
-      <Modal visible={true}>
-        <ModalContentExample />
-      </Modal>
+    <div>
+      <Header />
+      <img src="https://zverovod.info/wp-content/uploads/2020/09/33.jpg" alt="" />
     </div>
   );
 }
