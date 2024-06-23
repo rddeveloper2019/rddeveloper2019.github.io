@@ -19,6 +19,9 @@ const Modal: FC<ModalPropSTypes> = ({
   }
 
   const onClick = (event: any) => {
+    if (!event?.target?.dataset?.setModalWrapper) {
+      return;
+    }
     event?.preventDefault();
     event?.stopPropagation();
     backgroundClickHandler();
@@ -33,7 +36,7 @@ const Modal: FC<ModalPropSTypes> = ({
   };
 
   return (
-    <div className={cn(styles.wrapper)} onClick={onClick}>
+    <div data-set-modal-wrapper="modal-wrapper" className={cn(styles.wrapper)} onClick={onClick}>
       <div className={cn(styles.modal)} onClick={preventClick}>
         {children}
         <div className={cn(styles.buttons)}>
