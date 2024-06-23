@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEventHandler, ReactEventHandler } from 'react';
 import { ModalPropSTypes } from './types';
 import styles from './modal.module.scss';
 import cn from 'clsx';
@@ -12,12 +12,21 @@ const Modal: FC<ModalPropSTypes> = ({
   cancelButtonText = '',
   onCancel = () => {},
   onConfirm = () => {},
+  backgroundClickHandler = () => {},
 }) => {
   if (!visible) {
     return;
   }
+
+  const onClick = (event: any) => {
+    console.log(event);
+    if (event?.target?.tagName === 'BUTTON') {
+      return;
+    }
+    backgroundClickHandler();
+  };
   return (
-    <div className={cn(styles.wrapper)}>
+    <div className={cn(styles.wrapper)} onClick={onClick}>
       <div className={cn(styles.modal)}>
         {children}
         <div className={cn(styles.buttons)}>

@@ -1,0 +1,35 @@
+:root {
+  //backgrounds
+  --background-main: #ffffff;
+  --background-black-40: rgba(0, 0, 0, 0.4);
+
+  //shadows
+  --main-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  //text-colors
+  --color-default: #2a2929;
+  --color-primary: #2196f3;
+  --color-secondary: #e10050;
+  --color-disabled: #9c9c9c;
+  --color-link: #9c9c9c;
+
+  //element color
+  --main-red: #e10050;
+}
+
+//backgrounds
+$background-main: var(--background-main);
+$modal-background: var(--background-black-40);
+
+//shadows
+$main-shadow: var(--main-shadow);
+
+//text-colors
+$color-default: var(--color-default);
+$color-primary: var(--color-primary);
+$color-secondary: var(--color-secondary);
+$color-disabled: var(--color-disabled);
+$color-link: var(--color-link);
+
+//element-colors
+$element-red: var(--main-red);

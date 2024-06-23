@@ -34,3 +34,14 @@ export default meta;
 export const Default = {
   args: { children: () => <ModalContentExample />, visible: true },
 };
+export const WithHandlers = {
+  args: {
+    children: () => <ModalContentExample />,
+    visible: true,
+    confirmButtonText: 'Ясно!',
+    cancelButtonText: 'Не Хочу',
+    onCancel: () => console.log('onCancel'),
+    onConfirm: () => console.log('onConfirm'),
+    backgroundClickHandler: () => console.log('backgroundClickHandler'),
+  },
+};
