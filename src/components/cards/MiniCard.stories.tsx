@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import Card, { CardProps } from './Card';
+import MiniCard, { MiniCardProps } from './MiniCard';
 
 export default {
-  title: 'Components/CardFull',
-  component: Card,
+  title: 'Components/CardMini',
+  component: MiniCardProps,
   tags: ['autodocs'],
   argTypes: {
     width: { control: 'text' },
@@ -14,11 +14,11 @@ export default {
   },
 } as Meta;
 
-const Template: Story<CardProps> = (args) => <Card {...args} />;
+const Template: Story<MiniCardProps> = (args) => <MiniCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  width: '400px',
+  width: '200px',
   height: 'auto',
   category: 'Категория',
   description: 'Описание ',
