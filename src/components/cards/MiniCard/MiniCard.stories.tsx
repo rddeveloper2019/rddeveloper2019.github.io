@@ -4,13 +4,11 @@ import MiniCard, { MiniCardProps } from './MiniCard';
 
 export default {
   title: 'Components/CardMini',
-  component: MiniCardProps,
+  component: MiniCard,
   tags: ['autodocs'],
   argTypes: {
-    width: { control: 'text' },
-    height: { control: 'text' },
     category: { control: 'text' },
-    description: { control: 'text' },
+    sum_currency: { control: 'text' },
   },
 } as Meta;
 
@@ -18,8 +16,6 @@ const Template: Story<MiniCardProps> = (args) => <MiniCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  width: '400px',
-  height: 'auto',
   category: 'Категория',
-  description: 'Описание ',
+  sum_currency: '100,0 ',
 };

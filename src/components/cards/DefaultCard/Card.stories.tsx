@@ -7,10 +7,9 @@ export default {
   component: Card,
   tags: ['autodocs'],
   argTypes: {
-    width: { control: 'text' },
-    height: { control: 'text' },
     category: { control: 'text' },
     description: { control: 'text' },
+    sum_currency: { control: 'test' },
   },
 } as Meta;
 
@@ -18,8 +17,7 @@ const Template: Story<CardProps> = (args) => <Card {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  width: '400px',
-  height: 'auto',
   category: 'Категория',
-  description: 'Описание ',
+  description: 'Описание',
+  sum_currency: '100,0',
 };
