@@ -1,6 +1,8 @@
 import React from 'react';
-import './Card.scss';
-import { BiDollar } from "react-icons/bi";
+import '../Card.scss';
+import CardItem from '../CardItem';
+import { AiFillTags } from 'react-icons/ai';
+
 export interface MiniCardProps {
   width?: string;
   height?: string;
@@ -10,7 +12,7 @@ export interface MiniCardProps {
 }
 
 const MiniCard: React.FC<MiniCardProps> = ({
-  width = '200px',
+  width = '400px',
   height = 'auto',
   category = 'Категория',
   description = 'Описание ',
@@ -18,12 +20,8 @@ const MiniCard: React.FC<MiniCardProps> = ({
 }) => {
   return (
     <div className="card-container" style={{ width, height }}>
-      <h3 className="card-title">{category}</h3>
-      <p className="card-description">{description}</p>
-      <p className="card-description">
-        <BiDollar />
-        {sum_currency}
-      </p>
+      <CardItem icon={<AiFillTags size={20} />} title={category} subtitle={sum_currency} />
+      <p></p>
     </div>
   );
 };

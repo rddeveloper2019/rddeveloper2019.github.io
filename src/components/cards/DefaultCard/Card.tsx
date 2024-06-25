@@ -1,10 +1,8 @@
 import React from 'react';
-import './Card.scss';
-import CardItem from './CardItem';
-import { FcCurrencyExchange } from 'react-icons/fc';
-import { BiAlignLeft } from 'react-icons/bi';
-import { AiFillTags } from "react-icons/ai";
-import { BiDollar } from "react-icons/bi";
+import '../Card.scss';
+import CardItem from '../CardItem';
+import { BiAlignLeft, BiDollar } from 'react-icons/bi';
+import { AiFillTags } from 'react-icons/ai';
 
 export interface CardProps {
   width?: string;
@@ -23,9 +21,9 @@ const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div className="card-container" style={{ width, height }}>
-      <CardItem icon={<AiFillTags />} title={category} subtitle="" />
-      <CardItem icon={<BiAlignLeft />} title={description} subtitle="" />
-      <CardItem icon={<BiDollar />} title={sum_currency} subtitle="" />
+      <CardItem icon={<AiFillTags size={20} />} title={category} subtitle="" />
+      <CardItem icon={<BiAlignLeft size={20} />} title={description} subtitle="" />
+      <CardItem icon={<BiDollar size={20} />} title={sum_currency} subtitle="" />
     </div>
   );
 };

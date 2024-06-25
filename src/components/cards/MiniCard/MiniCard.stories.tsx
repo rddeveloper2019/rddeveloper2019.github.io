@@ -18,7 +18,7 @@ const Template: Story<MiniCardProps> = (args) => <MiniCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  width: '200px',
+  width: '400px',
   height: 'auto',
   category: 'Категория',
   description: 'Описание ',
