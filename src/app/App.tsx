@@ -5,6 +5,9 @@ import Logo from 'src/components/logo/logo';
 import Header from 'src/components/header/header';
 import { Size } from 'src/components/logo/types';
 import Modal from '../components/modal/modal';
+import { OperationDetailType } from 'src/app/types';
+import Card from 'src/components/card-2/card';
+import OperationDetail from 'src/components/operation-detail/operation-detail';
 
 const ModalContentExample = () => {
   return (
@@ -17,12 +20,54 @@ const ModalContentExample = () => {
     </div>
   );
 };
+
+const data: OperationDetailType[] = [
+  {
+    id: '1',
+    category: 'products',
+    title: 'Gleb',
+    description: 'ok',
+    amount: 1000,
+  },
+  {
+    id: '2',
+    category: 'products',
+    title: 'xleb',
+    description: 'ok',
+    amount: 1000,
+  },
+  {
+    id: '3',
+    category: 'products',
+    title: 'xleb',
+    description: 'ok',
+    amount: 1000,
+  },
+  {
+    id: '4',
+    category: 'products',
+    title: 'xleb',
+    description: 'ok',
+    amount: 100,
+  },
+];
+
 function App() {
   return (
     <div>
-      <Modal visible={true}>
-        <ModalContentExample />
-      </Modal>
+      {/*<Modal visible={true}>*/}
+      {/*  <ModalContentExample />*/}
+      {/*</Modal>*/}
+      <Card>
+        {data.map((detail, index) => (
+          <OperationDetail
+            key={detail.id}
+            data={detail}
+            icon={<p>Icon</p>}
+            bordered={index !== data.length - 1 || data.length === 1}
+          />
+        ))}
+      </Card>
     </div>
   );
 }
