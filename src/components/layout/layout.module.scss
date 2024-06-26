@@ -1,0 +1,7 @@
+@use "src/theme/variables";
+
+.layout {
+  margin-top: variables.$safe-area-top;
+  padding: 16px;
+  color: variables.$background-main;
+}
