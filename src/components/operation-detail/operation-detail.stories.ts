@@ -11,10 +11,10 @@ export default meta;
 
 export const Detail = {
   args: {
-    id: '2',
-    category: 'products',
-    title: 'xleb',
-    description: 'ok',
-    amount: 1000,
+    id: '1',
+    category: 'Продукты',
+    title: 'Хлеб',
+    description: 'Батон',
+    amount: 50,
   },
 };

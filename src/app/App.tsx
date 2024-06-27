@@ -8,6 +8,7 @@ import Modal from '../components/modal/modal';
 import { OperationDetailType } from 'src/app/types';
 import Card from 'src/components/card-2/card';
 import OperationDetail from 'src/components/operation-detail/operation-detail';
+import { GiSlicedBread } from 'react-icons/gi';
 
 const ModalContentExample = () => {
   return (
@@ -21,49 +22,59 @@ const ModalContentExample = () => {
   );
 };
 
+const dataOneLine: OperationDetailType[] = [
+  {
+    id: '1',
+    category: 'Продукты',
+    title: 'Хлеб',
+    description: 'Бородинский без дрожевой',
+    amount: 57,
+  },
+];
+
 const data: OperationDetailType[] = [
   {
     id: '1',
-    category: 'products',
-    title: 'Gleb',
-    description: 'ok',
-    amount: 1000,
+    category: 'Продукты',
+    title: 'Хлеб',
+    description: 'Бородинский без дрожевой',
+    amount: 57,
   },
   {
-    id: '2',
-    category: 'products',
-    title: 'xleb',
-    description: 'ok',
-    amount: 1000,
+    id: '1',
+    category: 'Продукты',
+    title: 'Хлеб',
+    description: 'Ржаной (в нарезке)',
+    amount: 48,
   },
   {
-    id: '3',
-    category: 'products',
-    title: 'xleb',
-    description: 'ok',
-    amount: 1000,
+    id: '1',
+    category: 'Продукты',
+    title: 'Хлеб',
+    description: 'Батон с изюмом',
+    amount: 45.5,
   },
   {
-    id: '4',
-    category: 'products',
-    title: 'xleb',
-    description: 'ok',
-    amount: 100,
+    id: '1',
+    category: 'Продукты',
+    title: 'Хлеб',
+    description: 'Бородинский',
+    amount: 75,
   },
 ];
 
 function App() {
   return (
     <div>
-      {/*<Modal visible={true}>*/}
+      {/* <Modal visible={true}> */}
       {/*  <ModalContentExample />*/}
       {/*</Modal>*/}
       <Card>
         {data.map((detail, index) => (
           <OperationDetail
             key={detail.id}
+            icon={<GiSlicedBread size={30} />}
             data={detail}
-            icon={<p>Icon</p>}
             bordered={index !== data.length - 1 || data.length === 1}
           />
         ))}
