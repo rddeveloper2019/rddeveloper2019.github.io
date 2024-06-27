@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import Card from './Card';
 import OperationDetail from '../operation-detail/operation-detail';
-import { GiSlicedBread } from 'react-icons/gi';
+import { GiSlicedBread, GiWallet } from 'react-icons/gi';
 import { OperationDetailType } from 'src/app/types';
 
 const meta: Meta<typeof Card> = {
@@ -83,7 +83,7 @@ export const CardWithOperationsDetails: Story = {
       ) => (
         <OperationDetail
           key={detail.id}
-          icon={<GiSlicedBread size={30} />}
+          icon={<GiWallet size={30} />}
           data={detail}
           bordered={index !== data.length - 1 || data.length === 1}
         />
