@@ -56,22 +56,30 @@ const data: OperationDetailType[] = [
   },
 ];
 
-const OperationDetail =()=> <OperationDetail
-          icon={<GiSlicedBread size={30} />}
-          data={data[0]}
-          bordered={index !== data.length - 1 || data.length === 1}
-        />;
-
 export const CardWithOperationsDetail: Story = {
   args: {
-    children: OperationDetail,
+    children: [data[0]].map(
+      (
+        detail: { id: string; category?: string; title?: string; description?: string; amount: number },
+        index: number
+      ) => (
+        <OperationDetail
+          key={detail.id}
+          icon={<GiSlicedBread size={30} />}
+          data={detail}
+          bordered={index !== data.length - 1 || data.length === 1}
+        />
+      )
+    ),
   },
 };
 
-const OperationDetails = data.map(
+export const CardWithOperationsDetails: Story = {
+  args: {
+    children: data.map(
       (
-        detail,
-        index
+        detail: { id: string; category?: string; title?: string; description?: string; amount: number },
+        index: number
       ) => (
         <OperationDetail
           key={detail.id}
@@ -80,10 +88,6 @@ const OperationDetails = data.map(
           bordered={index !== data.length - 1 || data.length === 1}
         />
       )
-    );
-
-export const CardWithOperationsDetails: Story = {
-  args: {
-    children: OperationDetails,
+    ),
   },
 };

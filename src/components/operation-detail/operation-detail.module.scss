@@ -1,3 +1,5 @@
+@use 'src/theme/variables';
+
 .operation-detail-content {
   display: flex;
   flex-direction: column;
@@ -12,7 +14,7 @@
   padding: 10px 0;
 
   .bordered {
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid variables.$color-link;
   }
 
   .icon {
@@ -22,25 +24,24 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #e0e0e0;
+    background-color: variables.$color-grey;
     margin-right: 16px;
 
   }
 
   .category {
-    font-size: 14px;
-    color: #999;
+    font-size: variables.$font-size-sm;
+    color: variables.$color-disabled
   }
 
   .title {
-    font-size: 20px;
+    font-size: variables.$font-size-main;
     font-weight: 700;
-    color: #333;
+    color: variables.$color-default
   }
 
   .description {
-    // font-weight: 500;
-    color: #333;
+    color: variables.$color-default
   }
 
   .content-wrapper {
