@@ -1,14 +1,16 @@
+@use 'src/theme/variables';
+
 .card {
   width: 400px;
-  background: white;
+  background: variables.$color-light;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: variables.$main-shadow;
   padding: 20px;
   margin: 30px auto;
 }
 
 .card-title {
   margin: 0 0 20px 0;
-  font-size: 18px;
-  color: #333;
+  font-size: variables.$font-size-xl;
+  color: variables.$color-secondary;
 }
