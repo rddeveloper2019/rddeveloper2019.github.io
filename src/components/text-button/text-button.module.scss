@@ -17,14 +17,20 @@
   color: variables.$color-primary;
 }
 .secondary {
-  color: variables.$color-secondary;
+  color: variables.$color-warn;
 }
 .disabled {
   color: variables.$color-disabled;
 }
 .link {
-  color: variables.$color-link;
+  color: variables.$border-color-card-main;
+}
+.disabled,
+.link {
+  &:active {
+    transform: none;
+  }
 }
 .white {
-  color: variables.$color-white;
+  color: variables.$color-main;
 }

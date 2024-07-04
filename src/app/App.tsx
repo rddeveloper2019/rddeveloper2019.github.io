@@ -5,6 +5,9 @@ import Logo from 'src/components/logo/logo';
 import Header from 'src/components/header/header';
 import { Size } from 'src/components/logo/types';
 import Modal from '../components/modal/modal';
+import { OperationDetailType } from 'src/app/types';
+import OperationDetail from 'src/components/operation-detail/operation-detail';
+import { GiSlicedBread } from 'react-icons/gi';
 
 const ModalContentExample = () => {
   return (
@@ -17,6 +20,7 @@ const ModalContentExample = () => {
     </div>
   );
 };
+
 function App() {
   return (
     <div>

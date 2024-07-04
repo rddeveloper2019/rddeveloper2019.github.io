@@ -18,26 +18,22 @@ const Modal: FC<ModalPropSTypes> = ({
     return;
   }
 
-  const onClick = (event: any) => {
-    if (!event?.target?.dataset?.setModalWrapper) {
+  const onClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    if (event?.target !== event?.currentTarget) {
       return;
     }
-    event?.preventDefault();
-    event?.stopPropagation();
     backgroundClickHandler();
   };
 
-  const preventClick = (e: any) => {
-    if (e?.target?.tagName !== 'BUTTON') {
-      e?.preventDefault();
-      e?.stopPropagation();
-      return;
-    }
+  const preventClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+    return;
   };
 
   return (
     <div data-set-modal-wrapper="modal-wrapper" className={cn(styles.wrapper)} onClick={onClick}>
-      <div className={cn(styles.modal)} onClick={preventClick}>
+      <div className={cn(styles.modal)} onClickCapture={preventClick}>
         {children}
         <div className={cn(styles.buttons)}>
           {onCancel && (

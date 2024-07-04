@@ -1,0 +1,16 @@
+@use 'src/theme/variables';
+
+.card {
+  width: 400px;
+  background: variables.$color-main;
+  border-radius: 8px;
+  box-shadow: variables.$main-shadow;
+  padding: 20px;
+  margin: 30px auto;
+}
+
+.card-title {
+  margin: 0 0 20px 0;
+  font-size: variables.$font-size-xl;
+  color: variables.$color-warn;
+}
