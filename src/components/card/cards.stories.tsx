@@ -12,6 +12,7 @@ const meta: Meta<typeof Card> = {
     children: {
       control: 'text',
     },
+    width: 'number',
   },
 };
 
@@ -22,6 +23,7 @@ type Story = StoryObj<typeof Card>;
 export const Default: Story = {
   args: {
     children: 'This is a card component',
+    width: 400,
   },
 };
 
@@ -58,36 +60,28 @@ const data: OperationDetailType[] = [
 
 export const CardWithOperationsDetail: Story = {
   args: {
-    children: [data[0]].map(
-      (
-        detail: { id: string; category?: string; title?: string; description?: string; amount: number },
-        index: number
-      ) => (
-        <OperationDetail
-          key={detail.id}
-          icon={<GiSlicedBread size={30} />}
-          data={detail}
-          bordered={index !== data.length - 1 || data.length === 1}
-        />
-      )
-    ),
+    children: [data[0]].map((detail: OperationDetailType, index: number) => (
+      <OperationDetail
+        key={detail.id}
+        icon={<GiSlicedBread size={30} />}
+        data={detail}
+        bordered={index !== data.length - 1 || data.length === 1}
+      />
+    )),
+    width: 400,
   },
 };
 
 export const CardWithOperationsDetails: Story = {
   args: {
-    children: data.map(
-      (
-        detail: { id: string; category?: string; title?: string; description?: string; amount: number },
-        index: number
-      ) => (
-        <OperationDetail
-          key={detail.id}
-          icon={<GiWallet size={30} />}
-          data={detail}
-          bordered={index !== data.length - 1 || data.length === 1}
-        />
-      )
-    ),
+    children: data.map((detail: OperationDetailType, index: number) => (
+      <OperationDetail
+        key={detail.id}
+        icon={<GiWallet size={30} />}
+        data={detail}
+        bordered={index !== data.length - 1 || data.length === 1}
+      />
+    )),
+    width: 350,
   },
 };

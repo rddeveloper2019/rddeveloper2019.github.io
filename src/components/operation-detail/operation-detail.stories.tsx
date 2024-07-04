@@ -5,16 +5,22 @@ const meta: Meta<typeof OperationDetail> = {
   title: 'Components/OperationDetail',
   component: OperationDetail,
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    bordered: false,
+  },
 };
 export default meta;
 
 export const Detail = {
   args: {
-    id: '1',
-    category: 'Продукты',
-    title: 'Хлеб',
-    description: 'Батон',
-    amount: 50,
+    data: {
+      id: '1',
+      category: 'Продукты',
+      title: 'Хлеб',
+      description: 'Батон',
+      amount: 50,
+    },
+    bordered: true,
+    width: 400,
   },
 };

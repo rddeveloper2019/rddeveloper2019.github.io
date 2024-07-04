@@ -5,13 +5,13 @@ import cn from 'clsx';
 import { OperationDetailType } from 'src/app/types';
 import { GiWallet } from 'react-icons/gi';
 
-const OperationDetail: FC<OperationDetailPropsTypes> = ({ icon = null, data = {}, bordered = false, width = 360 }) => {
+const OperationDetail: FC<OperationDetailPropsTypes> = ({ icon = null, data = {}, bordered = false, width }) => {
   const { amount, title, description, category } = data as OperationDetailType;
 
   return (
-    <div className={cn(styles['operation-detail'])} style={{ width: width }}>
+    <div className={cn(styles['operation-detail'], bordered && styles.bordered)} style={{ width: width }}>
       <div className={cn(styles.icon)}>{(icon && icon) || <GiWallet size={20} />}</div>
-      <div className={cn(bordered && styles.bordered, styles['operation-detail-content'])}>
+      <div className={cn(styles['operation-detail-content'])}>
         {category && <div className={cn(styles.category)}>{category}</div>}
         {title && <div className={cn(styles.title)}>{title}</div>}
         {description && <div className={cn(styles.description)}>{description}</div>}

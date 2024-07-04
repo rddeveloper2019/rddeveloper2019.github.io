@@ -2,7 +2,7 @@
 
 .card {
   width: 400px;
-  background: variables.$color-light;
+  background: variables.$color-main;
   border-radius: 8px;
   box-shadow: variables.$main-shadow;
   padding: 20px;
@@ -12,5 +12,5 @@
 .card-title {
   margin: 0 0 20px 0;
   font-size: variables.$font-size-xl;
-  color: variables.$color-secondary;
+  color: variables.$color-warn;
 }
