@@ -1,0 +1,50 @@
+@use 'src/theme/variables';
+
+.operation-detail {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  width: 100%;
+
+  .operation-detail-content {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5px;
+    flex-grow: 1;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: variables.$background-icon-color-main;
+    margin-right: 16px;
+  }
+
+  .category {
+    font-size: variables.$font-size-sm;
+    color: variables.$color-disabled;
+  }
+
+  .title {
+    font-size: variables.$font-size-main;
+    font-weight: 700;
+    color: variables.$color-default;
+  }
+
+  .description {
+    color: variables.$color-default;
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.bordered {
+  border-bottom: 1px solid variables.$border-color-card-main;
+}

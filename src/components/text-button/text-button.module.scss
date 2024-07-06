@@ -1,23 +1,36 @@
+@use 'src/theme/variables';
+
 .text-button {
   text-transform: uppercase;
-  font-size: 14px;
   background-color: transparent;
   border: none;
   padding: 10px 15px;
+  &:active {
+    transform: translateY(-2px);
+  }
 }
 
 .default {
-  color: #2a2929;
+  color: variables.$color-default;
 }
 .primary {
-  color: #2196f3;
+  color: variables.$color-primary;
 }
 .secondary {
-  color: #e10050;
+  color: variables.$color-warn;
 }
 .disabled {
-  color: #9c9c9c;
+  color: variables.$color-disabled;
 }
 .link {
-  color: #9c9c9c;
+  color: variables.$border-color-card-main;
+}
+.disabled,
+.link {
+  &:active {
+    transform: none;
+  }
+}
+.white {
+  color: variables.$color-main;
 }

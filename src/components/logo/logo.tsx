@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import cn from 'clsx';
 import { LogoPropTypes, Size } from './types';
 
-const Logo: FC<LogoPropTypes> = ({ image = '', color = '#eeeaea', size = Size.MEDIUM }) => {
+const Logo: FC<LogoPropTypes> = ({ image = '', color = 'transparent', size = Size.MEDIUM }) => {
   return (
     <div
       className={cn(styles.logo, size && styles[size])}

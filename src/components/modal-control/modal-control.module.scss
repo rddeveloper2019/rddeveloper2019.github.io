@@ -1,0 +1,18 @@
+@use 'src/theme/variables';
+
+.control {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20;
+}
+
+.input {
+    font-size: variables.$font-size-m;
+    padding: 10px;
+    background-color: variables.$background-main;
+    color: variables.$color-default;
+    border-color: variables.$border-color-card-main;
+    border-radius: 4px;
+}
