@@ -8,6 +8,7 @@ import Modal from '../components/modal/modal';
 import { OperationDetailType } from 'src/app/types';
 import OperationDetail from 'src/components/operation-detail/operation-detail';
 import { GiSlicedBread } from 'react-icons/gi';
+import { Layout } from 'src/layout/layout';
 
 const ModalContentExample = () => {
   return (
@@ -23,11 +24,9 @@ const ModalContentExample = () => {
 
 function App() {
   return (
-    <div>
-      <Modal visible={true}>
-        <ModalContentExample />
-      </Modal>
-    </div>
+    <Layout>
+      <h1>HELLO!!</h1>
+    </Layout>
   );
 }
 

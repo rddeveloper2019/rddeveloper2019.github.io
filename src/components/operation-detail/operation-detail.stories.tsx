@@ -5,9 +5,6 @@ const meta: Meta<typeof OperationDetail> = {
   title: 'Components/OperationDetail',
   component: OperationDetail,
   tags: ['autodocs'],
-  argTypes: {
-    bordered: false,
-  },
 };
 export default meta;
 
