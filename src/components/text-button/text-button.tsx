@@ -6,7 +6,7 @@ import cn from 'clsx';
 const TextButton: FC<TextButtonPropsTypes> = ({
   children = 'Click',
   state = TextButtonState.DEFAULT,
-  handleClick = () => {},
+  handleClick,
   disabled = false,
 }) => {
   return (

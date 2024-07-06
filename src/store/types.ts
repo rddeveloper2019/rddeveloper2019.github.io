@@ -1,5 +1,3 @@
-import { ReactElement } from 'react';
-
 export enum Theme {
   LIGHT = 'light',
   DARK = 'dark',
