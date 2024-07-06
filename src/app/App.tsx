@@ -9,6 +9,8 @@ import { OperationDetailType } from 'src/app/types';
 import OperationDetail from 'src/components/operation-detail/operation-detail';
 import { GiSlicedBread } from 'react-icons/gi';
 import { Layout } from 'src/layout/layout';
+import { MainProvider } from 'src/store/provider';
+import { MainPage } from 'src/pages/main';
 
 const ModalContentExample = () => {
   return (
@@ -24,9 +26,11 @@ const ModalContentExample = () => {
 
 function App() {
   return (
-    <Layout>
-      <h1>HELLO!!</h1>
-    </Layout>
+    <MainProvider>
+      <Layout>
+        <MainPage />
+      </Layout>
+    </MainProvider>
   );
 }
 

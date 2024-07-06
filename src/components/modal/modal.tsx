@@ -10,8 +10,8 @@ const Modal: FC<ModalPropSTypes> = ({
   visible = false,
   confirmButtonText = '',
   cancelButtonText = '',
-  onCancel = () => {},
-  onConfirm = () => {},
+  onCancel,
+  onConfirm,
   backgroundClickHandler = () => {},
 }) => {
   if (!visible) {
@@ -25,15 +25,9 @@ const Modal: FC<ModalPropSTypes> = ({
     backgroundClickHandler();
   };
 
-  const preventClick: MouseEventHandler<HTMLDivElement> = (event) => {
-    event?.preventDefault();
-    event?.stopPropagation();
-    return;
-  };
-
   return (
     <div data-set-modal-wrapper="modal-wrapper" className={cn(styles.wrapper)} onClick={onClick}>
-      <div className={cn(styles.modal)} onClickCapture={preventClick}>
+      <div className={cn(styles.modal)}>
         {children}
         <div className={cn(styles.buttons)}>
           {onCancel && (
