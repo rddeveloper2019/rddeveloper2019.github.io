@@ -1,5 +1,3 @@
-import React, { JSXElementConstructor, ReactElement } from 'react';
-
 export enum TextButtonState {
   DEFAULT = 'default',
   PRIMARY = 'primary',

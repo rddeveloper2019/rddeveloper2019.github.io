@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import styled from './card.module.scss';
 import cn from 'clsx';
 import { CardPropsType } from 'src/components/card/types';

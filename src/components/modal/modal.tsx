@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, ReactEventHandler } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import { ModalPropSTypes } from './types';
 import styles from './modal.module.scss';
 import cn from 'clsx';
@@ -12,7 +12,7 @@ const Modal: FC<ModalPropSTypes> = ({
   cancelButtonText = '',
   onCancel,
   onConfirm,
-  backgroundClickHandler = () => {},
+  backgroundClickHandler,
 }) => {
   if (!visible) {
     return;
