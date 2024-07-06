@@ -12,7 +12,6 @@ const meta: Meta<typeof Card> = {
     children: {
       control: 'text',
     },
-    width: 'number',
   },
 };
 
