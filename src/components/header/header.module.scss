@@ -2,13 +2,16 @@
 
 .header {
   background-color: variables.$background-primary;
-  padding: 8px 16px;
+  padding: 8px 0;
   color: variables.$color-main;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: variables.$font-size-xl;
   height: variables.$safe-area-top;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .nav {
@@ -21,4 +24,30 @@
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.login {
+  display: flex;
+  gap: 10;
+
+  .theme {
+    display: flex;
+    align-items: center;
+    button {
+      padding: 5px;
+      font-size: variables.$font-size-sm;
+    }
+    button.icon {
+      font-size: variables.$font-size-xl;
+    }
+  }
+}
+
+.links {
+  display: flex;
+  gap: 5;
+  button {
+    padding: 5px;
+    // font-size: variables.$font-size-sm;
+  }
 }

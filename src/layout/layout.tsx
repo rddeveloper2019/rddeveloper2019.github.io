@@ -6,9 +6,9 @@ export const Layout = ({ children }: { children: ReactElement }) => {
   return (
     <div className={styles.layout}>
       <Header />
-      <div className={styles['safe-area']}>
+      <main className={styles['safe-area']}>
         <div className={styles.content}>{children}</div>
-      </div>
+      </main>
     </div>
   );
 };
