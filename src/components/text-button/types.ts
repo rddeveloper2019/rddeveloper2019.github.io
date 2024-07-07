@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 export enum TextButtonState {
   DEFAULT = 'default',
   PRIMARY = 'primary',
@@ -8,8 +9,9 @@ export enum TextButtonState {
 }
 
 export type TextButtonPropsTypes = {
-  children: string;
+  children: ReactNode;
   handleClick?: () => void;
   state?: TextButtonState;
   disabled?: boolean;
+  className?: string;
 };

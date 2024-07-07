@@ -23,10 +23,14 @@
   color: variables.$color-disabled;
 }
 .link {
-  color: variables.$border-color-card-main;
+  a {
+    color: variables.$color-link;
+    text-decoration: none;
+  }
 }
 .disabled,
 .link {
+  a,
   &:active {
     transform: none;
   }
