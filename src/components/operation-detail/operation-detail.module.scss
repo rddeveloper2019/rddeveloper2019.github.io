@@ -11,6 +11,10 @@
     flex-direction: column;
     padding-bottom: 5px;
     flex-grow: 1;
+
+    .amount {
+      color: variables.$color-warn;
+    }
   }
 
   .icon {

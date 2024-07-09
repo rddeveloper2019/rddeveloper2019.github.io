@@ -1,5 +1,5 @@
 import styles from './layout.module.scss';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import Header from '../components/header/header';
 
 export const Layout = ({ children }: { children: ReactElement }) => {

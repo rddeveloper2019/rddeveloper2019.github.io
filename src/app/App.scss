@@ -1,4 +1,8 @@
-@use "../theme/variables";
+@use '../theme/variables';
+
+body {
+  background-color: variables.$background-main;
+}
 
 .App {
   font-size: variables.$font-size-main;

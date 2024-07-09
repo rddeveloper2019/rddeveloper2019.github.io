@@ -1,11 +1,19 @@
 import styles from './header.module.scss';
-import React from 'react';
+import React, { useContext } from 'react';
 import cn from 'clsx';
 import TextButton from '../text-button/text-button';
 import Logo from '../logo/logo';
 import { TextButtonState } from '../text-button/types';
+import { MainContext } from '../../store/provider';
+import { Theme } from '../../store/types';
 
 const Header = () => {
+  const { theme, setTheme } = useContext(MainContext);
+
+  const setAppTheme = (name: Theme) => {
+    setTheme(name);
+  };
+
   return (
     <div className={cn(styles.header)}>
       <div className={cn(styles['logo-block'])}>
@@ -16,7 +24,7 @@ const Header = () => {
         <div>Финансы</div>
       </div>
       <div className={styles.links}>
-        <TextButton state={TextButtonState.LINK}>
+        <TextButton state={TextButtonState.LINK} className={styles.active}>
           <a href="#">Главная</a>
         </TextButton>
         <TextButton state={TextButtonState.LINK}>
@@ -33,12 +41,24 @@ const Header = () => {
       <div className={styles.login}>
         <div className={styles.theme}>
           <TextButton state={TextButtonState.WHITE}>EN</TextButton>
-          <TextButton state={TextButtonState.WHITE} className={styles.icon}>
-            ☼
-          </TextButton>
-          {/* <TextButton state={TextButtonState.WHITE} className={styles.icon}>
-            ☾
-          </TextButton> */}
+          {theme === Theme.DARK && (
+            <TextButton
+              state={TextButtonState.WHITE}
+              className={styles.icon}
+              handleClick={() => setAppTheme(Theme.LIGHT)}
+            >
+              ☼
+            </TextButton>
+          )}
+          {theme === Theme.LIGHT && (
+            <TextButton
+              state={TextButtonState.WHITE}
+              className={styles.icon}
+              handleClick={() => setAppTheme(Theme.DARK)}
+            >
+              ☾
+            </TextButton>
+          )}
         </div>
         <nav className={cn(styles.nav)}>
           <TextButton state={TextButtonState.WHITE}>Вход</TextButton>

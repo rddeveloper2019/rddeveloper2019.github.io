@@ -1,5 +1,7 @@
 import type { Meta } from '@storybook/react';
 import Header from './header';
+import { MainProvider } from '../../store/provider';
+import React from 'react';
 
 const meta: Meta<typeof Header> = {
   title: 'Layouts/Header',
@@ -8,6 +10,10 @@ const meta: Meta<typeof Header> = {
 };
 export default meta;
 
-export const Default = {
-  args: {},
+export const Default = () => {
+  return (
+    <MainProvider>
+      <Header />
+    </MainProvider>
+  );
 };
