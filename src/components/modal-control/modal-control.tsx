@@ -5,6 +5,7 @@ import { MainContext } from '../../store/provider';
 import TextButton from '../text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import styles from './modal-control.module.scss';
+import { Portal } from '../portal/Portal'; // Импортируем компонент Portal
 
 export const ModalControl = () => {
   const { modal, setModal } = useContext(MainContext);
@@ -30,16 +31,18 @@ export const ModalControl = () => {
         </div>
       </Card>
       {text && (
-        <Modal
-          visible={modal}
-          confirmButtonText="согласен"
-          onConfirm={hideModal}
-          cancelButtonText="закрыть"
-          onCancel={hideModal}
-          backgroundClickHandler={hideModal}
-        >
-          <div>{text}</div>
-        </Modal>
+        <Portal>
+          <Modal
+            visible={modal}
+            confirmButtonText="согласен"
+            onConfirm={hideModal}
+            cancelButtonText="закрыть"
+            onCancel={hideModal}
+            backgroundClickHandler={hideModal}
+          >
+            <div>{text}</div>
+          </Modal>
+        </Portal>
       )}
     </>
   );
