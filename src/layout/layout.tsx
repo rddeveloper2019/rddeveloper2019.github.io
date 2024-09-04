@@ -1,8 +1,8 @@
 import styles from './layout.module.scss';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import Header from '../components/header/header';
 
-export const Layout = ({ children }: { children: ReactElement }) => {
+export const Layout = ({ children }: { children?: ReactElement }) => {
   return (
     <div className={styles.layout}>
       <Header />

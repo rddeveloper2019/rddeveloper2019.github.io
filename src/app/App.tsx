@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import '../theme/fonts.scss';
 import { Layout } from 'src/layout/layout';
-import { MainProvider } from 'src/store/provider';
+import { MainProvider } from '../../store/provider';
 import { MainPage } from 'src/pages/main';
 
 function App() {

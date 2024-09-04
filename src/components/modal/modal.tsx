@@ -22,6 +22,7 @@ const Modal: FC<ModalPropSTypes> = ({
     if (event?.target !== event?.currentTarget) {
       return;
     }
+
     backgroundClickHandler();
   };
 

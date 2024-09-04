@@ -13,7 +13,7 @@ export default meta;
 export const Default = () => {
   return (
     <MainProvider>
-      <Layout children={undefined} />
+      <Layout />
     </MainProvider>
   );
 };
