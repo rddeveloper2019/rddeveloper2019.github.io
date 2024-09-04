@@ -1,7 +1,7 @@
 import React, { ReactElement, createContext, useState, useEffect } from 'react';
-import { Lang, Theme } from './types';
+import { Lang, Store, Theme } from './types';
 
-export const MainContext = createContext(null);
+export const MainContext = createContext<Store>(null);
 
 const root = document.querySelector(':root') as HTMLElement;
 
@@ -27,7 +27,7 @@ const themesMap = {
 const setAppTheme = (name: Theme) => {
   const themeMap = themesMap[name];
 
-  for (let [key, value] of Object.entries(themeMap)) {
+  for (const [key, value] of Object.entries(themeMap)) {
     root?.style?.setProperty(key, value);
   }
 };
@@ -36,7 +36,14 @@ export const MainProvider = ({ children }: { children: ReactElement }) => {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
   const [lang, setLang] = useState<Lang>(Lang.RU);
   const [modal, setModal] = useState<boolean>(false);
-  const store = { theme, setTheme, lang, setLang, modal, setModal };
+  const store: Store = {
+    theme,
+    setTheme,
+    lang,
+    setLang,
+    modal,
+    setModal,
+  };
 
   useEffect(() => {
     setAppTheme(theme);
