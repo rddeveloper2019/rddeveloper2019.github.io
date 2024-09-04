@@ -4,8 +4,8 @@ import cn from 'clsx';
 import TextButton from '../text-button/text-button';
 import Logo from '../logo/logo';
 import { TextButtonState } from '../text-button/types';
-import { MainContext } from 'src/store/provider';
-import { Lang, Theme } from 'src/store/types';
+import { MainContext } from '../../store/provider';
+import { Lang, Theme } from '../../store/types';
 import { useTranslation } from 'react-i18next';
 
 const Header = () => {

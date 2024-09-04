@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Modal from '../modal/modal';
 import Card from '../card/Card';
-import { MainContext } from 'src/store/provider';
+import { MainContext } from '../../store/provider';
 import TextButton from '../text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import styles from './modal-control.module.scss';

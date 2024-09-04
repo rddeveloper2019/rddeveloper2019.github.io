@@ -1,5 +1,5 @@
-import { en } from 'src/config/lang/en';
-import { ru } from 'src/config/lang/ru';
+import { en } from './en';
+import { ru } from './ru';
 
 export default {
   en,
