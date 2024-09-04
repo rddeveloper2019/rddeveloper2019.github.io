@@ -17,6 +17,7 @@
   --color-disabled: #9c9c9c;
   --color-main: #ffffff;
   --color-link: #f5e50c;
+  --placeholder-default: #cbc9c9;
 
   //element color
   --element-warn: #c90909;
@@ -50,6 +51,7 @@ $color-warn: var(--color-warn);
 $color-disabled: var(--color-disabled);
 $color-main: var(--color-main);
 $color-link: var(--color-link);
+$color-placeholder: var(--placeholder-default);
 
 //element-colors
 $element-warn: var(--element-warn);

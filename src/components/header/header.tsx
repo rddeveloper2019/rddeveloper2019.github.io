@@ -4,14 +4,25 @@ import cn from 'clsx';
 import TextButton from '../text-button/text-button';
 import Logo from '../logo/logo';
 import { TextButtonState } from '../text-button/types';
-import { MainContext } from '../../store/provider';
-import { Theme } from '../../store/types';
+import { MainContext } from 'src/store/provider';
+import { Lang, Theme } from 'src/store/types';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
-  const { theme, setTheme } = useContext(MainContext);
+  const { theme, setTheme, setLang, lang } = useContext(MainContext);
+
+  const { t } = useTranslation();
 
   const setAppTheme = (name: Theme) => {
     setTheme(name);
+  };
+
+  const toggleLang = () => {
+    if (lang === Lang.RU) {
+      setLang(Lang.EN);
+    } else {
+      setLang(Lang.RU);
+    }
   };
 
   return (
@@ -25,22 +36,24 @@ const Header = () => {
       </div>
       <div className={styles.links}>
         <TextButton state={TextButtonState.LINK} className={styles.active}>
-          <a href="#">Главная</a>
+          <a href="#">{t('header.home')}</a>
         </TextButton>
         <TextButton state={TextButtonState.LINK}>
-          <a href="#">Статистика</a>
+          <a href="#">{t('header.statistics')}</a>
         </TextButton>
         <TextButton state={TextButtonState.LINK}>
-          <a href="#">Поиск</a>
+          <a href="#">{t('header.search')}</a>
         </TextButton>
         <TextButton state={TextButtonState.LINK}>
-          <a href="#">Профиль</a>
+          <a href="#">{t('header.profile')}</a>
         </TextButton>
       </div>
 
       <div className={styles.login}>
         <div className={styles.theme}>
-          <TextButton state={TextButtonState.WHITE}>EN</TextButton>
+          <TextButton state={TextButtonState.WHITE} handleClick={toggleLang}>
+            {lang === Lang.RU ? Lang.EN : 'РУ'}
+          </TextButton>
           {theme === Theme.DARK && (
             <TextButton
               state={TextButtonState.WHITE}
@@ -61,7 +74,7 @@ const Header = () => {
           )}
         </div>
         <nav className={cn(styles.nav)}>
-          <TextButton state={TextButtonState.WHITE}>Вход</TextButton>
+          <TextButton state={TextButtonState.WHITE}>{t('header.login')}</TextButton>
         </nav>
       </div>
     </div>

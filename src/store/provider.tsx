@@ -1,5 +1,6 @@
 import React, { ReactElement, createContext, useState, useEffect } from 'react';
 import { Lang, Store, Theme } from './types';
+import { useTranslation } from 'react-i18next';
 
 export const MainContext = createContext<Store>(null);
 
@@ -36,6 +37,8 @@ export const MainProvider = ({ children }: { children: ReactElement }) => {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
   const [lang, setLang] = useState<Lang>(Lang.RU);
   const [modal, setModal] = useState<boolean>(false);
+  const { i18n } = useTranslation();
+
   const store: Store = {
     theme,
     setTheme,
@@ -48,6 +51,10 @@ export const MainProvider = ({ children }: { children: ReactElement }) => {
   useEffect(() => {
     setAppTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang, i18n]);
 
   return <MainContext.Provider value={store}>{children}</MainContext.Provider>;
 };
