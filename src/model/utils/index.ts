@@ -2,7 +2,7 @@ import { Category, Operation, Product } from '../types';
 
 const categories = ['sport', 'education', 'travel', 'hobby', 'dance', 'zoo', 'byke', 'shoping'];
 const getRandomId = (): string => Math.random().toString(36).substring(7);
-const getRandomName = (prefix?: string): string => `${prefix} ${Math.floor(Math.random() * 100)}`;
+const getRandomName = (prefix?: string): string => `${prefix} ${Math.floor(Math.random() * 1000)}`;
 
 const getRandomCategory = (): string => categories[Math.floor(Math.random() * categories.length)];
 const getPhoto = (notnull?: boolean): string | undefined =>

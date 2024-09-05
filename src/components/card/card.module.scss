@@ -7,6 +7,14 @@
   box-shadow: variables.$main-shadow;
   padding: 20px;
   margin: 10px auto;
+  border: 2px solid;
+  transition: border-color 0.3s;
+  &.hidden {
+    border-color: red;
+  }
+  &.shown {
+    border-color: transparent;
+  }
 }
 
 .card-title {
