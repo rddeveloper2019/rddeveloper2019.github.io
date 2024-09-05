@@ -2,8 +2,7 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import Card from './Card';
 import OperationDetail from '../operation-detail/operation-detail';
-import { GiSlicedBread, GiWallet } from 'react-icons/gi';
-import { OperationDetailType } from 'src/app/types';
+import { Operation } from '../../model/types';
 
 const meta: Meta<typeof Card> = {
   title: 'Components/Card',
@@ -26,46 +25,38 @@ export const Default: Story = {
   },
 };
 
-const data: OperationDetailType[] = [
+const data: Operation[] = [
   {
-    id: '1',
-    category: 'Продукты',
-    title: 'Хлеб',
-    description: 'Бородинский без дрожевой',
-    amount: 57,
+    id: 'lgtxju',
+    name: 'Operation 84',
+    desc: 'Description for Operation 84',
+    createdAt: '17.04.2018',
+    amount: 795,
+    category: { id: 'vbp6jt', name: 'sport', photo: 'https://picsum.photos/200' },
+    type: 'Profit',
   },
   {
-    id: '1',
-    category: 'Продукты',
-    title: 'Хлеб',
-    description: 'Ржаной (в нарезке)',
-    amount: 48,
+    id: '351dll',
+    name: 'Operation 38',
+    createdAt: '14.05.2019',
+    amount: 329,
+    category: { id: 'm2y75v', name: 'dance', photo: 'https://picsum.photos/200' },
+    type: 'Profit',
   },
   {
-    id: '1',
-    category: 'Продукты',
-    title: 'Хлеб',
-    description: 'Батон с изюмом',
-    amount: 45.5,
-  },
-  {
-    id: '1',
-    category: 'Продукты',
-    title: 'Хлеб',
-    description: 'Бородинский',
-    amount: 75,
+    id: '7byr4q',
+    name: 'Operation 54',
+    createdAt: '15.05.2020',
+    amount: 68,
+    category: { id: '0gevb4', name: 'hobby', photo: 'https://picsum.photos/200' },
+    type: 'Profit',
   },
 ];
 
 export const CardWithOperationsDetail: Story = {
   args: {
-    children: [data[0]].map((detail: OperationDetailType, index: number) => (
-      <OperationDetail
-        key={detail.id}
-        icon={<GiSlicedBread size={30} />}
-        data={detail}
-        bordered={index !== data.length - 1 || data.length === 1}
-      />
+    children: [data[0]].map((detail: Operation, index: number) => (
+      <OperationDetail key={detail.id} data={detail} bordered={index !== data.length - 1 || data.length === 1} />
     )),
     width: 400,
   },
@@ -73,13 +64,8 @@ export const CardWithOperationsDetail: Story = {
 
 export const CardWithOperationsDetails: Story = {
   args: {
-    children: data.map((detail: OperationDetailType, index: number) => (
-      <OperationDetail
-        key={detail.id}
-        icon={<GiWallet size={30} />}
-        data={detail}
-        bordered={index !== data.length - 1 || data.length === 1}
-      />
+    children: data.map((detail: Operation, index: number) => (
+      <OperationDetail key={detail.id} data={detail} bordered={index !== data.length - 1 || data.length === 1} />
     )),
     width: 350,
   },
