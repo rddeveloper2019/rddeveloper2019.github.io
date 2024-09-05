@@ -2,7 +2,6 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import Card from './Card';
 import OperationDetail from '../operation-detail/operation-detail';
-import { GiSlicedBread, GiWallet } from 'react-icons/gi';
 import { Operation } from '../../model/types';
 
 const meta: Meta<typeof Card> = {

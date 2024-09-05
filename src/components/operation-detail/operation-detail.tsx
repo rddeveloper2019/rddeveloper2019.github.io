@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { OperationDetailPropsTypes } from 'src/components/operation-detail/types';
+import { OperationDetailPropsTypes } from './types';
 import styles from './operation-detail.module.scss';
 import cn from 'clsx';
 
