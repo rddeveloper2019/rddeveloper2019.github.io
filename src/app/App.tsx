@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.scss';
 import '../theme/fonts.scss';
-import { Layout } from 'src/layout/layout';
+import { Layout } from '../layout/layout';
 import { MainProvider } from '../store/provider';
-import { MainPage } from 'src/pages/main';
+import { MainPage } from '../pages/main';
+import { createRandomOperations } from '../model/utils';
 
 function App() {
   return (

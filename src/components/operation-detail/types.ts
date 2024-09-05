@@ -1,9 +1,7 @@
-import { ReactElement } from 'react';
-import { OperationDetailType } from 'src/app/types';
+import { Operation } from '../../model/types';
 
 export type OperationDetailPropsTypes = {
-  icon?: ReactElement;
-  data: OperationDetailType;
+  data: Operation;
   bordered?: boolean;
   width?: number;
 };

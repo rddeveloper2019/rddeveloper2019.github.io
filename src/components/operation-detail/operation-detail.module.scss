@@ -1,6 +1,7 @@
 @use 'src/theme/variables';
 
 .operation-detail {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 5px 0;
@@ -11,21 +12,23 @@
     flex-direction: column;
     padding-bottom: 5px;
     flex-grow: 1;
+    gap: 5px;
 
     .amount {
       color: variables.$color-warn;
     }
   }
 
-  .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: variables.$background-icon-color-main;
+  .logo {
+    overflow: hidden;
+
     margin-right: 16px;
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
   }
 
   .category {
