@@ -11,7 +11,12 @@ const OperationsList: FC<OperationsListPropsType> = ({ operations, addMore, isIn
   return (
     <ul className={styles.operations}>
       {operations.map((operation, idx) => (
-        <Card key={operation.id} isLast={operations.length - 1 === idx} onIntersect={() => isInfinite && addMore?.()}>
+        <Card
+          key={operation.id}
+          width={400}
+          isLast={operations.length - 1 === idx}
+          onIntersect={() => isInfinite && addMore?.()}
+        >
           <OperationDetail data={operation} />
         </Card>
       ))}

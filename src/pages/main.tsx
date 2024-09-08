@@ -3,6 +3,7 @@ import { ModalControl } from 'src/components/modal-control/modal-control';
 import OperationsList from '../components/operations-list';
 import { createRandomOperations } from 'src/model/utils';
 import { Operation } from '../model/types';
+import LoginForm from 'src/components/login-form/login-form';
 
 export const MainPage = () => {
   const [count, setCount] = useState<number>(0);
@@ -18,9 +19,6 @@ export const MainPage = () => {
     <div style={{ display: 'flex', padding: 20 }}>
       <div style={{ width: '50%' }}>
         <OperationsList operations={operations} addMore={() => setCount(count + 1)} />
-      </div>
-      <div style={{ width: '50%' }}>
-        <ModalControl />
       </div>
     </div>
   );

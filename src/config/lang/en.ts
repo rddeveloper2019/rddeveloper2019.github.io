@@ -6,6 +6,7 @@ export const en = {
       search: 'search',
       profile: 'profile',
       login: 'login',
+      logout: 'logout',
     },
     modal: {
       cancel: 'cancel',
