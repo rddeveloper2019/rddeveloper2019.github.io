@@ -4,4 +4,7 @@ $safe-area: variables.$safe-area-top;
   max-height: calc(100vh - $safe-area - 40px);
   overflow-y: scroll;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

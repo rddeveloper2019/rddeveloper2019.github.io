@@ -7,8 +7,8 @@ import { TextButtonState } from '../text-button/types';
 import { MainContext } from '../../store/provider';
 import { Lang, Theme } from '../../store/types';
 import { useTranslation } from 'react-i18next';
-import { ModalControl } from 'src/components/modal-control/modal-control';
-import LoginForm from 'src/components/login-form/login-form';
+import { ModalControl } from '../../components/modal-control/modal-control';
+import LoginForm from '../../components/login-form/login-form';
 
 const Header = () => {
   const { theme, setTheme, setLang, lang, isAuth, modal, setModal, setIsAuth } = useContext(MainContext);
