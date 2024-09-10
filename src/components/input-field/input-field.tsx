@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import cn from 'clsx';
 import { InputFieldPropTypes } from './types';
 
-const InputField: FC<InputFieldPropTypes> = ({ placeholder = '', error, type = 'text', ...rest }) => {
+const InputField: FC<InputFieldPropTypes> = ({ placeholder = '', error, type = 'text', ...rest }, ref) => {
   return (
     <>
       <input className={cn(styles.input, error && styles.error)} placeholder={placeholder} type={type} {...rest} />

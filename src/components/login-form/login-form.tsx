@@ -2,14 +2,14 @@ import styles from './login-form.module.scss';
 import React, { FC, useContext } from 'react';
 import cn from 'clsx';
 import { LoginFormPropTypes, LoginFormType } from './types';
-import InputField from '../../components/InputField/input-field';
-import Card from '../../components/card/Card';
+import Card from '../card/Card';
 import TextButton from '../../components/text-button/text-button';
-import { TextButtonState } from '../../components/text-button/types';
+import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import { MainContext } from '../../store/provider';
+import InputField from '../input-field/input-field';
 
-const LoginForm: FC<LoginFormPropTypes> = ({}) => {
+const LoginForm: FC<LoginFormPropTypes> = () => {
   const { setModal, setIsAuth } = useContext(MainContext);
 
   const {
