@@ -68,7 +68,7 @@ export const createRandomProduct = (createdAt: string): Product => {
 // console.log(randomCategory);
 
 export const getRandomDate = (start: Date, end: Date): string => {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toLocaleDateString('RU');
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toISOString();
 };
 export const createRandomProducts = (count: number): Product[] => {
   const products: Product[] = [];

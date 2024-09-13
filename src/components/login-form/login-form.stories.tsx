@@ -1,12 +1,13 @@
 import type { Meta } from '@storybook/react';
-import { ModalControl } from './modal-control';
 import { MainProvider } from '../../store/provider';
 import React from 'react';
 import '../../i18n';
 
-const meta: Meta<typeof ModalControl> = {
-  title: 'Components/ModalControl',
-  component: ModalControl,
+import LoginForm from '../../components/login-form/login-form';
+
+const meta: Meta<typeof LoginForm> = {
+  title: 'Forms/LoginForm',
+  component: LoginForm,
   tags: ['autodocs'],
 };
 export default meta;
@@ -14,7 +15,9 @@ export default meta;
 export const Default = () => {
   return (
     <MainProvider>
-      <ModalControl />
+      <div style={{ width: '50%' }}>
+        <LoginForm />
+      </div>
     </MainProvider>
   );
 };

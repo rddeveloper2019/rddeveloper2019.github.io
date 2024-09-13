@@ -6,6 +6,7 @@ export const ru = {
       search: 'поиск',
       profile: 'профиль',
       login: 'вход',
+      logout: 'выход',
     },
     modal: {
       cancel: 'закрыть',

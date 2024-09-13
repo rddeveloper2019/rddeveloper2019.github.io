@@ -6,13 +6,14 @@
   align-items: center;
   padding: 5px 0;
   width: 100%;
+  cursor: pointer;
 
   .operation-detail-content {
     display: flex;
     flex-direction: column;
     padding-bottom: 5px;
     flex-grow: 1;
-    gap: 5px;
+    gap: 8px;
 
     .amount {
       color: variables.$color-warn;
@@ -50,8 +51,17 @@
     display: flex;
     flex-direction: column;
   }
+
+  .created-at {
+    color: variables.$color-disabled;
+  }
 }
 
 .bordered {
   border-bottom: 1px solid variables.$border-color-card-main;
+}
+
+.edit-button {
+  font-size: 18px;
+  cursor: pointer;
 }

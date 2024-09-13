@@ -10,6 +10,7 @@
 
   //border colors
   --border-color-card-main: #9c9c9c;
+  --border-color-warn: #c90909;
 
   //text-colors
   --color-default: #2a2929;
@@ -43,6 +44,7 @@ $main-shadow: var(--main-shadow);
 
 //border colors
 $border-color-card-main: var(--border-color-card-main);
+$border-color-warn: var(--border-color-warn);
 
 //text-colors
 $color-default: var(--color-default);

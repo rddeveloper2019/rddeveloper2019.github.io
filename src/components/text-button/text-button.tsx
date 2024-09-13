@@ -9,12 +9,16 @@ const TextButton: FC<TextButtonPropsTypes> = ({
   handleClick,
   disabled = false,
   className,
+  type,
+  ...rest
 }) => {
   return (
     <button
       className={cn(styles['text-button'], styles[state], disabled && styles.disabled, className)}
       onClick={handleClick}
       disabled={disabled}
+      type={type}
+      {...rest}
     >
       {children}
     </button>

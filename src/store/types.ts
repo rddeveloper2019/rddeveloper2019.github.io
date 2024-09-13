@@ -17,4 +17,6 @@ export type Store = {
   lang: Lang;
   setLang: State<Lang>;
   modal: boolean;
+  isAuth: boolean;
+  setIsAuth: State<boolean>;
 };
