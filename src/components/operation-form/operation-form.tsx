@@ -9,9 +9,26 @@ import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import { MainContext } from '../../store/provider';
 import TextareaField from '../textarea-field/textarea-field';
+import { Category } from '../../model/types';
+import { SelectField } from '../select-field';
+
+export const categoriesById: { [key: string]: Category } = {
+  1: { id: '1', name: 'одежда', photo: 'https://i.pinimg.com/originals/81/3c/be/813cbeb756bed0a23e6dbf581bfcfd8a.png' },
+  2: {
+    id: '2',
+    name: 'лекарства',
+    photo: 'https://wega55.ru/assets/images/resources/574/360x270/41-cdc4294e2a3f333d2ac9c17af76ee5ed.jpg',
+  },
+  3: {
+    id: '3',
+    name: 'еда',
+    photo: 'https://visitukraine.today/media/blog/previews/t49F6991IC8wJgcLrNFBZeZhvyIHmVMauusz8lbQ.jpg',
+  },
+};
 
 const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
   const { setModal, setIsAuth } = useContext(MainContext);
+  const createdAt = operation?.createdAt ? new Date(operation.createdAt).toLocaleDateString('en-CA') : '';
 
   const {
     control,
@@ -23,9 +40,9 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
     defaultValues: {
       name: operation?.name ?? '',
       desc: operation?.desc ?? '',
-      createdAt: operation?.createdAt ?? '',
+      createdAt,
       amount: operation?.amount?.toString() ?? '',
-      category: operation?.category?.name ?? '',
+      category: operation?.category?.id ?? '',
       photo: operation?.category?.photo ?? '',
     },
   });
@@ -40,7 +57,7 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
   };
 
   const onConfirm: SubmitHandler<OperationFormType> = (data) => {
-    console.log('## -onConfirm data: ', data);
+    console.log('onFormConfirm: ', data);
     closeModal();
   };
 
@@ -77,6 +94,13 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
           )}
         />
         <Controller
+          name="category"
+          control={control as unknown as Control<FieldValues>}
+          render={({ field: { onChange, ...rest } }) => (
+            <SelectField onChange={onChange} {...rest} options={Object.values(categoriesById)} />
+          )}
+        />
+        <Controller
           name="createdAt"
           control={control as unknown as Control<FieldValues>}
           rules={dateRules}
@@ -89,14 +113,7 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
             />
           )}
         />
-        <Controller
-          name="category"
-          control={control as unknown as Control<FieldValues>}
-          defaultValue="female"
-          render={({ field: { ref, ...otherProps } }) => (
-            <InputField placeholder="категория операции" {...otherProps} />
-          )}
-        />
+
         <Controller
           name="photo"
           control={control as unknown as Control<FieldValues>}

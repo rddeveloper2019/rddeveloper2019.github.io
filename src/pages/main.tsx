@@ -7,52 +7,37 @@ import TextButton from '../components/text-button/text-button';
 import styles from './main.module.scss';
 import { TextButtonState } from 'src/components/text-button/types';
 import OperationForm from 'src/components/operation-form/operation-form';
+import { ModalControl } from 'src/components/modal-control/modal-control';
 
 export const MainPage = () => {
   const [count, setCount] = useState<number>(0);
   const [operations, setOperations] = useState<Operation[]>([...createRandomOperations(10)]);
-  const { isAuth } = useContext(MainContext);
-
+  const { isAuth, modal, setModal } = useContext(MainContext);
+  const [editedOperation, setEditedOperation] = useState<Operation>();
   useEffect(() => {
     if (count) {
       setOperations((prev) => [...prev, ...createRandomOperations(5)]);
     }
   }, [count]);
-  const onOperationSelect = (operation: Operation) => {
-    console.log('onOperationSelect: ', JSON.stringify(operation));
-  };
+  const onOperationSelect = (operation: Operation) => {};
 
   const onOperationEdit = (operation: Operation) => {
+    setEditedOperation(operation);
+    setModal(true);
     console.log('onOperationEdit: ', operation);
   };
 
-  const showOperationModal = () => {
-    console.log('## -showOperationModal: ');
+  const showNewOperationModal = () => {
+    setModal(true);
   };
 
   if (!isAuth) {
     return null;
   }
 
-  const operation = {
-    id: 'lj52i',
-    name: 'Operation 590',
-    createdAt: '27.05.2023',
-    amount: 310,
-    category: { id: 'i4sane', name: 'byke', photo: 'https://picsum.photos/200' },
-    type: 'Profit',
-    desc: 'lorem lorem lorem lorem',
-  };
-
-  return (
-    <div style={{ width: '50%', padding: 50 }}>
-      <OperationForm operation={operation as Operation} />
-    </div>
-  );
-
   return (
     <div style={{ display: 'flex', padding: 20 }}>
-      <div style={{ width: '50%' }}>
+      <div style={{ width: '85%' }}>
         <OperationsList
           operations={operations}
           addMore={() => setCount(count + 1)}
@@ -64,10 +49,15 @@ export const MainPage = () => {
         type="button"
         className={styles['add-button']}
         state={TextButtonState.PRIMARY}
-        handleClick={showOperationModal}
+        handleClick={showNewOperationModal}
       >
         +
       </TextButton>
+      {modal && (
+        <ModalControl>
+          <OperationForm operation={editedOperation} />
+        </ModalControl>
+      )}
     </div>
   );
 };

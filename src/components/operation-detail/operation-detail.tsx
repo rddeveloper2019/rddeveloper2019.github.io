@@ -20,7 +20,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({ data, bordered = false
         {name && <div className={cn(styles.title)}>{name}</div>}
         {desc && <div className={cn(styles.description)}>{desc}</div>}
         {amount && <div className={cn(styles.amount)}>{amount.toString().replace('.', ', ')} $</div>}
-        {createdAt && <div className={cn(styles['created-at'])}>{createdAt}</div>}
+        {createdAt && <div className={cn(styles['created-at'])}>{new Date(createdAt).toLocaleDateString('RU')}</div>}
       </div>
       <TextButton
         type="button"
