@@ -28,6 +28,8 @@ export const MainPage = () => {
   };
 
   const showNewOperationModal = () => {
+    //для демонстрации
+    setEditedOperation(null);
     setModal(true);
   };
 
