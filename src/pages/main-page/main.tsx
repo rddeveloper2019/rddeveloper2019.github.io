@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import OperationsList from '../../components/operations-list';
 import { createRandomOperations } from 'src/model/utils';
 import { Operation } from '../../model/types';
-import { MainContext } from 'src/store/provider';
+import { MainContext } from '../../store/provider';
 import TextButton from '../../components/text-button/text-button';
 import styles from './main.module.scss';
-import { TextButtonState } from 'src/components/text-button/types';
-import OperationForm from 'src/components/operation-form/operation-form';
-import { ModalControl } from 'src/components/modal-control/modal-control';
+import { TextButtonState } from '../../components/text-button/types';
+import OperationForm from '../../components/operation-form/operation-form';
+import { ModalControl } from '../../components/modal-control/modal-control';
 import { useNavigate } from 'react-router-dom';
 
 export const MainPage = () => {

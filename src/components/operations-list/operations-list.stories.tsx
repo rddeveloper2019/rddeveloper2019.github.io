@@ -1,10 +1,8 @@
 import type { Meta } from '@storybook/react';
 import OperationsList from './index';
 import { createRandomOperations } from '../../model/utils';
-import { MainProvider } from 'src/store/provider';
-import Header from 'src/components/header/header';
 import React, { useEffect, useState } from 'react';
-import { Operation } from 'src/model/types';
+import { Operation } from '../../model/types';
 
 const meta: Meta<typeof OperationsList> = {
   title: 'Components/OperationsList',

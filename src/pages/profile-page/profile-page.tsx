@@ -1,14 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import OperationsList from '../../components/operations-list';
-import { createRandomOperations } from 'src/model/utils';
+import { createRandomOperations } from '../../model/utils';
 import { Operation } from '../../model/types';
-import { MainContext } from 'src/store/provider';
-import TextButton from '../../components/text-button/text-button';
+import { MainContext } from '../../store/provider';
 import styles from './profile-page.module.scss';
-import { TextButtonState } from 'src/components/text-button/types';
-import OperationForm from 'src/components/operation-form/operation-form';
-import { ModalControl } from 'src/components/modal-control/modal-control';
-import ProfileForm from 'src/components/profile-form/profile-form';
+import ProfileForm from '../../components/profile-form/profile-form';
 
 export const ProfilePage = () => {
   const [count, setCount] = useState<number>(0);
