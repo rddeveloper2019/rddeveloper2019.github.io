@@ -5,7 +5,10 @@ import { Layout } from '../layout/layout';
 import { MainProvider } from '../store/provider';
 import { MainPage } from '../pages/main-page/main';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { FavoritesPage } from 'src/pages/favorites-page/favorites-page';
+import { FavoritesPage } from '../pages/favorites-page/favorites-page';
+import { ProfilePage } from '../pages/profile-page/profile-page';
+import { NoFoundPage } from '../pages/404-page/no-found-page';
+import { OperationDetailPage } from '../pages/operation-detail-page/operation-detail-page';
 
 function App() {
   return (
@@ -15,7 +18,9 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
-            <Route path="/profile" element={<div>Profile</div>} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/operation/:id" element={<OperationDetailPage />} />{' '}
+            <Route path="*" element={<NoFoundPage />} />
           </Routes>
         </Layout>
       </MainProvider>

@@ -8,12 +8,14 @@ import styles from './main.module.scss';
 import { TextButtonState } from 'src/components/text-button/types';
 import OperationForm from 'src/components/operation-form/operation-form';
 import { ModalControl } from 'src/components/modal-control/modal-control';
+import { useNavigate } from 'react-router-dom';
 
 export const MainPage = () => {
   const [count, setCount] = useState<number>(0);
   const [operations, setOperations] = useState<Operation[]>([...createRandomOperations(10)]);
   const { isAuth, modal, setModal } = useContext(MainContext);
   const [editedOperation, setEditedOperation] = useState<Operation>();
+  const navigate = useNavigate();
   useEffect(() => {
     if (count) {
       setOperations((prev) => [...prev, ...createRandomOperations(5)]);
@@ -21,6 +23,8 @@ export const MainPage = () => {
   }, [count]);
   const onOperationSelect = (operation: Operation) => {
     console.log('onOperationSelect: ', operation);
+
+    navigate(`/operation/${operation.id}`, { state: { operation } });
   };
 
   const onOperationEdit = (operation: Operation) => {

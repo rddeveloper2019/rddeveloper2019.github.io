@@ -8,6 +8,7 @@ import styles from './profile-page.module.scss';
 import { TextButtonState } from 'src/components/text-button/types';
 import OperationForm from 'src/components/operation-form/operation-form';
 import { ModalControl } from 'src/components/modal-control/modal-control';
+import ProfileForm from 'src/components/profile-form/profile-form';
 
 export const ProfilePage = () => {
   const [count, setCount] = useState<number>(0);
@@ -53,29 +54,8 @@ export const ProfilePage = () => {
   }
 
   return (
-    <div>
-      <div style={{ width: '85%' }}>
-        <OperationsList
-          operations={operations}
-          addMore={() => setCount(count + 1)}
-          onItemEdit={onOperationEdit}
-          onItemSelect={onOperationSelect}
-          onFavoriteItemToggle={onFavoriteItemToggle}
-        />
-      </div>
-      <TextButton
-        type="button"
-        className={styles['add-button']}
-        state={TextButtonState.PRIMARY}
-        handleClick={showNewOperationModal}
-      >
-        +
-      </TextButton>
-      {modal && (
-        <ModalControl>
-          <OperationForm operation={editedOperation} />
-        </ModalControl>
-      )}
+    <div className={styles.page}>
+      <ProfileForm className={styles.form} />
     </div>
   );
 };
