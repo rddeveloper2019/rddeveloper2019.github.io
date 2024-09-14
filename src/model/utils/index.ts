@@ -11,6 +11,7 @@ const getRandomDesc = (entity?: string): string | undefined =>
   entity && Math.random() < 0.5 ? `Description for ${entity}` : undefined;
 const getRandomNotNullNumber = (additional?: number): number => Math.floor(Math.random() * 1000) + (additional || 0);
 const getRandomNumber = (): number | undefined => (Math.random() < 0.5 ? getRandomNotNullNumber() : undefined);
+const getRandomBoolean = (): boolean => Math.random() < 0.5;
 export const createRandomCategory = (): Category => {
   return {
     id: getRandomId(),
@@ -26,6 +27,7 @@ export const createRandomOperation = (createdAt: string): Operation => {
   const desc = getRandomDesc(name);
   const amount = getRandomNotNullNumber();
   const category = createRandomCategory();
+  const isFavorite = getRandomBoolean();
 
   return {
     id,
@@ -35,6 +37,7 @@ export const createRandomOperation = (createdAt: string): Operation => {
     amount,
     category,
     type,
+    isFavorite,
   } as Operation;
 };
 

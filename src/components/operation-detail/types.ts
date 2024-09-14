@@ -6,4 +6,5 @@ export type OperationDetailPropsTypes = {
   width?: number;
   onEdit?: (operation: Operation) => void;
   onClick?: (operation: Operation) => void;
+  onFavoriteToggle?: (operation: Operation) => void;
 };

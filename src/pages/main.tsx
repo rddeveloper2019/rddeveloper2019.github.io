@@ -19,7 +19,9 @@ export const MainPage = () => {
       setOperations((prev) => [...prev, ...createRandomOperations(5)]);
     }
   }, [count]);
-  const onOperationSelect = (operation: Operation) => {};
+  const onOperationSelect = (operation: Operation) => {
+    console.log('onOperationSelect: ', operation);
+  };
 
   const onOperationEdit = (operation: Operation) => {
     setEditedOperation(operation);
@@ -31,6 +33,19 @@ export const MainPage = () => {
     //для демонстрации
     setEditedOperation(null);
     setModal(true);
+  };
+
+  const onFavoriteItemToggle = (operation: Operation) => {
+    console.log('onFavoriteItemToggle: ', operation);
+
+    const foundIndex = operations.findIndex(({ id }) => id === operation.id);
+    const editedOperation = { ...operation, isFavorite: !operation?.isFavorite } as Operation;
+    const editedOperations = [
+      ...operations.slice(0, foundIndex),
+      editedOperation,
+      ...operations.slice(foundIndex + 1),
+    ] as Operation[];
+    setOperations(editedOperations);
   };
 
   if (!isAuth) {
@@ -45,6 +60,7 @@ export const MainPage = () => {
           addMore={() => setCount(count + 1)}
           onItemEdit={onOperationEdit}
           onItemSelect={onOperationSelect}
+          onFavoriteItemToggle={onFavoriteItemToggle}
         />
       </div>
       <TextButton
