@@ -10,12 +10,13 @@ const meta: Meta<typeof OperationsList> = {
   tags: ['autodocs'],
 };
 export default meta;
-
+const handlers = { onItemEdit: console.log, onItemSelect: console.log, onFavoriteItemToggle: console.log };
 const operations = createRandomOperations(10);
 export const Default = {
   args: {
     operations,
     isInfinite: false,
+    ...handlers,
   },
 };
 
@@ -28,9 +29,10 @@ export const InfiniteScroll = () => {
       setOperations((prev) => [...prev, ...createRandomOperations(5)]);
     }
   }, [count]);
+
   return (
     <div style={{ height: '100vh', overflow: 'hidden' }}>
-      <OperationsList operations={operations} addMore={() => setCount(count + 1)} />
+      <OperationsList operations={operations} addMore={() => setCount(count + 1)} {...handlers} i />
     </div>
   );
 };
