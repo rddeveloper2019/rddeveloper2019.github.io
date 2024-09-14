@@ -6,8 +6,5 @@ $safe-area: variables.$safe-area-top;
 }
 
 .safe-area {
-  margin-top: $safe-area;
-}
-
-.content {
+  margin-top: calc($safe-area + 16px);
 }

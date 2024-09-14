@@ -2,7 +2,7 @@ export const en = {
   translation: {
     header: {
       home: 'home',
-      statistics: 'statistics',
+      favorites: 'favorites',
       search: 'search',
       profile: 'profile',
       login: 'login',

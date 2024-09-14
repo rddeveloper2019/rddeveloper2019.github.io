@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import OperationsList from '../components/operations-list';
+import OperationsList from '../../components/operations-list';
 import { createRandomOperations } from 'src/model/utils';
-import { Operation } from '../model/types';
+import { Operation } from '../../model/types';
 import { MainContext } from 'src/store/provider';
-import TextButton from '../components/text-button/text-button';
+import TextButton from '../../components/text-button/text-button';
 import styles from './main.module.scss';
 import { TextButtonState } from 'src/components/text-button/types';
 import OperationForm from 'src/components/operation-form/operation-form';
@@ -53,7 +53,7 @@ export const MainPage = () => {
   }
 
   return (
-    <div style={{ display: 'flex', padding: 20 }}>
+    <div>
       <div style={{ width: '85%' }}>
         <OperationsList
           operations={operations}

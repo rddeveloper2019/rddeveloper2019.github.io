@@ -2,7 +2,7 @@ export const ru = {
   translation: {
     header: {
       home: 'главная',
-      statistics: 'статистика',
+      favorites: 'избранное',
       search: 'поиск',
       profile: 'профиль',
       login: 'вход',
