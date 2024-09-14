@@ -1,4 +1,4 @@
-import { Ref, RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 export const useObserver = (ref: RefObject<HTMLDivElement>, options: IntersectionObserverInit) => {
   const { rootMargin } = options;

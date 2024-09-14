@@ -4,7 +4,7 @@ import { MainContext } from '../../store/provider';
 import { Portal } from '../portal/Portal';
 import { ModalControlProps } from './types'; // Импортируем компонент Portal
 
-export const ModalControl: FC<ModalControlProps> = ({ children, cancelButtonText, confirmButtonText }) => {
+export const ModalControl: FC<ModalControlProps> = ({ children }) => {
   const { modal, setModal } = useContext(MainContext);
 
   const hideModal = () => {

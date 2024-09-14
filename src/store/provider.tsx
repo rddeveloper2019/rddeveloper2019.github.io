@@ -19,7 +19,7 @@ export const MainProvider = ({ children }: { children: ReactElement }) => {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
   const [lang, setLang] = useState<Lang>(Lang.RU);
   const [modal, setModal] = useState<boolean>(false);
-  const [isAuth, setIsAuth] = useState<boolean>(true);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   const { i18n } = useTranslation();
 
   const store: Store = {

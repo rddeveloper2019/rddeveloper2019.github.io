@@ -9,6 +9,7 @@
     "build": "webpack --mode production",
     "test": "jest src",
     "lint": "eslint src --fix",
+    "lint-check": "eslint src",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
