@@ -3,6 +3,9 @@
 body {
   background-color: variables.$background-main;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
 
 .App {
   font-size: variables.$font-size-main;

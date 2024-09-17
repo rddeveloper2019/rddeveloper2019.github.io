@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 export type ModalControlProps = {
   children: ReactElement;

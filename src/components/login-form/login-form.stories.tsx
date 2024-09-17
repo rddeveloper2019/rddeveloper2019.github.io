@@ -3,7 +3,7 @@ import { MainProvider } from '../../store/provider';
 import React from 'react';
 import '../../i18n';
 
-import LoginForm from '../../components/login-form/login-form';
+import LoginForm from './login-form';
 
 const meta: Meta<typeof LoginForm> = {
   title: 'Forms/LoginForm',

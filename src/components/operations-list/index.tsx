@@ -9,6 +9,7 @@ const OperationsList: FC<OperationsListPropsType> = ({
   isInfinite = true,
   onItemEdit,
   onItemSelect,
+  onFavoriteItemToggle,
 }) => {
   if (!operations || !operations.length) {
     return null;
@@ -23,7 +24,12 @@ const OperationsList: FC<OperationsListPropsType> = ({
           isLast={operations.length - 1 === idx}
           onIntersect={() => isInfinite && addMore?.()}
         >
-          <OperationDetail data={operation} onClick={onItemSelect} onEdit={onItemEdit} />
+          <OperationDetail
+            data={operation}
+            onClick={onItemSelect}
+            onEdit={onItemEdit}
+            onFavoriteToggle={onFavoriteItemToggle}
+          />
         </Card>
       ))}
     </ul>

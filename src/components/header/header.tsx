@@ -9,6 +9,7 @@ import { Lang, Theme } from '../../store/types';
 import { useTranslation } from 'react-i18next';
 import { ModalControl } from '../../components/modal-control/modal-control';
 import LoginForm from '../../components/login-form/login-form';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const { theme, setTheme, setLang, lang, isAuth, modal, setModal, setIsAuth } = useContext(MainContext);
@@ -46,17 +47,14 @@ const Header = () => {
           <div>Финансы</div>
         </div>
         <div className={styles.links}>
-          <TextButton state={TextButtonState.LINK} className={styles.active} type="button">
-            <a href="#">{t('header.home')}</a>
+          <TextButton state={TextButtonState.LINK} type="button">
+            <NavLink to={'/'}>{t('header.home')}</NavLink>
           </TextButton>
           <TextButton state={TextButtonState.LINK} type="button">
-            <a href="#">{t('header.statistics')}</a>
+            <NavLink to={'/favorites'}>{t('header.favorites')}</NavLink>
           </TextButton>
           <TextButton state={TextButtonState.LINK} type="button">
-            <a href="#">{t('header.search')}</a>
-          </TextButton>
-          <TextButton state={TextButtonState.LINK} type="button">
-            <a href="#">{t('header.profile')}</a>
+            <NavLink to={'/profile'}>{t('header.profile')}</NavLink>
           </TextButton>
         </div>
 

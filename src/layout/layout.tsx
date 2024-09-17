@@ -1,13 +1,17 @@
 import styles from './layout.module.scss';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import Header from '../components/header/header';
+import { MainContext } from '../store/provider';
 
 export const Layout = ({ children }: { children?: ReactElement }) => {
+  const { isAuth } = useContext(MainContext);
+
   return (
     <div className={styles.layout}>
       <Header />
       <main className={styles['safe-area']}>
-        <div className={styles.content}>{children}</div>
+        {!isAuth && <p className={styles.info}>Только для авторизированных пользователей</p>}
+        {isAuth && children}
       </main>
     </div>
   );

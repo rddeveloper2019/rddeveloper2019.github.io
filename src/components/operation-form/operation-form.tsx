@@ -27,7 +27,7 @@ export const categoriesById: { [key: string]: Category } = {
 };
 
 const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
-  const { setModal, setIsAuth } = useContext(MainContext);
+  const { setModal } = useContext(MainContext);
   const createdAt = operation?.createdAt ? new Date(operation.createdAt).toLocaleDateString('en-CA') : '';
 
   const {

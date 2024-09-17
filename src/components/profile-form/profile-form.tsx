@@ -1,7 +1,7 @@
-import styles from './login-form.module.scss';
+import styles from './profile-form.module.scss';
 import React, { FC, useContext } from 'react';
 import cn from 'clsx';
-import { LoginFormPropTypes, LoginFormType } from './types';
+import { ProfileFormType, ProfileFormTypePropTypes } from './types';
 import Card from '../card/Card';
 import TextButton from '../../components/text-button/text-button';
 import { TextButtonState } from '../text-button/types';
@@ -9,7 +9,7 @@ import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useFo
 import { MainContext } from '../../store/provider';
 import InputField from '../input-field/input-field';
 
-const LoginForm: FC<LoginFormPropTypes> = () => {
+const ProfileForm: FC<ProfileFormTypePropTypes> = ({ className }) => {
   const { setModal, setIsAuth } = useContext(MainContext);
 
   const {
@@ -18,7 +18,7 @@ const LoginForm: FC<LoginFormPropTypes> = () => {
     clearErrors,
     reset,
     formState: { errors },
-  } = useForm<LoginFormType>({
+  } = useForm<ProfileFormType>({
     defaultValues: {
       username: '',
       password: '',
@@ -34,7 +34,7 @@ const LoginForm: FC<LoginFormPropTypes> = () => {
     closeModal();
   };
 
-  const onConfirm: SubmitHandler<LoginFormPropTypes> = () => {
+  const onConfirm: SubmitHandler<ProfileFormType> = (data) => {
     setIsAuth(true);
     closeModal();
   };
@@ -44,7 +44,7 @@ const LoginForm: FC<LoginFormPropTypes> = () => {
 
   return (
     <Card>
-      <form className={cn(styles.form)} onSubmit={handleSubmit(onConfirm)}>
+      <form className={cn(className, styles.form)} onSubmit={handleSubmit(onConfirm)}>
         <Controller
           name="username"
           control={control as unknown as Control<FieldValues>}
@@ -85,4 +85,4 @@ const LoginForm: FC<LoginFormPropTypes> = () => {
   );
 };
 
-export default LoginForm;
+export default ProfileForm;

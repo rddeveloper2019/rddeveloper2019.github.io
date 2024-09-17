@@ -6,4 +6,5 @@ export type OperationsListPropsType = {
   isInfinite?: boolean;
   onItemSelect?: (data: Operation) => void;
   onItemEdit?: (data: Operation) => void;
+  onFavoriteItemToggle?: (data: Operation) => void;
 };

@@ -1,0 +1,9 @@
+@use 'src/theme/variables';
+$safe-area: variables.$safe-area-top;
+
+.page {
+  font-size: 48px;
+  text-align: center;
+  padding: 50px;
+  color: variables.$color-default;
+}
