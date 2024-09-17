@@ -32,7 +32,7 @@ export const InfiniteScroll = () => {
 
   return (
     <div style={{ height: '100vh', overflow: 'hidden' }}>
-      <OperationsList operations={operations} addMore={() => setCount(count + 1)} {...handlers} i />
+      <OperationsList operations={operations} addMore={() => setCount(count + 1)} {...handlers} />
     </div>
   );
 };
