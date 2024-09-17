@@ -18,6 +18,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
     event.stopPropagation();
     onClick?.(data);
   };
+  const operationDate = new Date(createdAt).toLocaleDateString('RU');
 
   return (
     <div
@@ -31,7 +32,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
         {name && <div className={cn(styles.title)}>{name}</div>}
         {desc && <div className={cn(styles.description)}>{desc}</div>}
         {amount && <div className={cn(styles.amount)}>{amount.toString().replace('.', ', ')} $</div>}
-        {createdAt && <div className={cn(styles['created-at'])}>{new Date(createdAt).toLocaleDateString('RU')}</div>}
+        {createdAt && <div className={cn(styles['created-at'])}>{operationDate}</div>}
       </div>
       <div className={styles['edit-buttons']}>
         <TextButton

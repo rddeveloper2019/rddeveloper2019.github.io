@@ -34,7 +34,7 @@ const LoginForm: FC<LoginFormPropTypes> = () => {
     closeModal();
   };
 
-  const onConfirm: SubmitHandler<LoginFormPropTypes> = (data) => {
+  const onConfirm: SubmitHandler<LoginFormPropTypes> = () => {
     setIsAuth(true);
     closeModal();
   };
