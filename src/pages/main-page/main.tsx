@@ -9,6 +9,8 @@ import { TextButtonState } from '../../components/text-button/types';
 import OperationForm from '../../components/operation-form/operation-form';
 import { ModalControl } from '../../components/modal-control/modal-control';
 import { useNavigate } from 'react-router-dom';
+import { DualRangeSlider } from '../../components/dual-range-slider';
+import { SlideValues } from '../../components/dual-range-slider/types';
 
 export const MainPage = () => {
   const [count, setCount] = useState<number>(0);
@@ -16,6 +18,13 @@ export const MainPage = () => {
   const { isAuth, modal, setModal } = useContext(MainContext);
   const [editedOperation, setEditedOperation] = useState<Operation>();
   const navigate = useNavigate();
+  const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
+
+  const onSlide: (data: SlideValues) => void = ({ minValue, maxValue }) => {
+    setSlideValues({ minValue, maxValue });
+    console.log({ minValue, maxValue });
+  };
+
   useEffect(() => {
     if (count) {
       setOperations((prev) => [...prev, ...createRandomOperations(5)]);
@@ -59,8 +68,14 @@ export const MainPage = () => {
   return (
     <div>
       <div style={{ width: '85%' }}>
+        <div style={{ padding: 20, display: 'flex', justifyContent: 'center' }}>
+          <DualRangeSlider onSlide={onSlide} width={350} />
+        </div>
+
         <OperationsList
-          operations={operations}
+          operations={operations.filter(
+            (item) => item.amount >= slideValues.minValue && item.amount <= slideValues.maxValue
+          )}
           addMore={() => setCount(count + 1)}
           onItemEdit={onOperationEdit}
           onItemSelect={onOperationSelect}

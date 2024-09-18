@@ -1,6 +1,7 @@
 :root {
   //backgrounds
   --background-main: #ffffff;
+  --background-main-reversed: #696767;
   --background-primary: #2196f3;
   --background-black-40: rgba(0, 0, 0, 0.4);
   --background-icon-color-main: #e0e0e0;
@@ -35,6 +36,7 @@
 
 //backgrounds
 $background-main: var(--background-main);
+$background-main-reversed: var(--background-main-reversed);
 $modal-background: var(--background-black-40);
 $background-primary: var(--background-primary);
 $background-icon-color-main: var(--background-icon-color-main);
