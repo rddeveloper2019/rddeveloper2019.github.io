@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { MainProvider } from '../../store/provider';
+import { MainProvider } from '../../theme/theme-provider';
 import React from 'react';
 import '../../i18n';
 

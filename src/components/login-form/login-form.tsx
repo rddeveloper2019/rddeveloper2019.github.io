@@ -1,16 +1,19 @@
 import styles from './login-form.module.scss';
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import cn from 'clsx';
 import { LoginFormType } from './types';
 import Card from '../card/Card';
 import TextButton from '../../components/text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
-import { MainContext } from '../../store/provider';
+
 import InputField from '../input-field/input-field';
+import { useAppDispatch } from '../../store/store';
+import { hideModal } from '../../store/slices/modalSlice';
+import { setIsAuth } from '../../store/slices/authSlice';
 
 const LoginForm: FC = () => {
-  const { setModal, setIsAuth } = useContext(MainContext);
+  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -28,14 +31,15 @@ const LoginForm: FC = () => {
   const closeModal = () => {
     clearErrors();
     reset();
-    setModal(false);
+    dispatch(hideModal());
   };
+
   const onCancel = () => {
     closeModal();
   };
 
-  const onConfirm: SubmitHandler<LoginFormPropTypes> = () => {
-    setIsAuth(true);
+  const onConfirm: SubmitHandler<LoginFormType> = () => {
+    dispatch(setIsAuth(true));
     closeModal();
   };
 

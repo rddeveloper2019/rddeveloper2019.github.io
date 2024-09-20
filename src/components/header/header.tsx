@@ -4,15 +4,22 @@ import cn from 'clsx';
 import TextButton from '../text-button/text-button';
 import Logo from '../logo/logo';
 import { TextButtonState } from '../text-button/types';
-import { MainContext } from '../../store/provider';
+import { ThemeContext } from '../../theme/theme-provider';
 import { Lang, Theme } from '../../store/types';
 import { useTranslation } from 'react-i18next';
 import { ModalControl } from '../../components/modal-control/modal-control';
 import LoginForm from '../../components/login-form/login-form';
 import { NavLink } from 'react-router-dom';
+import { showModal } from '../../store/slices/modalSlice';
+import { useAppDispatch } from '../../store/store';
+import { useAuthSelector, useModalSelector } from '../../store/selectors';
+import { setIsAuth } from '../../store/slices/authSlice';
 
 const Header = () => {
-  const { theme, setTheme, setLang, lang, isAuth, modal, setModal, setIsAuth } = useContext(MainContext);
+  const dispatch = useAppDispatch();
+  const modal = useModalSelector();
+  const { isAuth } = useAuthSelector();
+  const { theme, setAppLang: setLang, setAppTheme: setTheme, lang } = useContext(ThemeContext);
 
   const { t } = useTranslation();
 
@@ -29,11 +36,11 @@ const Header = () => {
   };
 
   const openLoginForm = () => {
-    setModal(true);
+    dispatch(showModal());
   };
 
   const logout = () => {
-    setIsAuth(false);
+    dispatch(setIsAuth(false));
   };
 
   return (

@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
 import { Layout } from './layout';
-import { MainProvider } from '../store/provider';
+import { MainProvider } from '../theme/theme-provider';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 

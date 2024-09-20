@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import OperationsList from '../../components/operations-list';
 import { createRandomOperations } from 'src/model/utils';
 import { Operation } from '../../model/types';
-import { MainContext } from '../../store/provider';
+import { ThemeContext } from '../../theme/theme-provider';
 import TextButton from '../../components/text-button/text-button';
 import styles from './main.module.scss';
 import { TextButtonState } from '../../components/text-button/types';
@@ -11,11 +11,16 @@ import { ModalControl } from '../../components/modal-control/modal-control';
 import { useNavigate } from 'react-router-dom';
 import { DualRangeSlider } from '../../components/dual-range-slider';
 import { SlideValues } from '../../components/dual-range-slider/types';
+import { useAppDispatch } from '../../store/store';
+import { useModalSelector } from '../../store/selectors';
+import { showModal } from '../../store/slices/modalSlice';
 
 export const MainPage = () => {
+  const dispatch = useAppDispatch();
+  const { modal } = useModalSelector();
   const [count, setCount] = useState<number>(0);
   const [operations, setOperations] = useState<Operation[]>([...createRandomOperations(10)]);
-  const { isAuth, modal, setModal } = useContext(MainContext);
+  const { isAuth } = useContext(ThemeContext);
   const [editedOperation, setEditedOperation] = useState<Operation>();
   const navigate = useNavigate();
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
@@ -38,14 +43,14 @@ export const MainPage = () => {
 
   const onOperationEdit = (operation: Operation) => {
     setEditedOperation(operation);
-    setModal(true);
+    dispatch(showModal());
     console.log('onOperationEdit: ', operation);
   };
 
   const showNewOperationModal = () => {
     //для демонстрации
     setEditedOperation(null);
-    setModal(true);
+    dispatch(showModal());
   };
 
   const onFavoriteItemToggle = (operation: Operation) => {

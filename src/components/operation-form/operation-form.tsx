@@ -1,5 +1,5 @@
 import styles from './operation-form.module.scss';
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import cn from 'clsx';
 import { OperationFormPropTypes, OperationFormType } from './types';
 import InputField from '../input-field/input-field';
@@ -7,10 +7,11 @@ import Card from '../card/Card';
 import TextButton from '../text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
-import { MainContext } from '../../store/provider';
 import TextareaField from '../textarea-field/textarea-field';
 import { Category } from '../../model/types';
 import { SelectField } from '../select-field';
+import { useAppDispatch } from '../../store/store';
+import { hideModal } from '../../store/slices/modalSlice';
 
 export const categoriesById: { [key: string]: Category } = {
   1: { id: '1', name: 'одежда', photo: 'https://i.pinimg.com/originals/81/3c/be/813cbeb756bed0a23e6dbf581bfcfd8a.png' },
@@ -27,7 +28,7 @@ export const categoriesById: { [key: string]: Category } = {
 };
 
 const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
-  const { setModal } = useContext(MainContext);
+  const dispatch = useAppDispatch();
   const createdAt = operation?.createdAt ? new Date(operation.createdAt).toLocaleDateString('en-CA') : '';
 
   const {
@@ -50,7 +51,7 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
   const closeModal = () => {
     clearErrors();
     reset();
-    setModal(false);
+    dispatch(hideModal());
   };
   const onCancel = () => {
     closeModal();

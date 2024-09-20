@@ -1,13 +1,13 @@
 import type { ArgTypes, Meta } from '@storybook/react';
-import React, { useMemo, useState } from 'react';
-import { DualRangeSliderProps, SlideValues } from '../../components/dual-range-slider/types';
+import React from 'react';
+import { DualRangeSliderProps } from '../../components/dual-range-slider/types';
 import { DualRangeSlider } from '../../components/dual-range-slider/index';
 import { DualRangeSliderExample } from './dual-range-slider-example/dual-range-slider-example';
 
 const meta: Meta<typeof DualRangeSlider> = {
   title: 'Components/DualRangeSlider',
   component: DualRangeSlider,
-  render: ({ ...args }) => <DualRangeSliderExample />,
+  render: () => <DualRangeSliderExample />,
   tags: ['autodocs'],
   argTypes: {
     onSlide: 'function' as Partial<ArgTypes<DualRangeSliderProps>>,

@@ -1,10 +1,10 @@
 import styles from './layout.module.scss';
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 import Header from '../components/header/header';
-import { MainContext } from '../store/provider';
+import { useAuthSelector } from '../store/selectors';
 
 export const Layout = ({ children }: { children?: ReactElement }) => {
-  const { isAuth } = useContext(MainContext);
+  const { isAuth } = useAuthSelector();
 
   return (
     <div className={styles.layout}>

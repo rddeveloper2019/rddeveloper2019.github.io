@@ -1,8 +1,8 @@
 import type { Meta } from '@storybook/react';
 import Header from './header';
-import { MainProvider } from '../../store/provider';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../theme/theme-provider';
 
 const meta: Meta<typeof Header> = {
   title: 'Layouts/Header',
@@ -14,9 +14,9 @@ export default meta;
 export const Default = () => {
   return (
     <BrowserRouter>
-      <MainProvider>
+      <ThemeProvider>
         <Header />
-      </MainProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 };

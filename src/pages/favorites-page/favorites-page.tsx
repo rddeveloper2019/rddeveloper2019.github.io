@@ -1,26 +1,34 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import OperationsList from '../../components/operations-list';
 import { createRandomOperations } from 'src/model/utils';
 import { Operation } from '../../model/types';
-import { MainContext } from '../../store/provider';
 import TextButton from '../../components/text-button/text-button';
 import styles from './favorites-page.module.scss';
 import { TextButtonState } from '../../components/text-button/types';
 import OperationForm from '../../components/operation-form/operation-form';
 import { ModalControl } from '../../components/modal-control/modal-control';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store/store';
+import { useAuthSelector, useModalSelector } from '../../store/selectors';
+import { showModal } from '../../store/slices/modalSlice';
 
 export const FavoritesPage = () => {
+  const dispatch = useAppDispatch();
+  const { modal } = useModalSelector();
+  const { isAuth } = useAuthSelector();
+
   const [count, setCount] = useState<number>(0);
   const [operations, setOperations] = useState<Operation[]>([...createRandomOperations(10)]);
-  const { isAuth, modal, setModal } = useContext(MainContext);
+
   const [editedOperation, setEditedOperation] = useState<Operation>();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (count) {
       setOperations((prev) => [...prev, ...createRandomOperations(5)]);
     }
   }, [count]);
+
   const onOperationSelect = (operation: Operation) => {
     console.log('onOperationSelect: ', operation);
     navigate(`/operation/${operation.id}`, { state: { operation } });
@@ -28,14 +36,14 @@ export const FavoritesPage = () => {
 
   const onOperationEdit = (operation: Operation) => {
     setEditedOperation(operation);
-    setModal(true);
+    dispatch(showModal());
     console.log('onOperationEdit: ', operation);
   };
 
   const showNewOperationModal = () => {
     //для демонстрации
     setEditedOperation(null);
-    setModal(true);
+    dispatch(showModal());
   };
 
   const onFavoriteItemToggle = (operation: Operation) => {
