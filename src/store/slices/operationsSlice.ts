@@ -1,30 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { Operation } from '../../model/types';
+import { createRandomOperations } from '../../model/utils';
 
-type operationsSliceType = {
+type operationsStateType = {
   operations: Operation[];
-  favoriteOperations: Operation[];
 };
-const operationsSlice = createSlice<operationsSliceType>({
+
+const initialState: operationsStateType = {
+  operations: [...createRandomOperations(10)],
+};
+
+const operationsSlice = createSlice({
   name: 'operations',
-  initialState: {
-    operations: [],
-    favoriteOperations: [],
-  },
+  initialState,
   reducers: {
-    getOperations(state, action: PayloadAction<Operation[]>) {
+    setOperations: (state, action: PayloadAction<Operation[]>): void => {
       state.operations = action.payload;
-      state.favoriteOperations = action.payload.filter((item) => item.isFavorite);
     },
-    addOperation(state, action: PayloadAction<Operation>) {
+    addOperation: (state, action: PayloadAction<Operation>): void => {
       state.operations.unshift(action.payload);
-    },
-    addFavoriteOperation(state, action: PayloadAction<Operation>) {
-      state.favoriteOperations.unshift(action.payload);
     },
   },
 });
 
-export const { getOperations, addOperation, addFavoriteOperation } = operationsSlice.actions;
+export const { setOperations, addOperation } = operationsSlice.actions;
 export const operationsReduser = operationsSlice.reducer;

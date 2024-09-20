@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import OperationsList from '../../components/operations-list';
 import { createRandomOperations } from 'src/model/utils';
 import { Operation } from '../../model/types';
-import { ThemeContext } from '../../theme/theme-provider';
 import TextButton from '../../components/text-button/text-button';
 import styles from './main.module.scss';
 import { TextButtonState } from '../../components/text-button/types';
@@ -12,15 +11,16 @@ import { useNavigate } from 'react-router-dom';
 import { DualRangeSlider } from '../../components/dual-range-slider';
 import { SlideValues } from '../../components/dual-range-slider/types';
 import { useAppDispatch } from '../../store/store';
-import { useModalSelector } from '../../store/selectors';
+import { useAuthSelector, useModalSelector, useOperationsSelector } from '../../store/selectors';
 import { showModal } from '../../store/slices/modalSlice';
+import { setOperations } from 'src/store/slices/operationsSlice';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
   const { modal } = useModalSelector();
   const [count, setCount] = useState<number>(0);
-  const [operations, setOperations] = useState<Operation[]>([...createRandomOperations(10)]);
-  const { isAuth } = useContext(ThemeContext);
+  const { operations } = useOperationsSelector();
+  const { isAuth } = useAuthSelector();
   const [editedOperation, setEditedOperation] = useState<Operation>();
   const navigate = useNavigate();
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
@@ -32,7 +32,7 @@ export const MainPage = () => {
 
   useEffect(() => {
     if (count) {
-      setOperations((prev) => [...prev, ...createRandomOperations(5)]);
+      dispatch(setOperations([...operations, ...createRandomOperations(5)]));
     }
   }, [count]);
   const onOperationSelect = (operation: Operation) => {
@@ -73,7 +73,7 @@ export const MainPage = () => {
   return (
     <div>
       <div style={{ width: '85%' }}>
-        <div style={{ padding: 20, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ padding: 10, display: 'flex', justifyContent: 'center' }}>
           <DualRangeSlider onSlide={onSlide} width={350} />
         </div>
 

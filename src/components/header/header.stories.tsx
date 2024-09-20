@@ -3,6 +3,8 @@ import Header from './header';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../theme/theme-provider';
+import { Provider } from 'react-redux';
+import store from '../../store/store';
 
 const meta: Meta<typeof Header> = {
   title: 'Layouts/Header',
@@ -14,9 +16,11 @@ export default meta;
 export const Default = () => {
   return (
     <BrowserRouter>
-      <ThemeProvider>
-        <Header />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <Header />
+        </ThemeProvider>
+      </Provider>
     </BrowserRouter>
   );
 };

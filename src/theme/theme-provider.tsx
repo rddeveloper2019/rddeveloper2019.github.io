@@ -24,8 +24,8 @@ export const ThemeProvider = ({ children }: { children: ReactElement }) => {
 
   const { i18n } = useTranslation();
 
-  const setAppLang = (lang: Lang): void => dispatch(setLang(lang));
-  const setAppTheme = (theme: Theme): void => dispatch(setTheme(theme));
+  const setAppLang = (lang: Lang) => dispatch(setLang(lang));
+  const setAppTheme = (theme: Theme) => dispatch(setTheme(theme));
 
   const themeValue: ThemeProviderType = {
     theme,

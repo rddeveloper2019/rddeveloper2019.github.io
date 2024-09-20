@@ -2,21 +2,24 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { Lang, Theme } from '../types';
 
-type settingsSliceType = {
+type settingsStateType = {
   theme: Theme;
   lang: Lang;
 };
-const settingsSlice = createSlice<settingsSliceType>({
+
+const initialState: settingsStateType = {
+  theme: Theme.LIGHT,
+  lang: Lang.RU,
+};
+
+const settingsSlice = createSlice({
   name: 'settings',
-  initialState: {
-    theme: Theme.LIGHT,
-    lang: Lang.RU,
-  },
+  initialState,
   reducers: {
-    setTheme(state, action: PayloadAction<Theme>) {
+    setTheme: (state, action: PayloadAction<Theme>): void => {
       state.theme = action.payload;
     },
-    setLang(state, action: PayloadAction<Lang>) {
+    setLang: (state, action: PayloadAction<Lang>): void => {
       state.lang = action.payload;
     },
   },

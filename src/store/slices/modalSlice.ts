@@ -1,13 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const modalSlice = createSlice<boolean>({
+type ModalStateType = {
+  modal: boolean;
+};
+
+const initialState: ModalStateType = {
+  modal: false,
+};
+
+const modalSlice = createSlice({
   name: 'modal',
-  initialState: false,
+  initialState,
   reducers: {
-    showModal: () => true,
-    hideModal: () => false,
+    showModal: (state): void => {
+      state.modal = true;
+    },
+    hideModal: (state): void => {
+      state.modal = false;
+    },
   },
 });
 
 export const { showModal, hideModal } = modalSlice.actions;
-export const initReduser = modalSlice.reducer;
+export const modalReduser = modalSlice.reducer;

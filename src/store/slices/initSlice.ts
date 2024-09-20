@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type initSliceType = {
+type initStateType = {
   init: boolean;
 };
-const initSlice = createSlice<initSliceType>({
+
+const initialState: initStateType = {
+  init: false,
+};
+const initSlice = createSlice({
   name: 'init',
-  initialState: {
-    init: false,
-  },
+  initialState,
   reducers: {
-    initApp(state) {
+    initApp: (state): void => {
       state.init = true;
     },
   },

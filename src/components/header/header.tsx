@@ -17,7 +17,7 @@ import { setIsAuth } from '../../store/slices/authSlice';
 
 const Header = () => {
   const dispatch = useAppDispatch();
-  const modal = useModalSelector();
+  const { modal } = useModalSelector();
   const { isAuth } = useAuthSelector();
   const { theme, setAppLang: setLang, setAppTheme: setTheme, lang } = useContext(ThemeContext);
 

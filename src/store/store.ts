@@ -19,7 +19,6 @@ const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
-export type AppState = ReturnType<typeof store>;
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>(); // Export a hook that can be reused to resolve types
 
 export default store;
