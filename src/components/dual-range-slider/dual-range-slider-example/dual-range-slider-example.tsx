@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { DualRangeSlider } from '../../dual-range-slider';
 import Card from '../../card/Card';
 import { SlideValues } from '../../dual-range-slider/types';
-import styles from './dual-range-slider-example.modlue.scss';
+import './dual-range-slider-example.modlue.scss';
 
 export const DualRangeSliderExample = () => {
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
@@ -18,9 +18,9 @@ export const DualRangeSliderExample = () => {
     <div>
       <DualRangeSlider onSlide={onSlide} min={35} max={85} />
       <Card>
-        <div className={styles.elements}>
+        <div className="elements">
           {array.filter(filterFGn).map((item) => (
-            <p key={item} className={styles.element}>
+            <p key={item} className="element">
               {item}
             </p>
           ))}
