@@ -12,7 +12,7 @@ export const OperationsListInfiniteScrollExample = () => {
   const handlers = { onItemEdit: console.log, onItemSelect: console.log, onFavoriteItemToggle: console.log };
   useEffect(() => {
     if (count) {
-      dispatch(setOperations((prev) => [...prev, ...createRandomOperations(5)]));
+      dispatch(setOperations([...createRandomOperations(5)]));
     }
   }, [count]);
 
@@ -30,7 +30,7 @@ export const OperationsListExample = () => {
   const handlers = { onItemEdit: console.log, onItemSelect: console.log, onFavoriteItemToggle: console.log };
   useEffect(() => {
     if (count) {
-      dispatch(setOperations((prev) => [...prev, ...createRandomOperations(5)]));
+      dispatch(setOperations([...createRandomOperations(5)]));
     }
   }, [count]);
 
