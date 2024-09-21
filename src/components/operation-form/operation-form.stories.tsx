@@ -19,7 +19,7 @@ export const Default = () => {
     <Provider store={store}>
       <ThemeProvider>
         <div style={{ width: '50%' }}>
-          <OperationForm />
+          <OperationForm onOperationFormSubmit={console.log} />
         </div>
       </ThemeProvider>
     </Provider>

@@ -19,10 +19,23 @@ const operationsSlice = createSlice({
       state.operations = action.payload;
     },
     addOperation: (state, action: PayloadAction<Operation>): void => {
+      console.log('(**)=> action: ', action);
       state.operations.unshift(action.payload);
+    },
+    toggleOperationFavorite: (state, action: PayloadAction<Operation['id']>): void => {
+      const toggled = state.operations.find(({ id }) => id === action.payload);
+      if (toggled) {
+        toggled.isFavorite = !toggled.isFavorite;
+      }
+    },
+
+    editOperation: (state, action: PayloadAction<Partial<Operation>>): void => {
+      const operation = state.operations.find(({ id }) => id === action.payload);
+      console.log('action.payload: ', action.payload);
+      console.log('operation: ', operation);
     },
   },
 });
 
-export const { setOperations, addOperation } = operationsSlice.actions;
+export const { setOperations, addOperation, toggleOperationFavorite, editOperation } = operationsSlice.actions;
 export const operationsReduser = operationsSlice.reducer;

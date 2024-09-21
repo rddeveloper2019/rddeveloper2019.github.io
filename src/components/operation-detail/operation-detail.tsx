@@ -43,6 +43,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
         >
           ★
         </TextButton>
+
         <TextButton
           type="button"
           state={TextButtonState.PRIMARY}

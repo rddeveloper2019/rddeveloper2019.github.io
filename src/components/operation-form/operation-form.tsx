@@ -27,7 +27,7 @@ export const categoriesById: { [key: string]: Category } = {
   },
 };
 
-const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
+const OperationForm: FC<OperationFormPropTypes> = ({ operation, onOperationFormSubmit }) => {
   const dispatch = useAppDispatch();
   const createdAt = operation?.createdAt ? new Date(operation.createdAt).toLocaleDateString('en-CA') : '';
 
@@ -58,7 +58,7 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
   };
 
   const onConfirm: SubmitHandler<OperationFormType> = (data) => {
-    console.log('onFormConfirm: ', data);
+    onOperationFormSubmit?.(data);
     closeModal();
   };
 

@@ -2,6 +2,7 @@ import { Operation } from 'src/model/types';
 
 export type OperationFormPropTypes = {
   operation?: Operation;
+  onOperationFormSubmit: (operation: OperationFormType) => void;
 };
 
 export type OperationFormType = {
