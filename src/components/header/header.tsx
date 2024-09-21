@@ -106,7 +106,7 @@ const Header = () => {
         </div>
       </div>
       {modal && (
-        <ModalControl>
+        <ModalControl backgroundClickHandler={() => setModal(false)}>
           <LoginForm onAction={() => setModal(false)} />
         </ModalControl>
       )}

@@ -3,12 +3,12 @@ import { ModalPropSTypes } from './types';
 import styles from './modal.module.scss';
 import cn from 'clsx';
 
-const Modal: FC<ModalPropSTypes> = ({ children, visible = false, backgroundClickHandler }) => {
+const Modal: FC<ModalPropSTypes> = ({ children, backgroundClickHandler, visible = true }) => {
   if (!visible) {
-    return;
+    return null;
   }
-
   const onClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    event.stopPropagation();
     if (event?.target !== event?.currentTarget) {
       return;
     }

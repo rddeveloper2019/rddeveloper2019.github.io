@@ -81,7 +81,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
           🖊️
         </TextButton>
         {modal && (
-          <ModalControl>
+          <ModalControl backgroundClickHandler={() => setModal(false)}>
             <OperationForm operation={data} onOperationFormSubmit={changeOperation} onCancel={() => setModal(false)} />
           </ModalControl>
         )}

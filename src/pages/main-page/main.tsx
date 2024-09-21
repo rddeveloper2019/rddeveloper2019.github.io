@@ -79,7 +79,7 @@ export const MainPage = () => {
         +
       </TextButton>
       {modal && (
-        <ModalControl>
+        <ModalControl backgroundClickHandler={() => setModal(false)}>
           <OperationForm onOperationFormSubmit={addNewOperation} onCancel={() => setModal(false)} />
         </ModalControl>
       )}
