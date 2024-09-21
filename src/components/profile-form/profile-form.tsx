@@ -8,7 +8,6 @@ import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../input-field/input-field';
 import { useAppDispatch } from '../../store/store';
-import { hideModal } from '../../store/slices/modalSlice';
 import { setIsAuth } from '../../store/slices/authSlice';
 
 const ProfileForm: FC<ProfileFormTypePropTypes> = ({ className }) => {
@@ -27,18 +26,13 @@ const ProfileForm: FC<ProfileFormTypePropTypes> = ({ className }) => {
     },
   });
 
-  const closeModal = () => {
+  const onCancel = () => {
     clearErrors();
     reset();
-    dispatch(hideModal());
-  };
-  const onCancel = () => {
-    closeModal();
   };
 
   const onConfirm: SubmitHandler<ProfileFormType> = (data) => {
     dispatch(setIsAuth(true));
-    closeModal();
   };
 
   const usernameRules: RegisterOptions = { required: 'Невалидное имя пользователя', minLength: 3 };

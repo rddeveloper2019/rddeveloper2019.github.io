@@ -39,7 +39,7 @@ export const ThemeProvider = ({ children }: { children: ReactElement }) => {
   }, [theme]);
 
   useEffect(() => {
-    i18n.changeLanguage(lang);
+    i18n?.changeLanguage?.(lang);
   }, [lang, i18n]);
 
   return <ThemeContext.Provider value={themeValue}>{children}</ThemeContext.Provider>;

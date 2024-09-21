@@ -11,29 +11,20 @@ import { useNavigate } from 'react-router-dom';
 import { DualRangeSlider } from '../../components/dual-range-slider';
 import { SlideValues } from '../../components/dual-range-slider/types';
 import { useAppDispatch } from '../../store/store';
-import { useAuthSelector, useModalSelector, useOperationsSelector } from '../../store/selectors';
-import { showModal } from '../../store/slices/modalSlice';
-import {
-  addOperation,
-  setOperations,
-  editOperation,
-  toggleOperationFavorite,
-} from '../../store/slices/operationsSlice';
+import { useAuthSelector, useOperationsSelector } from '../../store/selectors';
+import { addOperation, setOperations } from '../../store/slices/operationsSlice';
 import { OperationFormType } from '../../components/operation-form/types';
-import { Mode } from '../../components/operation-form/constants';
-import { sanitizeOperationFormData } from 'src/model/utils/sanitizeOperationFormData';
+import { sanitizeOperationFormData } from '../..//model/utils/sanitizeOperationFormData';
 import { v4 as uuidv4 } from 'uuid';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
-  const { modal } = useModalSelector();
+  const [modal, setModal] = useState(false);
   const [count, setCount] = useState<number>(0);
   const { operations } = useOperationsSelector();
   const { isAuth } = useAuthSelector();
-  const [operationFormData, setOperationFormData] = useState<Operation>();
   const navigate = useNavigate();
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
-  const [mode, setMode] = useState<Mode>(Mode.ADD);
 
   useEffect(() => {
     if (count) {
@@ -45,46 +36,19 @@ export const MainPage = () => {
     setSlideValues({ minValue, maxValue });
   };
 
-  const onOperationSelect = (operation: Operation) => {
-    console.log('onOperationSelect: ', operation);
-
+  const redirectToDetail = (operation: Operation) => {
     navigate(`/operation/${operation.id}`, { state: { operation } });
   };
 
   const showNewOperationModal = () => {
-    setMode(Mode.ADD);
-    setOperationFormData(null);
-    dispatch(showModal());
-  };
-
-  const setDataAndOpenEditForm = (data: Operation) => {
-    setOperationFormData(data);
-    setMode(Mode.EDIT);
-    dispatch(showModal());
-  };
-
-  const changeOperation = (data: OperationFormType) => {
-    console.log('onOperationEdit: ', data);
-    dispatch(editOperation(sanitizeOperationFormData(data)));
+    setModal(true);
   };
 
   const addNewOperation = (data: OperationFormType) => {
     //для демонстрации
     const operation: Operation = sanitizeOperationFormData(data);
+    setModal(false);
     dispatch(addOperation({ ...operation, id: uuidv4() }));
-  };
-
-  const handleByMode = (mode: Mode) => (operation: OperationFormType) => {
-    if (mode === Mode.EDIT) {
-      changeOperation(operation);
-    } else if (mode === Mode.ADD) {
-      setOperationFormData(null);
-      addNewOperation(operation);
-    }
-  };
-
-  const onFavoriteItemToggle = (operation: Operation) => {
-    dispatch(toggleOperationFavorite(operation.id));
   };
 
   if (!isAuth) {
@@ -103,9 +67,7 @@ export const MainPage = () => {
             (item) => item.amount >= slideValues.minValue && item.amount <= slideValues.maxValue
           )}
           addMore={() => setCount(count + 1)}
-          onItemEdit={setDataAndOpenEditForm}
-          onItemSelect={onOperationSelect}
-          onFavoriteItemToggle={onFavoriteItemToggle}
+          onItemSelect={redirectToDetail}
         />
       </div>
       <TextButton
@@ -118,7 +80,7 @@ export const MainPage = () => {
       </TextButton>
       {modal && (
         <ModalControl>
-          <OperationForm operation={operationFormData} onOperationFormSubmit={handleByMode(mode)} />
+          <OperationForm onOperationFormSubmit={addNewOperation} onCancel={() => setModal(false)} />
         </ModalControl>
       )}
     </div>

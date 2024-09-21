@@ -1,10 +1,7 @@
 import type { Meta } from '@storybook/react';
-import { ThemeProvider } from '../../theme/theme-provider';
 import React from 'react';
-import '../../i18n';
-import { Provider } from 'react-redux';
-import store from '../../store/store';
 import OperationForm from './operation-form';
+import { MockProvider } from '../../layout/mock-provider';
 
 const meta: Meta<typeof OperationForm> = {
   title: 'Forms/OperationForm',
@@ -16,12 +13,8 @@ export default meta;
 
 export const Default = () => {
   return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <div style={{ width: '50%' }}>
-          <OperationForm onOperationFormSubmit={console.log} />
-        </div>
-      </ThemeProvider>
-    </Provider>
+    <MockProvider>
+      <OperationForm onOperationFormSubmit={console.log} />
+    </MockProvider>
   );
 };

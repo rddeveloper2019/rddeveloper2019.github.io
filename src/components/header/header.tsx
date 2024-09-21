@@ -1,5 +1,5 @@
 import styles from './header.module.scss';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import cn from 'clsx';
 import TextButton from '../text-button/text-button';
 import Logo from '../logo/logo';
@@ -10,16 +10,16 @@ import { useTranslation } from 'react-i18next';
 import { ModalControl } from '../../components/modal-control/modal-control';
 import LoginForm from '../../components/login-form/login-form';
 import { NavLink } from 'react-router-dom';
-import { showModal } from '../../store/slices/modalSlice';
 import { useAppDispatch } from '../../store/store';
-import { useAuthSelector, useModalSelector } from '../../store/selectors';
+import { useAuthSelector } from '../../store/selectors';
 import { setIsAuth } from '../../store/slices/authSlice';
 
 const Header = () => {
   const dispatch = useAppDispatch();
-  const { modal } = useModalSelector();
+
   const { isAuth } = useAuthSelector();
   const { theme, setAppLang: setLang, setAppTheme: setTheme, lang } = useContext(ThemeContext);
+  const [modal, setModal] = useState(false);
 
   const { t } = useTranslation();
 
@@ -36,7 +36,7 @@ const Header = () => {
   };
 
   const openLoginForm = () => {
-    dispatch(showModal());
+    setModal(true);
   };
 
   const logout = () => {
@@ -107,7 +107,7 @@ const Header = () => {
       </div>
       {modal && (
         <ModalControl>
-          <LoginForm />
+          <LoginForm onAction={() => setModal(false)} />
         </ModalControl>
       )}
     </>

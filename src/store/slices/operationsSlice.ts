@@ -19,7 +19,6 @@ const operationsSlice = createSlice({
       state.operations = action.payload;
     },
     addOperation: (state, action: PayloadAction<Operation>): void => {
-      console.log('(**)=> action: ', action);
       state.operations.unshift(action.payload);
     },
     toggleOperationFavorite: (state, action: PayloadAction<Operation['id']>): void => {

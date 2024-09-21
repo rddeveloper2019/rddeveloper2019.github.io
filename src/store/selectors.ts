@@ -13,16 +13,17 @@ const operationsSelector = () => {
   return store.getState().operations;
 };
 
-const settingsSelector = () => {
-  return store.getState().settings;
+const operationByIdSelector = (opearionId: string) => {
+  const operation = store.getState().operations.operations.find(({ id }) => id === opearionId);
+  return operation;
 };
 
-const modalSelector = () => {
-  return store.getState().modal;
+const settingsSelector = () => {
+  return store.getState().settings;
 };
 
 export const useAuthSelector = () => useSelector(authSelector);
 export const useInitSelector = () => useSelector(initSelector);
 export const useOperationsSelector = () => useSelector(operationsSelector);
 export const useSettingsSelector = () => useSelector(settingsSelector);
-export const useModalSelector = () => useSelector(modalSelector);
+export const useOperationByIdSelector = (id: string) => useSelector(() => operationByIdSelector(id));

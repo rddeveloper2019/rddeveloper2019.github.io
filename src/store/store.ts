@@ -4,14 +4,12 @@ import { useDispatch } from 'react-redux';
 import { authReducer } from './slices/authSlice';
 import { operationsReduser } from './slices/operationsSlice';
 import { settingsReduser } from './slices/settingsSlice';
-import { modalReduser } from './slices/modalSlice';
 
 const rootReducer = combineReducers({
   init: initReduser,
   auth: authReducer,
   operations: operationsReduser,
   settings: settingsReduser,
-  modal: modalReduser,
 });
 
 const store = configureStore({
