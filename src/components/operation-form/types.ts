@@ -14,4 +14,5 @@ export type OperationFormType = {
   amount: string;
   category: string;
   photo?: string;
+  isFavorite?: boolean;
 };

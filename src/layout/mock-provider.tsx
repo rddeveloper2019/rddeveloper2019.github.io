@@ -2,7 +2,8 @@ import { Provider } from 'react-redux';
 import store from '../store/store';
 import { ThemeProvider } from '../theme/theme-provider';
 import { BrowserRouter } from 'react-router-dom';
-import React, { FC, PropsWithChildren, ReactElement, ReactNode } from 'react';
+import React, { FC, ReactElement } from 'react';
+import '../i18n';
 
 type MockProviderType = {
   children: ReactElement;

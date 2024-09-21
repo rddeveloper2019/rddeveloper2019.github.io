@@ -41,9 +41,11 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
   };
 
   const changeOperation = (data: OperationFormType) => {
-    dispatch(editOperation(sanitizeOperationFormData(data)));
+    const editedOperation = sanitizeOperationFormData({ ...operation, ...data });
+    dispatch(editOperation(editedOperation));
     setModal(false);
-    onEdit?.(sanitizeOperationFormData(data));
+
+    onEdit?.(editedOperation);
   };
 
   const operationDate = new Date(createdAt).toLocaleDateString('RU');

@@ -28,10 +28,13 @@ const operationsSlice = createSlice({
       }
     },
 
-    editOperation: (state, action: PayloadAction<Partial<Operation>>): void => {
-      const operation = state.operations.find(({ id }) => id === action.payload);
-      console.log('action.payload: ', action.payload);
-      console.log('operation: ', operation);
+    editOperation: (state, action: PayloadAction<Operation>): void => {
+      state.operations = state.operations.map((operation) => {
+        if (operation.id === action.payload.id) {
+          return action.payload;
+        }
+        return operation;
+      });
     },
   },
 });

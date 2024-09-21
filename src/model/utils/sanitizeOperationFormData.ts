@@ -15,13 +15,14 @@ const sanitizeCategory = (category: string, photo: string): Category | null => {
 };
 
 export const sanitizeOperationFormData = (data: OperationFormType): Operation => {
-  const { id, name, category, createdAt, desc, photo, amount } = data;
+  const { id, name, category, createdAt, desc, photo, amount, isFavorite } = data;
 
   const operation: Partial<Operation> = {
+    id,
     name,
     createdAt,
     amount: Number(amount),
-    isFavorite: false,
+    isFavorite: Boolean(isFavorite),
   };
 
   if (desc) {
@@ -30,9 +31,6 @@ export const sanitizeOperationFormData = (data: OperationFormType): Operation =>
 
   if (category) {
     operation.category = sanitizeCategory(category, photo);
-  }
-  if (id) {
-    operation.id = id;
   }
 
   return operation as Operation;
