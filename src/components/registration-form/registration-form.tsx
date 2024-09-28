@@ -1,7 +1,7 @@
-import styles from './login-form.module.scss';
+import styles from './registration-form.module.scss';
 import React, { FC } from 'react';
 import cn from 'clsx';
-import { LoginFormPropsType, LoginFormType } from './types';
+import { RegistrationFormType, RegistrationPropsType } from './types';
 import Card from '../card/Card';
 import TextButton from '../../components/text-button/text-button';
 import { TextButtonState } from '../text-button/types';
@@ -10,7 +10,7 @@ import InputField from '../input-field/input-field';
 import { useAppDispatch } from '../../store/store';
 import { login } from '../../store/slices/authSlice';
 
-const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
+const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
   const dispatch = useAppDispatch();
 
   const {
@@ -19,7 +19,7 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
     clearErrors,
     reset,
     formState: { errors },
-  } = useForm<LoginFormType>({
+  } = useForm<RegistrationFormType>({
     defaultValues: {
       username: '',
       password: '',
@@ -32,7 +32,7 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
     onAction?.();
   };
 
-  const onConfirm: SubmitHandler<LoginFormType> = ({ username }) => {
+  const onConfirm: SubmitHandler<RegistrationFormType> = ({ username }) => {
     dispatch(login(username));
     onAction?.();
   };
@@ -42,7 +42,7 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
 
   return (
     <Card>
-      <h1 className={cn(styles.title)}>Вход</h1>
+      <h1 className={cn(styles.title)}>Регистрация</h1>
       <form className={cn(styles.form)} onSubmit={handleSubmit(onConfirm)}>
         <Controller
           name="username"

@@ -13,13 +13,21 @@ import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector } from '../../store/selectors';
 import { logout } from '../../store/slices/authSlice';
+import RegistrationForm from 'src/components/registration-form/registration-form';
+import Card from 'src/components/card/Card';
 
+const enum ModalType {
+  REGISTER,
+  LOGIN,
+  SELECT,
+  NONE,
+}
 const Header = () => {
   const dispatch = useAppDispatch();
 
   const { isAuth } = useAuthSelector();
   const { theme, setAppLang: setLang, setAppTheme: setTheme, lang } = useContext(ThemeContext);
-  const [modal, setModal] = useState(false);
+  const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
 
   const { t } = useTranslation();
 
@@ -35,8 +43,19 @@ const Header = () => {
     }
   };
 
-  const openLoginForm = () => {
-    setModal(true);
+  const showRegisterForm = () => {
+    setModalType(ModalType.REGISTER);
+  };
+
+  const showLoginForm = () => {
+    setModalType(ModalType.LOGIN);
+  };
+  const showSelectAuthModal = () => {
+    setModalType(ModalType.SELECT);
+  };
+
+  const closeModal = () => {
+    setModalType(ModalType.NONE);
   };
 
   return (
@@ -91,7 +110,7 @@ const Header = () => {
           </div>
           <nav className={cn(styles.nav)}>
             {!isAuth && (
-              <TextButton handleClick={openLoginForm} type="button" state={TextButtonState.WHITE}>
+              <TextButton handleClick={showSelectAuthModal} type="button" state={TextButtonState.WHITE}>
                 {t('header.login')}
               </TextButton>
             )}
@@ -103,9 +122,27 @@ const Header = () => {
           </nav>
         </div>
       </div>
-      {modal && (
-        <ModalControl backgroundClickHandler={() => setModal(false)}>
-          <LoginForm onAction={() => setModal(false)} />
+      {modalType === ModalType.SELECT && (
+        <ModalControl backgroundClickHandler={closeModal}>
+          <Card className={styles.flex}>
+            <TextButton handleClick={showRegisterForm} type="button" state={TextButtonState.PRIMARY}>
+              Зарегистрироваться
+            </TextButton>
+
+            <TextButton type="button" state={TextButtonState.SECONDARY} handleClick={showLoginForm}>
+              Войти
+            </TextButton>
+          </Card>
+        </ModalControl>
+      )}
+      {modalType === ModalType.LOGIN && (
+        <ModalControl backgroundClickHandler={closeModal}>
+          <LoginForm onAction={closeModal} />
+        </ModalControl>
+      )}
+      {modalType === ModalType.REGISTER && (
+        <ModalControl backgroundClickHandler={closeModal}>
+          <RegistrationForm onAction={closeModal} />
         </ModalControl>
       )}
     </>

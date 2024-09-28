@@ -21,6 +21,11 @@
   }
 }
 
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
 .logo-block {
   display: flex;
   align-items: center;
