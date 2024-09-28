@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { createRandomOperations } from '../../../model/utils';
+import React, { useState } from 'react';
 import OperationsList from '../../../components/operations-list';
 import { useAppDispatch } from '../../../store/store';
-import { setOperations } from '../../../store/slices/operationsSlice';
 import { useOperationsSelector } from '../../../store/selectors';
+import { GetOperations } from '../../../store/thunks/operationsThunk';
 
 export const OperationsListInfiniteScrollExample = () => {
   const [count, setCount] = useState<number>(0);
   const { operations } = useOperationsSelector();
-  const dispatch = useAppDispatch();
+
   const handlers = { onItemEdit: console.log, onItemSelect: console.log, onFavoriteItemToggle: console.log };
-  useEffect(() => {
-    if (count) {
-      dispatch(setOperations([...createRandomOperations(5)]));
-    }
-  }, [count]);
 
   return (
     <div style={{ height: '100vh', overflow: 'hidden' }}>
@@ -24,19 +18,16 @@ export const OperationsListInfiniteScrollExample = () => {
 };
 
 export const OperationsListExample = () => {
-  const [count, setCount] = useState<number>(0);
   const { operations } = useOperationsSelector();
   const dispatch = useAppDispatch();
   const handlers = { onItemEdit: console.log, onItemSelect: console.log, onFavoriteItemToggle: console.log };
-  useEffect(() => {
-    if (count) {
-      dispatch(setOperations([...createRandomOperations(5)]));
-    }
-  }, [count]);
+  const loadMoreOperations = () => {
+    dispatch(GetOperations(true));
+  };
 
   return (
     <div style={{ overflow: 'hidden' }}>
-      <OperationsList operations={operations} addMore={() => setCount(count + 1)} {...handlers} isInfinite={false} />
+      <OperationsList operations={operations} addMore={loadMoreOperations} {...handlers} isInfinite={false} />
     </div>
   );
 };

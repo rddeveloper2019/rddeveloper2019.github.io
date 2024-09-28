@@ -8,24 +8,11 @@ import TextButton from '../text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import TextareaField from '../textarea-field/textarea-field';
-import { Category } from '../../model/types';
 import { SelectField } from '../select-field';
-
-export const categoriesById: { [key: string]: Category } = {
-  1: { id: '1', name: 'одежда', photo: 'https://i.pinimg.com/originals/81/3c/be/813cbeb756bed0a23e6dbf581bfcfd8a.png' },
-  2: {
-    id: '2',
-    name: 'лекарства',
-    photo: 'https://wega55.ru/assets/images/resources/574/360x270/41-cdc4294e2a3f333d2ac9c17af76ee5ed.jpg',
-  },
-  3: {
-    id: '3',
-    name: 'еда',
-    photo: 'https://visitukraine.today/media/blog/previews/t49F6991IC8wJgcLrNFBZeZhvyIHmVMauusz8lbQ.jpg',
-  },
-};
+import { useCategoriesSelector } from '../../store/selectors';
 
 const OperationForm: FC<OperationFormPropTypes> = ({ operation, onOperationFormSubmit, onCancel }) => {
+  const { categories } = useCategoriesSelector();
   const createdAt = operation?.createdAt ? new Date(operation.createdAt).toLocaleDateString('en-CA') : '';
 
   const {
@@ -38,9 +25,9 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation, onOperationFormS
     defaultValues: {
       name: operation?.name ?? '',
       desc: operation?.desc ?? '',
-      createdAt,
+      date: createdAt,
       amount: operation?.amount?.toString() ?? '',
-      category: operation?.category?.id ?? '',
+      categoryId: operation?.category?.id ?? '',
       photo: operation?.photo ?? '',
     },
   });
@@ -54,6 +41,7 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation, onOperationFormS
   const onConfirm: SubmitHandler<OperationFormType> = (data) => {
     clearErrors();
     reset();
+    data.date = new Date(data.date).toISOString();
     onOperationFormSubmit?.(data);
   };
 
@@ -90,21 +78,21 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation, onOperationFormS
           )}
         />
         <Controller
-          name="category"
+          name="categoryId"
           control={control as unknown as Control<FieldValues>}
           render={({ field: { onChange, ...rest } }) => (
-            <SelectField onChange={onChange} {...rest} options={Object.values(categoriesById)} />
+            <SelectField onChange={onChange} {...rest} options={categories} value={operation?.category?.id} />
           )}
         />
         <Controller
-          name="createdAt"
+          name="date"
           control={control as unknown as Control<FieldValues>}
           rules={dateRules}
           render={({ field: { ref, ...otherProps } }) => (
             <InputField
               type="date"
               placeholder="дата операции"
-              error={errors.createdAt && `${errors.createdAt.message}`}
+              error={errors.date && `${errors.date.message}`}
               {...otherProps}
             />
           )}

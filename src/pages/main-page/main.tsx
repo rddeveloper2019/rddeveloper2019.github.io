@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import OperationsList from '../../components/operations-list';
-import { createRandomOperations } from '../../model/utils';
 import { Operation } from '../../model/types';
 import TextButton from '../../components/text-button/text-button';
 import styles from './main.module.scss';
@@ -12,17 +11,14 @@ import { DualRangeSlider } from '../../components/dual-range-slider';
 import { SlideValues } from '../../components/dual-range-slider/types';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector, useOperationsSelector } from '../../store/selectors';
-import { addOperation } from '../../store/slices/operationsSlice';
 import { OperationFormType } from '../../components/operation-form/types';
-import { sanitizeOperationFormData } from '../../model/utils/sanitizeOperationFormData';
-import { v4 as uuidv4 } from 'uuid';
-import { GetOperations } from '../../store/thunks/operationsThunk';
+import { AddOperation, GetOperations } from '../../store/thunks/operationsThunk';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
   const { operations } = useOperationsSelector();
-  const { isAuth, isAdmin } = useAuthSelector();
+  const { isAuth } = useAuthSelector();
   const navigate = useNavigate();
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
 
@@ -34,18 +30,17 @@ export const MainPage = () => {
   };
 
   const redirectToDetail = (operation: Operation) => {
-    navigate(`/operation/${operation.id}`, { state: { operation } });
+    navigate(`/operation/${operation.id}`, { state: { id: operation.id } });
   };
 
   const showNewOperationModal = () => {
     setModal(true);
   };
 
-  const addNewOperation = (data: OperationFormType) => {
-    //для демонстрации
-    const operation: Operation = sanitizeOperationFormData(data);
+  const addNewOperation = async (data: OperationFormType) => {
+    dispatch(AddOperation(data));
     setModal(false);
-    dispatch(addOperation({ ...operation, id: uuidv4() }));
+    // dispatch(addOperation(null));
   };
 
   if (!isAuth) {
@@ -67,7 +62,7 @@ export const MainPage = () => {
           onItemSelect={redirectToDetail}
         />
       </div>
-      {isAdmin && (
+      {isAuth && (
         <TextButton
           type="button"
           className={styles['add-button']}

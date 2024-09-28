@@ -1,6 +1,8 @@
 import { BaseURL } from '../config/sources';
 import { Profile, setIsLoading } from '../store/slices/authSlice';
 import store from '../store/store';
+import { TokenService } from '../model/TokenService';
+import { OperationFormType } from '../components/operation-form/types';
 
 export type AuthResult = {
   token: string;
@@ -98,7 +100,24 @@ export class FetchService {
     });
   };
 
-  static getOperations = async (more = false): Promise<Response> => {
+  static getCategories = async (): Promise<Response> => {
+    return fetch(
+      `${BaseURL}/categories?${new URLSearchParams({
+        pagination: JSON.stringify({
+          pageSize: 10,
+          pageNumber: 1,
+        }),
+        sorting: JSON.stringify({ type: 'DESC', field: 'id' }),
+      }).toString()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${TokenService.getToken()}`,
+        },
+      }
+    );
+  };
+
+  static getOperations = async (more: boolean): Promise<Response> => {
     const count = more ? ++FetchService.pageNumber : 1;
     // store.dispatch(setIsLoading());
     return fetch(
@@ -107,8 +126,48 @@ export class FetchService {
           pageSize: 10,
           pageNumber: count,
         }),
-        sorting: JSON.stringify({ type: 'ASC', field: 'updatedAt' }),
-      }).toString()}`
+        sorting: JSON.stringify({ type: 'DESC', field: 'updatedAt' }),
+      }).toString()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${TokenService.getToken()}`,
+        },
+        method: 'GET',
+      }
     );
+  };
+
+  static addOperation = async (body: OperationFormType): Promise<Response> => {
+    body.type = 'Profit';
+    return fetch(`${BaseURL}/operations`, {
+      headers: {
+        Authorization: `Bearer ${TokenService.getToken()}`,
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+  };
+
+  static toggleOperationFavorite = async ({ id, type }: { id: string; type: 'Cost' | 'Profit' }): Promise<Response> => {
+    return fetch(`${BaseURL}/operations/${id}`, {
+      headers: {
+        authorization: `Bearer ${TokenService.getToken()}`,
+        'content-type': 'application/json',
+      },
+      method: 'PATCH',
+      body: JSON.stringify({ type: type === 'Profit' ? 'Cost' : 'Profit' }),
+    });
+  };
+
+  static editOperation = async (operation: OperationFormType): Promise<Response> => {
+    return fetch(`${BaseURL}/operations/${operation.id}`, {
+      headers: {
+        authorization: `Bearer ${TokenService.getToken()}`,
+        'content-type': 'application/json',
+      },
+      method: 'PATCH',
+      body: JSON.stringify(operation),
+    });
   };
 }

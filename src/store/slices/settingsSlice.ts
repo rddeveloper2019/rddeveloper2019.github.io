@@ -26,4 +26,4 @@ const settingsSlice = createSlice({
 });
 
 export const { setTheme, setLang } = settingsSlice.actions;
-export const settingsReduser = settingsSlice.reducer;
+export const settingsReducer = settingsSlice.reducer;

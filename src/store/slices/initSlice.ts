@@ -19,4 +19,4 @@ const initSlice = createSlice({
 });
 
 export const { initApp } = initSlice.actions;
-export const initReduser = initSlice.reducer;
+export const initReducer = initSlice.reducer;
