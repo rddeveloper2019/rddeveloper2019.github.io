@@ -23,7 +23,10 @@
 
 .flex {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  &.p-40 {
+    padding: 40px;
+  }
 }
 
 .logo-block {
@@ -58,5 +61,14 @@
     &:has(> [class='active']) {
       border-bottom: 1px solid variables.$color-link;
     }
+  }
+}
+
+.error-message {
+  color: variables.$color-warn;
+
+  text-align: center;
+  &.p-40 {
+    padding: 40px;
   }
 }

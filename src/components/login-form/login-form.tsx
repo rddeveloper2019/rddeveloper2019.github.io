@@ -32,8 +32,8 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
     onAction?.();
   };
 
-  const onConfirm: SubmitHandler<LoginFormType> = ({ username }) => {
-    dispatch(login(username));
+  const onConfirm: SubmitHandler<LoginFormType> = ({ username, password }) => {
+    dispatch(login({ token: 'fake token' }));
     onAction?.();
   };
 
@@ -71,12 +71,8 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
         />
 
         <div className={cn(styles.buttons)}>
-          <TextButton handleClick={handleCancel} type="button" state={TextButtonState.SECONDARY}>
-            Cancel
-          </TextButton>
-
           <TextButton type="submit" state={TextButtonState.PRIMARY}>
-            OK
+            Войти
           </TextButton>
         </div>
       </form>

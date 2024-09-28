@@ -8,7 +8,6 @@ import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../input-field/input-field';
 import { useAppDispatch } from '../../store/store';
-import { saveProfile } from '../../store/slices/authSlice';
 import { useAuthSelector } from '../../store/selectors';
 
 const ProfileForm: FC<ProfileFormTypePropTypes> = ({ className }) => {
@@ -20,13 +19,13 @@ const ProfileForm: FC<ProfileFormTypePropTypes> = ({ className }) => {
     formState: { errors },
   } = useForm<ProfileFormType>({
     defaultValues: {
-      username: profile?.username || '',
+      username: profile?.name || '',
       email: profile?.email || '',
     },
   });
 
   const onConfirm: SubmitHandler<ProfileFormType> = ({ username, email }) => {
-    dispatch(saveProfile({ username, email }));
+    console.log('(**)=> save profile: ', { username, email });
   };
 
   const usernameRules: RegisterOptions = { required: 'Невалидное имя пользователя', minLength: 3 };

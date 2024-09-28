@@ -17,7 +17,7 @@ export const Layout = ({ children }: { children?: ReactElement }) => {
     <div className={styles.layout}>
       <Header />
       <main className={styles['safe-area']}>
-        {!isAuth && <p className={styles.info}>Только для авторизированных пользователей</p>}
+        {!isAuth && <p className={styles.info}>Только для авторизованных пользователей</p>}
         {isAuth && children}
       </main>
     </div>

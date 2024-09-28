@@ -3,5 +3,5 @@ export type RegistrationFormType = {
   password: string;
 };
 export type RegistrationPropsType = {
-  onAction?: () => void;
+  onAction?: (message?: string) => void;
 };

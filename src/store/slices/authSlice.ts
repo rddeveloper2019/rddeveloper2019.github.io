@@ -1,70 +1,51 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { ADMIN_TOKEN, TokenService, USER_TOKEN } from '../../model/utils/tokenService';
-
-const usersDb: { [key: string]: UserProfile } = {
-  admin: {
-    id: '1_',
-    root: 'admin',
-    username: 'admin',
-    email: 'admin@test.f',
-  },
-  user: {
-    id: '2_',
-    root: 'user',
-    username: 'user',
-    email: 'user@test.f',
-  },
-};
-
-type UserProfile = {
-  id: string;
-  username: string;
-  email: string;
-  root: 'admin' | 'user';
-};
+import { TokenService } from '../../model/TokenService';
+import { Profile } from '../../store/types';
 
 type AuthStateType = {
   isAuth: boolean;
   isAdmin: boolean;
-  profile: UserProfile | null;
+  profile: Profile | null;
+  authError?: string;
 };
 
 const initialState: AuthStateType = {
   isAuth: TokenService.checkToken(),
-  isAdmin: TokenService.checkIsAdmin(),
-  profile: (TokenService.checkIsAdmin() && usersDb.admin) || (TokenService.checkIsUser() && usersDb.user) || null,
+  isAdmin: true,
+  profile: null,
+  authError: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<string>): void => {
-      const username = action.payload;
-      TokenService.clearToken();
-
-      if (username === 'admin') {
-        TokenService.setToken(ADMIN_TOKEN);
-        state.profile = usersDb.admin;
-      } else {
-        TokenService.setToken(USER_TOKEN);
-        state.profile = usersDb.user;
-      }
+    login: (state, action: PayloadAction<{ token: string }>): void => {
+      TokenService.setToken(action.payload.token);
       state.isAuth = true;
-      state.isAdmin = TokenService.checkIsAdmin();
     },
     logout: (state): void => {
       TokenService.clearToken();
       state.isAuth = false;
-      state.isAdmin = TokenService.checkIsAdmin();
       state.profile = null;
+      TokenService.clearToken();
     },
-    saveProfile: (state, action: PayloadAction<Partial<UserProfile>>): void => {
-      state.profile = { ...state.profile, ...action.payload };
+    signup: (state, { payload }: PayloadAction<{ profile: Profile; token: string }>): void => {
+      TokenService.setToken(payload.token);
+      state.isAuth = true;
+      state.profile = payload.profile;
+    },
+    setAuthError: (state, { payload }: PayloadAction<{ error: string }>): void => {
+      state.isAuth = false;
+      state.profile = null;
+      state.authError = payload.error || ' ❌ Неизвестная ошибка';
+    },
+    clearAuthError: (state): void => {
+      state.authError = null;
     },
   },
 });
 
-export const { login, logout, saveProfile } = authSlice.actions;
+export const { login, logout, signup, setAuthError, clearAuthError } = authSlice.actions;
 export const authReducer = authSlice.reducer;

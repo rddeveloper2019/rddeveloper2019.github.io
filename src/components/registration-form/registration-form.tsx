@@ -8,10 +8,11 @@ import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../input-field/input-field';
 import { useAppDispatch } from '../../store/store';
-import { login } from '../../store/slices/authSlice';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
   const dispatch = useAppDispatch();
+  const { register } = useAuthentication();
 
   const {
     control,
@@ -32,8 +33,9 @@ const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
     onAction?.();
   };
 
-  const onConfirm: SubmitHandler<RegistrationFormType> = ({ username }) => {
-    dispatch(login(username));
+  const onConfirm: SubmitHandler<RegistrationFormType> = ({ username, password }) => {
+    register({ email: username, password });
+
     onAction?.();
   };
 
@@ -43,7 +45,7 @@ const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
   return (
     <Card>
       <h1 className={cn(styles.title)}>Регистрация</h1>
-      <form className={cn(styles.form)} onSubmit={handleSubmit(onConfirm)}>
+      <form className={cn(styles.form)}>
         <Controller
           name="username"
           control={control as unknown as Control<FieldValues>}
@@ -71,12 +73,11 @@ const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
         />
 
         <div className={cn(styles.buttons)}>
-          <TextButton handleClick={handleCancel} type="button" state={TextButtonState.SECONDARY}>
-            Cancel
+          <TextButton type="button" state={TextButtonState.SECONDARY} handleClick={handleSubmit(onConfirm)}>
+            AsyncThunk
           </TextButton>
-
-          <TextButton type="submit" state={TextButtonState.PRIMARY}>
-            OK
+          <TextButton type="button" state={TextButtonState.PRIMARY} handleClick={handleSubmit(onConfirm)}>
+            Hook
           </TextButton>
         </div>
       </form>

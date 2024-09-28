@@ -12,9 +12,10 @@ import LoginForm from '../../components/login-form/login-form';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector } from '../../store/selectors';
-import { logout } from '../../store/slices/authSlice';
-import RegistrationForm from 'src/components/registration-form/registration-form';
-import Card from 'src/components/card/Card';
+import { clearAuthError, logout } from '../../store/slices/authSlice';
+import RegistrationForm from '../../components/registration-form/registration-form';
+import Card from '../../components/card/Card';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 const enum ModalType {
   REGISTER,
@@ -28,7 +29,7 @@ const Header = () => {
   const { isAuth } = useAuthSelector();
   const { theme, setAppLang: setLang, setAppTheme: setTheme, lang } = useContext(ThemeContext);
   const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
-
+  const { errorMessage } = useAuthentication();
   const { t } = useTranslation();
 
   const setAppTheme = (name: Theme) => {
@@ -68,19 +69,20 @@ const Header = () => {
           />
           <div>Финансы</div>
         </div>
-        <div className={styles.links}>
-          <TextButton state={TextButtonState.LINK} type="button">
-            <NavLink to={'/'}>{t('header.home')}</NavLink>
-          </TextButton>
-          <TextButton state={TextButtonState.LINK} type="button">
-            <NavLink to={'/favorites'}>{t('header.favorites')}</NavLink>
-          </TextButton>
-          {isAuth && (
+        {isAuth && (
+          <div className={styles.links}>
+            <TextButton state={TextButtonState.LINK} type="button">
+              <NavLink to={'/'}>{t('header.home')}</NavLink>
+            </TextButton>
+            <TextButton state={TextButtonState.LINK} type="button">
+              <NavLink to={'/favorites'}>{t('header.favorites')}</NavLink>
+            </TextButton>
+
             <TextButton state={TextButtonState.LINK} type="button">
               <NavLink to={'/profile'}>{t('header.profile')}</NavLink>
             </TextButton>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className={styles.login}>
           <div className={styles.theme}>
@@ -124,13 +126,13 @@ const Header = () => {
       </div>
       {modalType === ModalType.SELECT && (
         <ModalControl backgroundClickHandler={closeModal}>
-          <Card className={styles.flex}>
+          <Card className={cn(styles.flex, styles['p-40'])}>
             <TextButton handleClick={showRegisterForm} type="button" state={TextButtonState.PRIMARY}>
-              Зарегистрироваться
+              🔑 Регистрация
             </TextButton>
 
             <TextButton type="button" state={TextButtonState.SECONDARY} handleClick={showLoginForm}>
-              Войти
+              🔓 Вход
             </TextButton>
           </Card>
         </ModalControl>
@@ -143,6 +145,11 @@ const Header = () => {
       {modalType === ModalType.REGISTER && (
         <ModalControl backgroundClickHandler={closeModal}>
           <RegistrationForm onAction={closeModal} />
+        </ModalControl>
+      )}
+      {errorMessage && (
+        <ModalControl backgroundClickHandler={() => dispatch(clearAuthError())}>
+          <Card className={cn(styles['error-message'], styles['p-40'])}>{errorMessage}</Card>
         </ModalControl>
       )}
     </>
