@@ -1,16 +1,17 @@
 import styles from './login-form.module.scss';
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import cn from 'clsx';
-import { LoginFormPropTypes, LoginFormType } from './types';
+import { LoginFormPropsType, LoginFormType } from './types';
 import Card from '../card/Card';
 import TextButton from '../../components/text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
-import { MainContext } from '../../store/provider';
 import InputField from '../input-field/input-field';
+import { useAppDispatch } from '../../store/store';
+import { login } from '../../store/slices/authSlice';
 
-const LoginForm: FC<LoginFormPropTypes> = () => {
-  const { setModal, setIsAuth } = useContext(MainContext);
+const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
+  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -25,18 +26,15 @@ const LoginForm: FC<LoginFormPropTypes> = () => {
     },
   });
 
-  const closeModal = () => {
+  const handleCancel = () => {
     clearErrors();
     reset();
-    setModal(false);
-  };
-  const onCancel = () => {
-    closeModal();
+    onAction?.();
   };
 
-  const onConfirm: SubmitHandler<LoginFormPropTypes> = () => {
-    setIsAuth(true);
-    closeModal();
+  const onConfirm: SubmitHandler<LoginFormType> = ({ username }) => {
+    dispatch(login(username));
+    onAction?.();
   };
 
   const usernameRules: RegisterOptions = { required: 'Невалидное имя пользователя', minLength: 3 };
@@ -72,7 +70,7 @@ const LoginForm: FC<LoginFormPropTypes> = () => {
         />
 
         <div className={cn(styles.buttons)}>
-          <TextButton handleClick={onCancel} type="button" state={TextButtonState.SECONDARY}>
+          <TextButton handleClick={handleCancel} type="button" state={TextButtonState.SECONDARY}>
             Cancel
           </TextButton>
 

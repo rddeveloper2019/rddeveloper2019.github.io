@@ -1,18 +1,25 @@
 import styles from './header.module.scss';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import cn from 'clsx';
 import TextButton from '../text-button/text-button';
 import Logo from '../logo/logo';
 import { TextButtonState } from '../text-button/types';
-import { MainContext } from '../../store/provider';
+import { ThemeContext } from '../../theme/theme-provider';
 import { Lang, Theme } from '../../store/types';
 import { useTranslation } from 'react-i18next';
 import { ModalControl } from '../../components/modal-control/modal-control';
 import LoginForm from '../../components/login-form/login-form';
 import { NavLink } from 'react-router-dom';
+import { useAppDispatch } from '../../store/store';
+import { useAuthSelector } from '../../store/selectors';
+import { logout } from '../../store/slices/authSlice';
 
 const Header = () => {
-  const { theme, setTheme, setLang, lang, isAuth, modal, setModal, setIsAuth } = useContext(MainContext);
+  const dispatch = useAppDispatch();
+
+  const { isAuth } = useAuthSelector();
+  const { theme, setAppLang: setLang, setAppTheme: setTheme, lang } = useContext(ThemeContext);
+  const [modal, setModal] = useState(false);
 
   const { t } = useTranslation();
 
@@ -32,10 +39,6 @@ const Header = () => {
     setModal(true);
   };
 
-  const logout = () => {
-    setIsAuth(false);
-  };
-
   return (
     <>
       <div className={cn(styles.header)}>
@@ -53,9 +56,11 @@ const Header = () => {
           <TextButton state={TextButtonState.LINK} type="button">
             <NavLink to={'/favorites'}>{t('header.favorites')}</NavLink>
           </TextButton>
-          <TextButton state={TextButtonState.LINK} type="button">
-            <NavLink to={'/profile'}>{t('header.profile')}</NavLink>
-          </TextButton>
+          {isAuth && (
+            <TextButton state={TextButtonState.LINK} type="button">
+              <NavLink to={'/profile'}>{t('header.profile')}</NavLink>
+            </TextButton>
+          )}
         </div>
 
         <div className={styles.login}>
@@ -91,7 +96,7 @@ const Header = () => {
               </TextButton>
             )}
             {isAuth && (
-              <TextButton type="button" state={TextButtonState.WHITE} handleClick={logout}>
+              <TextButton type="button" state={TextButtonState.WHITE} handleClick={() => dispatch(logout())}>
                 {t('header.logout')}
               </TextButton>
             )}
@@ -99,8 +104,8 @@ const Header = () => {
         </div>
       </div>
       {modal && (
-        <ModalControl>
-          <LoginForm />
+        <ModalControl backgroundClickHandler={() => setModal(false)}>
+          <LoginForm onAction={() => setModal(false)} />
         </ModalControl>
       )}
     </>

@@ -1,9 +1,7 @@
 import type { Meta } from '@storybook/react';
-import { MainProvider } from '../../store/provider';
 import React from 'react';
-import '../../i18n';
-
 import LoginForm from './login-form';
+import { MockProvider } from '../../layout/mock-provider';
 
 const meta: Meta<typeof LoginForm> = {
   title: 'Forms/LoginForm',
@@ -14,10 +12,8 @@ export default meta;
 
 export const Default = () => {
   return (
-    <MainProvider>
-      <div style={{ width: '50%' }}>
-        <LoginForm />
-      </div>
-    </MainProvider>
+    <MockProvider>
+      <LoginForm />
+    </MockProvider>
   );
 };

@@ -1,21 +1,13 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import Modal from '../modal/modal';
-import { MainContext } from '../../store/provider';
 import { Portal } from '../portal/Portal';
-import { ModalControlProps } from './types'; // Импортируем компонент Portal
+import { ModalControlProps } from './types';
 
-export const ModalControl: FC<ModalControlProps> = ({ children }) => {
-  const { modal, setModal } = useContext(MainContext);
-
-  const hideModal = () => {
-    setModal(false);
-  };
+export const ModalControl: FC<ModalControlProps> = ({ children, backgroundClickHandler }) => {
   return (
     <>
       <Portal>
-        <Modal visible={modal} backgroundClickHandler={hideModal}>
-          {children}
-        </Modal>
+        <Modal backgroundClickHandler={() => backgroundClickHandler?.()}>{children}</Modal>
       </Portal>
     </>
   );

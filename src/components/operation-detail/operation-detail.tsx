@@ -1,9 +1,16 @@
-import React, { FC, MouseEvent } from 'react';
+import React, { FC, MouseEvent, useState } from 'react';
 import { OperationDetailPropsTypes } from './types';
 import styles from './operation-detail.module.scss';
 import cn from 'clsx';
-import TextButton from '../../components/text-button/text-button';
-import { TextButtonState } from '../../components/text-button/types';
+import TextButton from '../text-button/text-button';
+import { TextButtonState } from '../text-button/types';
+import { OperationFormType } from '../operation-form/types';
+import { editOperation, toggleOperationFavorite } from '../../store/slices/operationsSlice';
+import { sanitizeOperationFormData } from '../../model/utils/sanitizeOperationFormData';
+import { useAppDispatch } from '../../store/store';
+import { ModalControl } from '../modal-control/modal-control';
+import OperationForm from '../operation-form/operation-form';
+import { useAuthSelector, useOperationByIdSelector } from '../../store/selectors';
 
 const OperationDetail: FC<OperationDetailPropsTypes> = ({
   data,
@@ -13,11 +20,34 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
   onEdit,
   onClick,
 }) => {
-  const { amount, name, desc, category, createdAt, isFavorite } = data;
+  const dispatch = useAppDispatch();
+  const operation = useOperationByIdSelector(data.id);
+
+  const [modal, setModal] = useState(false);
+  const { amount, name, desc, category, createdAt, isFavorite } = operation;
+  const { isAdmin } = useAuthSelector();
   const onItemClick = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
-    onClick?.(data);
+    onClick?.(operation);
   };
+
+  const onFavoriteItemToggle = () => {
+    dispatch(toggleOperationFavorite(operation.id));
+    onFavoriteToggle?.(data);
+  };
+
+  const openEditForm = () => {
+    setModal(true);
+  };
+
+  const changeOperation = (data: OperationFormType) => {
+    const editedOperation = sanitizeOperationFormData({ ...operation, ...data });
+    dispatch(editOperation(editedOperation));
+    setModal(false);
+
+    onEdit?.(editedOperation);
+  };
+
   const operationDate = new Date(createdAt).toLocaleDateString('RU');
 
   return (
@@ -39,18 +69,26 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
           type="button"
           state={isFavorite ? TextButtonState.SECONDARY : TextButtonState.PRIMARY}
           className={cn(styles['edit-button'], styles.large)}
-          handleClick={() => onFavoriteToggle?.(data)}
+          handleClick={onFavoriteItemToggle}
         >
           ★
         </TextButton>
-        <TextButton
-          type="button"
-          state={TextButtonState.PRIMARY}
-          className={styles['edit-button']}
-          handleClick={() => onEdit?.(data)}
-        >
-          🖊️
-        </TextButton>
+
+        {isAdmin && (
+          <TextButton
+            type="button"
+            state={TextButtonState.PRIMARY}
+            className={styles['edit-button']}
+            handleClick={openEditForm}
+          >
+            🖊️
+          </TextButton>
+        )}
+        {modal && (
+          <ModalControl backgroundClickHandler={() => setModal(false)}>
+            <OperationForm operation={data} onOperationFormSubmit={changeOperation} onCancel={() => setModal(false)} />
+          </ModalControl>
+        )}
       </div>
     </div>
   );

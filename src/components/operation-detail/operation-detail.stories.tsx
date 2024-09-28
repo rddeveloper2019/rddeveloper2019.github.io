@@ -1,6 +1,8 @@
 import type { Meta } from '@storybook/react';
 import OperationDetail from './operation-detail';
-import { createRandomOperations } from '../../model/utils';
+import React from 'react';
+import { OperationDetailExample } from './story-example/operation-detail-example';
+import { MockProvider } from '../../layout/mock-provider';
 
 const meta: Meta<typeof OperationDetail> = {
   title: 'Components/OperationDetail',
@@ -9,11 +11,10 @@ const meta: Meta<typeof OperationDetail> = {
 };
 export default meta;
 
-const operation = createRandomOperations(1)[0];
-export const Detail = {
-  args: {
-    data: operation,
-    bordered: true,
-    width: 400,
-  },
+export const Default = () => {
+  return (
+    <MockProvider>
+      <OperationDetailExample />
+    </MockProvider>
+  );
 };

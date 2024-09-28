@@ -8,15 +8,9 @@ export enum Lang {
   RU = 'ru',
 }
 
-type State<T> = (value: ((prevState: T) => T) | T) => void;
-
-export type Store = {
-  setModal: State<boolean>;
-  setTheme: State<Theme>;
+export type ThemeProviderType = {
   theme: Theme;
   lang: Lang;
-  setLang: State<Lang>;
-  modal: boolean;
-  isAuth: boolean;
-  setIsAuth: State<boolean>;
+  setAppLang: (lang: Lang) => void;
+  setAppTheme: (theme: Theme) => void;
 };

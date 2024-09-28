@@ -4,4 +4,5 @@ export type ModalControlProps = {
   children: ReactElement;
   confirmButtonText?: string;
   cancelButtonText?: string;
+  backgroundClickHandler?: () => void;
 };

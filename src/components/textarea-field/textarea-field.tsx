@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import cn from 'clsx';
 import { TextareaFieldPropTypes } from './types';
 
-const TextareaField: FC<TextareaFieldPropTypes> = ({ placeholder = '', error, type = 'text', ...rest }) => {
+const TextareaField: FC<TextareaFieldPropTypes> = ({ placeholder = '', error, ...rest }) => {
   return (
     <>
       <textarea className={cn(styles.textarea, error && styles.error)} placeholder={placeholder} {...rest} />

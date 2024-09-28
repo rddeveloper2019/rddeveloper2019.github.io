@@ -1,5 +1,5 @@
 import styles from './operation-form.module.scss';
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import cn from 'clsx';
 import { OperationFormPropTypes, OperationFormType } from './types';
 import InputField from '../input-field/input-field';
@@ -7,7 +7,6 @@ import Card from '../card/Card';
 import TextButton from '../text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
-import { MainContext } from '../../store/provider';
 import TextareaField from '../textarea-field/textarea-field';
 import { Category } from '../../model/types';
 import { SelectField } from '../select-field';
@@ -26,8 +25,7 @@ export const categoriesById: { [key: string]: Category } = {
   },
 };
 
-const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
-  const { setModal } = useContext(MainContext);
+const OperationForm: FC<OperationFormPropTypes> = ({ operation, onOperationFormSubmit, onCancel }) => {
   const createdAt = operation?.createdAt ? new Date(operation.createdAt).toLocaleDateString('en-CA') : '';
 
   const {
@@ -50,15 +48,13 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
   const closeModal = () => {
     clearErrors();
     reset();
-    setModal(false);
-  };
-  const onCancel = () => {
-    closeModal();
+    onCancel?.();
   };
 
   const onConfirm: SubmitHandler<OperationFormType> = (data) => {
-    console.log('onFormConfirm: ', data);
-    closeModal();
+    clearErrors();
+    reset();
+    onOperationFormSubmit?.(data);
   };
 
   const nameRules: RegisterOptions = { required: 'Невалидное название операции', minLength: 3 };
@@ -128,7 +124,7 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation }) => {
         />
 
         <div className={cn(styles.buttons)}>
-          <TextButton handleClick={onCancel} type="button" state={TextButtonState.SECONDARY}>
+          <TextButton handleClick={closeModal} type="button" state={TextButtonState.SECONDARY}>
             Cancel
           </TextButton>
 
