@@ -40,6 +40,7 @@ export type BaseOperation = {
   amount: number;
   category: Category;
   isFavorite?: boolean;
+  photo?: string;
 };
 
 export type Cost = BaseOperation & { type: 'Profit' };

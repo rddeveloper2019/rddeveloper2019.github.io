@@ -48,7 +48,34 @@ export type ServerErrors = {
   }[];
 };
 
+export type OperationsFilters = {
+  ids?: string[];
+  name?: string;
+  categoryIds?: string[];
+  type?: 'Cost' | 'Profit';
+  pagination?: {
+    pageSize?: number;
+    pageNumber?: number;
+  };
+  date?: {
+    gte?: string; // от - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+    lte?: string; // до - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+  };
+  createdAt?: {
+    gte?: string; // от - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+    lte?: string; // до - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+  };
+  updatedAt?: {
+    gte?: string; // от - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+    lte?: string; // до - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+  };
+  sorting?: {
+    type: 'ASC' | 'DESC';
+    field: 'id' | 'createdAt' | 'updatedAt' | 'name' | 'date';
+  };
+};
 export class FetchService {
+  static pageNumber = 1;
   static singup = async (body: SignUpBody): Promise<Response> => {
     store.dispatch(setIsLoading());
     return fetch(`${BaseURL}/signup`, {
@@ -69,5 +96,19 @@ export class FetchService {
         'content-type': 'application/json',
       },
     });
+  };
+
+  static getOperations = async (more = false): Promise<Response> => {
+    const count = more ? ++FetchService.pageNumber : 1;
+    // store.dispatch(setIsLoading());
+    return fetch(
+      `${BaseURL}/operations?${new URLSearchParams({
+        pagination: JSON.stringify({
+          pageSize: 10,
+          pageNumber: count,
+        }),
+        sorting: JSON.stringify({ type: 'ASC', field: 'updatedAt' }),
+      }).toString()}`
+    );
   };
 }

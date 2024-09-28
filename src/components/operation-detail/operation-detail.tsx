@@ -24,7 +24,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
   const operation = useOperationByIdSelector(data.id);
 
   const [modal, setModal] = useState(false);
-  const { amount, name, desc, category, createdAt, isFavorite } = operation;
+  const { amount, name, desc, category, createdAt, isFavorite, photo } = operation;
   const { isAdmin } = useAuthSelector();
   const onItemClick = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -56,7 +56,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
       style={{ width: width || '100%' }}
       onClick={onItemClick}
     >
-      <div className={cn(styles.logo)}>{category?.photo && <img src={category.photo} alt={category.name} />}</div>
+      <div className={cn(styles.logo)}>{photo && <img src={photo} />}</div>
       <div className={cn(styles['operation-detail-content'])}>
         {category?.name && <div className={cn(styles.category)}>{category.name}</div>}
         {name && <div className={cn(styles.title)}>{name}</div>}

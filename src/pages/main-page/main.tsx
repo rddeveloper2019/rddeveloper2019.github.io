@@ -12,26 +12,23 @@ import { DualRangeSlider } from '../../components/dual-range-slider';
 import { SlideValues } from '../../components/dual-range-slider/types';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector, useOperationsSelector } from '../../store/selectors';
-import { addOperation, setOperations } from '../../store/slices/operationsSlice';
+import { addOperation } from '../../store/slices/operationsSlice';
 import { OperationFormType } from '../../components/operation-form/types';
 import { sanitizeOperationFormData } from '../../model/utils/sanitizeOperationFormData';
 import { v4 as uuidv4 } from 'uuid';
+import { GetOperations } from '../../store/thunks/operationsThunk';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
-  const [count, setCount] = useState<number>(0);
   const { operations } = useOperationsSelector();
   const { isAuth, isAdmin } = useAuthSelector();
   const navigate = useNavigate();
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
 
-  useEffect(() => {
-    if (count) {
-      dispatch(setOperations([...operations, ...createRandomOperations(5)]));
-    }
-  }, [count]);
-
+  const loadMoreOperations = () => {
+    dispatch(GetOperations(true));
+  };
   const onSlide: (data: SlideValues) => void = ({ minValue, maxValue }) => {
     setSlideValues({ minValue, maxValue });
   };
@@ -66,7 +63,7 @@ export const MainPage = () => {
           operations={operations.filter(
             (item) => item.amount >= slideValues.minValue && item.amount <= slideValues.maxValue
           )}
-          addMore={() => setCount(count + 1)}
+          addMore={loadMoreOperations}
           onItemSelect={redirectToDetail}
         />
       </div>

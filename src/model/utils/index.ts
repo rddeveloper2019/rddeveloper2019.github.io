@@ -3,10 +3,14 @@ import { Category, Operation, Product } from '../types';
 const categories = ['sport', 'education', 'travel', 'hobby', 'dance', 'zoo', 'byke', 'shoping'];
 const getRandomId = (): string => Math.random().toString(36).substring(7);
 const getRandomName = (prefix?: string): string => `${prefix} ${Math.floor(Math.random() * 1000)}`;
-
+const getRandomInteger = (min: number, max: number): number => {
+  // случайное число от min до (max+1)
+  const rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+};
 const getRandomCategory = (): string => categories[Math.floor(Math.random() * categories.length)];
-const getPhoto = (notnull?: boolean): string | undefined =>
-  notnull || Math.random() < 0.5 ? 'https://picsum.photos/200' : undefined;
+export const getPhoto = (notnull?: boolean): string | undefined =>
+  notnull || Math.random() < 0.5 ? `https://picsum.photos/id/${getRandomInteger(1, 1000)}/200/300` : undefined;
 const getRandomDesc = (entity?: string): string | undefined =>
   entity && Math.random() < 0.5 ? `Description for ${entity}` : undefined;
 const getRandomNotNullNumber = (additional?: number): number => Math.floor(Math.random() * 1000) + (additional || 0);
@@ -16,7 +20,7 @@ export const createRandomCategory = (): Category => {
   return {
     id: getRandomId(),
     name: getRandomCategory(),
-    photo: getPhoto(),
+    photo: getPhoto(true),
   } as Category;
 };
 

@@ -41,7 +41,7 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation, onOperationFormS
       createdAt,
       amount: operation?.amount?.toString() ?? '',
       category: operation?.category?.id ?? '',
-      photo: operation?.category?.photo ?? '',
+      photo: operation?.photo ?? '',
     },
   });
 
