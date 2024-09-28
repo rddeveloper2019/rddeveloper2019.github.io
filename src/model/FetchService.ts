@@ -1,5 +1,6 @@
 import { BaseURL } from '../config/sources';
-import { Profile } from '../store/slices/authSlice';
+import { Profile, setIsLoading } from '../store/slices/authSlice';
+import store from '../store/store';
 
 export type AuthResult = {
   token: string;
@@ -49,6 +50,7 @@ export type ServerErrors = {
 
 export class FetchService {
   static singup = async (body: SignUpBody): Promise<Response> => {
+    store.dispatch(setIsLoading());
     return fetch(`${BaseURL}/signup`, {
       method: 'POST',
       body: JSON.stringify(body),
@@ -59,6 +61,7 @@ export class FetchService {
   };
 
   static singin = async (body: SignInBody): Promise<Response> => {
+    store.dispatch(setIsLoading());
     return fetch(`${BaseURL}/signin`, {
       method: 'POST',
       body: JSON.stringify(body),

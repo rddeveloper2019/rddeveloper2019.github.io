@@ -12,7 +12,7 @@ import LoginForm from '../../components/login-form/login-form';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector } from '../../store/selectors';
-import { clearAuthError, signin, signout } from '../../store/slices/authSlice';
+import { clearAuthError, signout } from '../../store/slices/authSlice';
 import RegistrationForm from '../../components/registration-form/registration-form';
 import Card from '../../components/card/Card';
 import { useAuthentication } from '../../hooks/useAuthentication';

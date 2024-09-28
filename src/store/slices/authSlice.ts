@@ -17,6 +17,7 @@ type AuthStateType = {
   isAdmin: boolean;
   profile: Profile | null;
   authError?: string;
+  isLoading: boolean;
 };
 
 const initialState: AuthStateType = {
@@ -24,6 +25,7 @@ const initialState: AuthStateType = {
   isAdmin: true,
   profile: null,
   authError: null,
+  isLoading: false,
 };
 
 const authSlice = createSlice({
@@ -33,6 +35,7 @@ const authSlice = createSlice({
     signin: (state, action: PayloadAction<{ token: string }>): void => {
       TokenService.setToken(action.payload.token);
       state.isAuth = true;
+      state.isLoading = false;
     },
     signout: (state): void => {
       TokenService.clearToken();
@@ -44,6 +47,7 @@ const authSlice = createSlice({
       TokenService.setToken(payload.token);
       state.isAuth = true;
       state.profile = payload.profile;
+      state.isLoading = false;
     },
     setAuthError: (state, { payload }: PayloadAction<{ error: unknown }>): void => {
       const { errors = [] } = payload.error as ServerErrors;
@@ -51,16 +55,25 @@ const authSlice = createSlice({
       state.isAuth = false;
       state.profile = null;
       state.authError = message;
+      state.isLoading = false;
     },
     clearAuthError: (state): void => {
       state.authError = null;
     },
+    setIsLoading: (state): void => {
+      state.isLoading = true;
+    },
   },
   extraReducers: (builder) => {
+    builder.addCase(SignUp.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(SignUp.fulfilled, (state, { payload }) => {
       TokenService.setToken(payload.token);
       state.isAuth = true;
       state.profile = payload.profile;
+      state.authError = null;
+      state.isLoading = false;
     });
     builder.addCase(SignUp.rejected, (state, { payload }) => {
       const { errors = [] } = payload as ServerErrors;
@@ -68,9 +81,10 @@ const authSlice = createSlice({
       state.isAuth = false;
       state.profile = null;
       state.authError = message;
+      state.isLoading = false;
     });
   },
 });
 
-export const { signin, signout, signup, setAuthError, clearAuthError } = authSlice.actions;
+export const { signin, signout, signup, setAuthError, clearAuthError, setIsLoading } = authSlice.actions;
 export const authReducer = authSlice.reducer;
