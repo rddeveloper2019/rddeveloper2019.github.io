@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { ADMIN_TOKEN, TokenService, USER_TOKEN } from 'src/model/utils/tokenService';
+import { ADMIN_TOKEN, TokenService, USER_TOKEN } from '../../model/utils/tokenService';
 
 const usersDb: { [key: string]: UserProfile } = {
   admin: {
