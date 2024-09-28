@@ -9,6 +9,7 @@ import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useFo
 import InputField from '../input-field/input-field';
 import { useAppDispatch } from '../../store/store';
 import { setIsAuth } from '../../store/slices/authSlice';
+import { ADMIN_TOKEN, TokenService, USER_TOKEN } from 'src/model/utils/tokenService';
 
 const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
   const dispatch = useAppDispatch();
@@ -32,8 +33,14 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
     onAction?.();
   };
 
-  const onConfirm: SubmitHandler<LoginFormType> = () => {
+  const onConfirm: SubmitHandler<LoginFormType> = ({ username }) => {
     dispatch(setIsAuth(true));
+    if (username === 'admin') {
+      TokenService.setToken(ADMIN_TOKEN);
+    }
+    if (username === 'user') {
+      TokenService.setToken(USER_TOKEN);
+    }
     onAction?.();
   };
 

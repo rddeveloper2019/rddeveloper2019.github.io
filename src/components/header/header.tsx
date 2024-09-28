@@ -13,6 +13,7 @@ import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector } from '../../store/selectors';
 import { setIsAuth } from '../../store/slices/authSlice';
+import { TokenService } from 'src/model/utils/tokenService';
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +41,7 @@ const Header = () => {
   };
 
   const logout = () => {
+    TokenService.clearToken();
     dispatch(setIsAuth(false));
   };
 
