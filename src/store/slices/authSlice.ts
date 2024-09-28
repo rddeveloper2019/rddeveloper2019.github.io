@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { TokenService } from '../../model/TokenService';
+import { ServerErrors } from '../../model/FetchService';
+import { SignUp } from '../../store/thunks/authThunk';
 
 export type Profile = {
   id: string;
@@ -43,14 +45,30 @@ const authSlice = createSlice({
       state.isAuth = true;
       state.profile = payload.profile;
     },
-    setAuthError: (state, { payload }: PayloadAction<{ error: string }>): void => {
+    setAuthError: (state, { payload }: PayloadAction<{ error: unknown }>): void => {
+      const { errors = [] } = payload.error as ServerErrors;
+      const message = errors?.[0]?.message || '❌ Неизвестная ошибка';
       state.isAuth = false;
       state.profile = null;
-      state.authError = payload.error || ' ❌ Неизвестная ошибка';
+      state.authError = message;
     },
     clearAuthError: (state): void => {
       state.authError = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(SignUp.fulfilled, (state, { payload }) => {
+      TokenService.setToken(payload.token);
+      state.isAuth = true;
+      state.profile = payload.profile;
+    });
+    builder.addCase(SignUp.rejected, (state, { payload }) => {
+      const { errors = [] } = payload as ServerErrors;
+      const message = errors?.[0]?.message || '❌ Неизвестная ошибка';
+      state.isAuth = false;
+      state.profile = null;
+      state.authError = message;
+    });
   },
 });
 

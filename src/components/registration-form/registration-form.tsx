@@ -9,6 +9,7 @@ import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useFo
 import InputField from '../input-field/input-field';
 import { useAppDispatch } from '../../store/store';
 import { useAuthentication } from '../../hooks/useAuthentication';
+import { SignUp } from '../../store/thunks/authThunk';
 
 const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
   const dispatch = useAppDispatch();
@@ -35,6 +36,12 @@ const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
 
   const onConfirm: SubmitHandler<RegistrationFormType> = ({ username, password }) => {
     register({ email: username, password });
+
+    onAction?.();
+  };
+
+  const onConfirmByThunk: SubmitHandler<RegistrationFormType> = ({ username, password }) => {
+    dispatch(SignUp({ email: username, password }));
 
     onAction?.();
   };
@@ -73,7 +80,7 @@ const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
         />
 
         <div className={cn(styles.buttons)}>
-          <TextButton type="button" state={TextButtonState.SECONDARY} handleClick={handleSubmit(onConfirm)}>
+          <TextButton type="button" state={TextButtonState.SECONDARY} handleClick={handleSubmit(onConfirmByThunk)}>
             AsyncThunk
           </TextButton>
           <TextButton type="button" state={TextButtonState.PRIMARY} handleClick={handleSubmit(onConfirm)}>
