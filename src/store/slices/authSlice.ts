@@ -16,6 +16,7 @@ const usersDb: { [key: string]: UserProfile } = {
     email: 'user@test.f',
   },
 };
+
 type UserProfile = {
   id: string;
   username: string;
