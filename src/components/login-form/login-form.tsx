@@ -8,11 +8,12 @@ import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../input-field/input-field';
 import { useAppDispatch } from '../../store/store';
-import { login } from '../../store/slices/authSlice';
+import { signin } from '../../store/slices/authSlice';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
   const dispatch = useAppDispatch();
-
+  const { login } = useAuthentication();
   const {
     control,
     handleSubmit,
@@ -33,7 +34,8 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
   };
 
   const onConfirm: SubmitHandler<LoginFormType> = ({ username, password }) => {
-    dispatch(login({ token: 'fake token' }));
+    login({ email: username, password });
+
     onAction?.();
   };
 

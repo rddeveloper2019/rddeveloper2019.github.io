@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AuthResult, FetchService, ServerErrors, SignUpBody } from '../model/FetchService';
+import { AuthResult, FetchService, ServerErrors, SignInBody, SignUpBody } from '../model/FetchService';
 import { useAuthSelector } from '../store/selectors';
 import { useAppDispatch } from '../store/store';
 import { setAuthError, signup } from '../store/slices/authSlice';
@@ -31,5 +31,23 @@ export const useAuthentication = () => {
     }
   };
 
-  return { register, errorMessage };
+  const login = async (body: SignInBody): Promise<void> => {
+    try {
+      const response = await FetchService.singin(body);
+
+      if (!response?.ok) {
+        throw await response.json();
+      }
+
+      const { token, profile } = (await response.json()) as AuthResult;
+      dispatch(signup({ token, profile }));
+    } catch (error: unknown) {
+      console.log('(**)=> error: ', error);
+      const { errors = [] } = error as ServerErrors;
+      const message = errors?.[0]?.message || '';
+      dispatch(setAuthError({ error: message }));
+    }
+  };
+
+  return { register, login, errorMessage };
 };

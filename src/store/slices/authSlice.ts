@@ -1,7 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { TokenService } from '../../model/TokenService';
-import { Profile } from '../../store/types';
+
+export type Profile = {
+  id: string;
+  name: string;
+  email: string;
+  signUpDate: Date;
+  commandId: string;
+};
 
 type AuthStateType = {
   isAuth: boolean;
@@ -21,11 +28,11 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ token: string }>): void => {
+    signin: (state, action: PayloadAction<{ token: string }>): void => {
       TokenService.setToken(action.payload.token);
       state.isAuth = true;
     },
-    logout: (state): void => {
+    signout: (state): void => {
       TokenService.clearToken();
       state.isAuth = false;
       state.profile = null;
@@ -47,5 +54,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout, signup, setAuthError, clearAuthError } = authSlice.actions;
+export const { signin, signout, signup, setAuthError, clearAuthError } = authSlice.actions;
 export const authReducer = authSlice.reducer;

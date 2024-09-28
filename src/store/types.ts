@@ -14,11 +14,3 @@ export type ThemeProviderType = {
   setAppLang: (lang: Lang) => void;
   setAppTheme: (theme: Theme) => void;
 };
-
-export type Profile = {
-  id: string;
-  name: string;
-  email: string;
-  signUpDate: Date;
-  commandId: string;
-};

@@ -7,58 +7,57 @@ import TextButton from '../../components/text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../input-field/input-field';
-import { useAppDispatch } from '../../store/store';
 import { useAuthSelector } from '../../store/selectors';
 
 const ProfileForm: FC<ProfileFormTypePropTypes> = ({ className }) => {
-  const dispatch = useAppDispatch();
   const { profile } = useAuthSelector();
+
+  const signUpDate = profile?.signUpDate ? new Date(profile.signUpDate).toLocaleDateString('en-CA') : '';
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<ProfileFormType>({
     defaultValues: {
-      username: profile?.name || '',
       email: profile?.email || '',
+      date: signUpDate,
     },
   });
 
-  const onConfirm: SubmitHandler<ProfileFormType> = ({ username, email }) => {
-    console.log('(**)=> save profile: ', { username, email });
+  const onConfirm: SubmitHandler<ProfileFormType> = ({ email, date }) => {
+    console.log('(**)=> save profile: ', { email, date });
   };
 
-  const usernameRules: RegisterOptions = { required: 'Невалидное имя пользователя', minLength: 3 };
   const emailRules: RegisterOptions = { required: 'Невалидный email', minLength: 3 };
 
   return (
     <Card>
       <form className={cn(className, styles.form)} onSubmit={handleSubmit(onConfirm)}>
         <Controller
-          name="username"
-          control={control as unknown as Control<FieldValues>}
-          rules={usernameRules}
-          render={({ field }) => (
-            <InputField
-              placeholder="введите логин"
-              error={errors.username && (`${errors.username.message}` || 'Не менее 3-х символов')}
-              {...field}
-            />
-          )}
-        />
-        <Controller
           name="email"
-          control={control as unknown as Control<FieldValues>}
           rules={emailRules}
+          control={control as unknown as Control<FieldValues>}
           render={({ field }) => (
             <InputField
-              placeholder="введите пароль"
+              placeholder="Ваш логин "
               error={errors.email && (`${errors.email.message}` || 'Не менее 3-х символов')}
               {...field}
             />
           )}
         />
-
+        <Controller
+          name="date"
+          control={control as unknown as Control<FieldValues>}
+          render={({ field: { ref, ...otherProps } }) => (
+            <InputField
+              type="date"
+              placeholder="Дата регистрации"
+              error={errors.date && `${errors.date.message}`}
+              {...otherProps}
+            />
+          )}
+        />
         <div className={cn(styles.buttons)}>
           <TextButton type="submit" state={TextButtonState.PRIMARY}>
             SAVE

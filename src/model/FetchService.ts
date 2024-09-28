@@ -1,5 +1,5 @@
 import { BaseURL } from '../config/sources';
-import { Profile } from '../store/types';
+import { Profile } from '../store/slices/authSlice';
 
 export type AuthResult = {
   token: string;
@@ -11,6 +11,12 @@ export type SignUpBody = {
   password: string;
   commandId?: string;
 };
+
+export type SignInBody = {
+  email: string;
+  password: string;
+};
+
 export enum ErrorCode {
   ERR_INCORRECT_EMAIL_OR_PASSWORD = 'ERR_INCORRECT_EMAIL_OR_PASSWORD', // Если не корректный email или пароль
   ERR_ACCOUNT_ALREADY_EXIST = 'ERR_ACCOUNT_ALREADY_EXIST', // При регистрации если пользователь уже существует
@@ -44,6 +50,16 @@ export type ServerErrors = {
 export class FetchService {
   static singup = async (body: SignUpBody): Promise<Response> => {
     return fetch(`${BaseURL}/signup`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  };
+
+  static singin = async (body: SignInBody): Promise<Response> => {
+    return fetch(`${BaseURL}/signin`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {

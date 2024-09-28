@@ -12,7 +12,7 @@ import LoginForm from '../../components/login-form/login-form';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector } from '../../store/selectors';
-import { clearAuthError, logout } from '../../store/slices/authSlice';
+import { clearAuthError, signin, signout } from '../../store/slices/authSlice';
 import RegistrationForm from '../../components/registration-form/registration-form';
 import Card from '../../components/card/Card';
 import { useAuthentication } from '../../hooks/useAuthentication';
@@ -117,7 +117,7 @@ const Header = () => {
               </TextButton>
             )}
             {isAuth && (
-              <TextButton type="button" state={TextButtonState.WHITE} handleClick={() => dispatch(logout())}>
+              <TextButton type="button" state={TextButtonState.WHITE} handleClick={() => dispatch(signout())}>
                 {t('header.logout')}
               </TextButton>
             )}
