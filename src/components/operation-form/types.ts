@@ -1,4 +1,4 @@
-import { Operation } from 'src/model/types';
+import { Operation } from '../../model/types';
 
 export type OperationFormPropTypes = {
   operation?: Operation;

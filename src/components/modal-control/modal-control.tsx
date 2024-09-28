@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import Modal from '../modal/modal';
 import { Portal } from '../portal/Portal';
 import { ModalControlProps } from './types';

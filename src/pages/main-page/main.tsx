@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import OperationsList from '../../components/operations-list';
-import { createRandomOperations } from 'src/model/utils';
+import { createRandomOperations } from '../../model/utils';
 import { Operation } from '../../model/types';
 import TextButton from '../../components/text-button/text-button';
 import styles from './main.module.scss';
@@ -14,7 +14,7 @@ import { useAppDispatch } from '../../store/store';
 import { useAuthSelector, useOperationsSelector } from '../../store/selectors';
 import { addOperation, setOperations } from '../../store/slices/operationsSlice';
 import { OperationFormType } from '../../components/operation-form/types';
-import { sanitizeOperationFormData } from '../..//model/utils/sanitizeOperationFormData';
+import { sanitizeOperationFormData } from '../../model/utils/sanitizeOperationFormData';
 import { v4 as uuidv4 } from 'uuid';
 
 export const MainPage = () => {
@@ -22,7 +22,7 @@ export const MainPage = () => {
   const [modal, setModal] = useState(false);
   const [count, setCount] = useState<number>(0);
   const { operations } = useOperationsSelector();
-  const { isAuth } = useAuthSelector();
+  const { isAuth, isAdmin } = useAuthSelector();
   const navigate = useNavigate();
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
 
@@ -70,14 +70,16 @@ export const MainPage = () => {
           onItemSelect={redirectToDetail}
         />
       </div>
-      <TextButton
-        type="button"
-        className={styles['add-button']}
-        state={TextButtonState.PRIMARY}
-        handleClick={showNewOperationModal}
-      >
-        +
-      </TextButton>
+      {isAdmin && (
+        <TextButton
+          type="button"
+          className={styles['add-button']}
+          state={TextButtonState.PRIMARY}
+          handleClick={showNewOperationModal}
+        >
+          +
+        </TextButton>
+      )}
       {modal && (
         <ModalControl backgroundClickHandler={() => setModal(false)}>
           <OperationForm onOperationFormSubmit={addNewOperation} onCancel={() => setModal(false)} />

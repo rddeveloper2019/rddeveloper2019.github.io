@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import OperationsList from '../../components/operations-list';
 import { Operation } from '../../model/types';
 import { useNavigate } from 'react-router-dom';

@@ -12,8 +12,7 @@ import LoginForm from '../../components/login-form/login-form';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector } from '../../store/selectors';
-import { setIsAuth } from '../../store/slices/authSlice';
-import { TokenService } from 'src/model/utils/tokenService';
+import { logout } from '../../store/slices/authSlice';
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -40,11 +39,6 @@ const Header = () => {
     setModal(true);
   };
 
-  const logout = () => {
-    TokenService.clearToken();
-    dispatch(setIsAuth(false));
-  };
-
   return (
     <>
       <div className={cn(styles.header)}>
@@ -62,9 +56,11 @@ const Header = () => {
           <TextButton state={TextButtonState.LINK} type="button">
             <NavLink to={'/favorites'}>{t('header.favorites')}</NavLink>
           </TextButton>
-          <TextButton state={TextButtonState.LINK} type="button">
-            <NavLink to={'/profile'}>{t('header.profile')}</NavLink>
-          </TextButton>
+          {isAuth && (
+            <TextButton state={TextButtonState.LINK} type="button">
+              <NavLink to={'/profile'}>{t('header.profile')}</NavLink>
+            </TextButton>
+          )}
         </div>
 
         <div className={styles.login}>
@@ -100,7 +96,7 @@ const Header = () => {
               </TextButton>
             )}
             {isAuth && (
-              <TextButton type="button" state={TextButtonState.WHITE} handleClick={logout}>
+              <TextButton type="button" state={TextButtonState.WHITE} handleClick={() => dispatch(logout())}>
                 {t('header.logout')}
               </TextButton>
             )}

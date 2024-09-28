@@ -10,7 +10,7 @@ import { sanitizeOperationFormData } from '../../model/utils/sanitizeOperationFo
 import { useAppDispatch } from '../../store/store';
 import { ModalControl } from '../modal-control/modal-control';
 import OperationForm from '../operation-form/operation-form';
-import { useOperationByIdSelector } from '../../store/selectors';
+import { useAuthSelector, useOperationByIdSelector } from '../../store/selectors';
 
 const OperationDetail: FC<OperationDetailPropsTypes> = ({
   data,
@@ -25,7 +25,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
 
   const [modal, setModal] = useState(false);
   const { amount, name, desc, category, createdAt, isFavorite } = operation;
-
+  const { isAdmin } = useAuthSelector();
   const onItemClick = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     onClick?.(operation);
@@ -74,14 +74,16 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
           ★
         </TextButton>
 
-        <TextButton
-          type="button"
-          state={TextButtonState.PRIMARY}
-          className={styles['edit-button']}
-          handleClick={openEditForm}
-        >
-          🖊️
-        </TextButton>
+        {isAdmin && (
+          <TextButton
+            type="button"
+            state={TextButtonState.PRIMARY}
+            className={styles['edit-button']}
+            handleClick={openEditForm}
+          >
+            🖊️
+          </TextButton>
+        )}
         {modal && (
           <ModalControl backgroundClickHandler={() => setModal(false)}>
             <OperationForm operation={data} onOperationFormSubmit={changeOperation} onCancel={() => setModal(false)} />
