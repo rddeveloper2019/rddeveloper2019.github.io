@@ -1,14 +1,17 @@
-@use "src/theme/variables";
-$safe-area:variables.$safe-area-top;
+@use 'src/theme/variables';
+$safe-area: variables.$safe-area-top;
 
 .layout {
   position: relative;
 }
 
 .safe-area {
-  margin-top: $safe-area;
+  margin-top: calc($safe-area + 16px);
 }
 
-.content {
-  min-height: calc(100vh - $safe-area);
+.info {
+  text-align: center;
+  padding: 16px;
+  font-size: 24px;
+  color: variables.$color-warn;
 }

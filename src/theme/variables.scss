@@ -1,6 +1,7 @@
 :root {
   //backgrounds
   --background-main: #ffffff;
+  --background-main-reversed: #696767;
   --background-primary: #2196f3;
   --background-black-40: rgba(0, 0, 0, 0.4);
   --background-icon-color-main: #e0e0e0;
@@ -10,22 +11,24 @@
 
   //border colors
   --border-color-card-main: #9c9c9c;
+  --border-color-warn: #c90909;
 
   //text-colors
   --color-default: #2a2929;
-  --color-primary: #2196f3;
-  --color-warn: #e10050;
+  --color-warn: #c90909;
   --color-disabled: #9c9c9c;
   --color-main: #ffffff;
+  --color-link: #f5e50c;
+  --placeholder-default: #cbc9c9;
 
   //element color
-  --element-warn: #e10050;
+  --element-warn: #c90909;
 
   //fonts sizes
   --font-size-main: 18px;
   --font-size-xl: 22px;
   --font-size-m: 16px;
-  --font-size-sm: 14px;
+  --font-size-sm: 13px;
 
   //safe-area
   --safe-area: 66px;
@@ -33,6 +36,7 @@
 
 //backgrounds
 $background-main: var(--background-main);
+$background-main-reversed: var(--background-main-reversed);
 $modal-background: var(--background-black-40);
 $background-primary: var(--background-primary);
 $background-icon-color-main: var(--background-icon-color-main);
@@ -42,6 +46,7 @@ $main-shadow: var(--main-shadow);
 
 //border colors
 $border-color-card-main: var(--border-color-card-main);
+$border-color-warn: var(--border-color-warn);
 
 //text-colors
 $color-default: var(--color-default);
@@ -49,6 +54,8 @@ $color-primary: var(--color-primary);
 $color-warn: var(--color-warn);
 $color-disabled: var(--color-disabled);
 $color-main: var(--color-main);
+$color-link: var(--color-link);
+$color-placeholder: var(--placeholder-default);
 
 //element-colors
 $element-warn: var(--element-warn);

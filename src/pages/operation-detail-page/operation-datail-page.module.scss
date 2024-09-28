@@ -1,0 +1,12 @@
+@use 'src/theme/variables';
+$safe-area: variables.$safe-area-top;
+
+.page {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+
+  .form {
+    width: 400px;
+  }
+}

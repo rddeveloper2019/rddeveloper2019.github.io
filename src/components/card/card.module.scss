@@ -1,12 +1,20 @@
 @use 'src/theme/variables';
 
 .card {
-  width: 400px;
-  background: variables.$color-main;
+  background: variables.$background-main;
   border-radius: 8px;
   box-shadow: variables.$main-shadow;
-  padding: 20px;
-  margin: 30px auto;
+  padding: 10px;
+  margin: 0 auto;
+  border: 2px solid;
+  transition: border-color 0.3s;
+  height: max-content;
+  &.hidden {
+    border-color: red;
+  }
+  &.shown {
+    border-color: transparent;
+  }
 }
 
 .card-title {
