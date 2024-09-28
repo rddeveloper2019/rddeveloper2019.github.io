@@ -1,8 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Operation } from '../../model/types';
 import { getPhoto } from '../../model/utils';
 import { AddOperation, EditOperation, GetOperations, ToggleOperation } from '../thunks/operationsThunk';
 import { ServerErrors } from '../../model/FetchService';
+import store from '../../store/store';
 
 type operationsStateType = {
   operations: Operation[];
@@ -19,7 +20,13 @@ const initialState: operationsStateType = {
 const operationsSlice = createSlice({
   name: 'operations',
   initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, { payload }: PayloadAction<unknown>): void => {
+      state.isLoading = false;
+      const { errors = [] } = payload as ServerErrors;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(GetOperations.pending, (state) => {
       state.isLoading = true;
@@ -47,8 +54,7 @@ const operationsSlice = createSlice({
     builder.addCase(GetOperations.rejected, (state, { payload }) => {
       state.isLoading = false;
       const { errors = [] } = payload as ServerErrors;
-      const message = errors?.[0]?.message || '❌ Неизвестная ошибка';
-      state.operationsError = message;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
     });
 
     builder.addCase(AddOperation.pending, (state) => {
@@ -64,8 +70,7 @@ const operationsSlice = createSlice({
     builder.addCase(AddOperation.rejected, (state, { payload }) => {
       state.isLoading = false;
       const { errors = [] } = payload as ServerErrors;
-      const message = errors?.[0]?.message || '❌ Неизвестная ошибка';
-      state.operationsError = message;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
     });
 
     builder.addCase(ToggleOperation.pending, (state) => {
@@ -86,8 +91,7 @@ const operationsSlice = createSlice({
     builder.addCase(ToggleOperation.rejected, (state, { payload }) => {
       state.isLoading = false;
       const { errors = [] } = payload as ServerErrors;
-      const message = errors?.[0]?.message || '❌ Неизвестная ошибка';
-      state.operationsError = message;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
     });
 
     builder.addCase(EditOperation.pending, (state) => {
@@ -108,13 +112,13 @@ const operationsSlice = createSlice({
       });
     });
 
-    builder.addCase(EditOperation.rejected, (state, { payload }) => {
+    builder.addCase(EditOperation.rejected, (state, { payload }: PayloadAction<unknown>) => {
       state.isLoading = false;
       const { errors = [] } = payload as ServerErrors;
-      const message = errors?.[0]?.message || '❌ Неизвестная ошибка';
-      state.operationsError = message;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
     });
   },
 });
 
+export const { setError } = operationsSlice.actions;
 export const operationsReducer = operationsSlice.reducer;
