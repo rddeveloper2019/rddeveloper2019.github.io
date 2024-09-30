@@ -8,11 +8,9 @@ import { OperationFormType } from '../operation-form/types';
 import { useAppDispatch } from '../../store/store';
 import { ModalControl } from '../modal-control/modal-control';
 import OperationForm from '../operation-form/operation-form';
-import { useAuthSelector, useOperationByIdSelector, useOperationsSelector } from '../../store/selectors';
+import { useAuthSelector, useOperationByIdSelector } from '../../store/selectors';
 import { EditOperation, ToggleOperation } from '../../store/thunks/operationsThunk';
 import { useLocation } from 'react-router-dom';
-import Card from '../card/Card';
-import { clearOperationsError } from '../../store/slices/operationsSlice';
 
 const OperationDetail: FC<OperationDetailPropsTypes> = ({
   data,
@@ -25,7 +23,6 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
   const dispatch = useAppDispatch();
   const location = useLocation();
   const operation = useOperationByIdSelector(data.id);
-  const { operationsError } = useOperationsSelector();
   const [modal, setModal] = useState(false);
   const { id, amount, name, desc, category, createdAt, isFavorite, photo } = data;
   const { isAuth } = useAuthSelector();
@@ -60,7 +57,6 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
     onEdit?.(null);
   };
 
-  const clearError = () => dispatch(clearOperationsError());
   const operationDate = new Date(createdAt).toLocaleDateString('RU');
 
   return (
@@ -100,11 +96,6 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
         {modal && (
           <ModalControl backgroundClickHandler={() => setModal(false)}>
             <OperationForm operation={data} onOperationFormSubmit={editOperation} onCancel={() => setModal(false)} />
-          </ModalControl>
-        )}
-        {operationsError && (
-          <ModalControl backgroundClickHandler={clearError}>
-            <Card className={cn(styles['error-message'], styles['p-40'])}>{operationsError}</Card>
           </ModalControl>
         )}
       </div>

@@ -13,11 +13,14 @@ import { useAppDispatch } from '../../store/store';
 import { useAuthSelector, useOperationsSelector } from '../../store/selectors';
 import { OperationFormType } from '../../components/operation-form/types';
 import { AddOperation, GetOperations } from '../../store/thunks/operationsThunk';
+import Card from '../../components/card/Card';
+import cn from 'clsx';
+import { clearOperationsError } from '../../store/slices/operationsSlice';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
-  const { operations } = useOperationsSelector();
+  const { operations, operationsError } = useOperationsSelector();
   const { isAuth } = useAuthSelector();
   const navigate = useNavigate();
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
@@ -42,7 +45,7 @@ export const MainPage = () => {
     setModal(false);
     // dispatch(addOperation(null));
   };
-
+  const clearError = () => dispatch(clearOperationsError());
   if (!isAuth) {
     return null;
   }
@@ -71,6 +74,11 @@ export const MainPage = () => {
         >
           +
         </TextButton>
+      )}
+      {operationsError && (
+        <ModalControl backgroundClickHandler={clearError}>
+          <Card className={cn(styles['error-message'], styles['p-40'])}>{operationsError}</Card>
+        </ModalControl>
       )}
       {modal && (
         <ModalControl backgroundClickHandler={() => setModal(false)}>
