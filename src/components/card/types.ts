@@ -5,4 +5,5 @@ export type CardPropsType = PropsWithChildren<{
   onClick?: () => void;
   onIntersect?: () => void;
   isLast?: boolean;
+  className?: string;
 }>;

@@ -12,15 +12,24 @@ import LoginForm from '../../components/login-form/login-form';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector } from '../../store/selectors';
-import { logout } from '../../store/slices/authSlice';
+import { clearAuthError, signout } from '../../store/slices/authSlice';
+import RegistrationForm from '../../components/registration-form/registration-form';
+import Card from '../../components/card/Card';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
+const enum ModalType {
+  REGISTER,
+  LOGIN,
+  SELECT,
+  NONE,
+}
 const Header = () => {
   const dispatch = useAppDispatch();
 
   const { isAuth } = useAuthSelector();
   const { theme, setAppLang: setLang, setAppTheme: setTheme, lang } = useContext(ThemeContext);
-  const [modal, setModal] = useState(false);
-
+  const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
+  const { errorMessage } = useAuthentication();
   const { t } = useTranslation();
 
   const setAppTheme = (name: Theme) => {
@@ -35,8 +44,19 @@ const Header = () => {
     }
   };
 
-  const openLoginForm = () => {
-    setModal(true);
+  const showRegisterForm = () => {
+    setModalType(ModalType.REGISTER);
+  };
+
+  const showLoginForm = () => {
+    setModalType(ModalType.LOGIN);
+  };
+  const showSelectAuthModal = () => {
+    setModalType(ModalType.SELECT);
+  };
+
+  const closeModal = () => {
+    setModalType(ModalType.NONE);
   };
 
   return (
@@ -49,19 +69,20 @@ const Header = () => {
           />
           <div>Финансы</div>
         </div>
-        <div className={styles.links}>
-          <TextButton state={TextButtonState.LINK} type="button">
-            <NavLink to={'/'}>{t('header.home')}</NavLink>
-          </TextButton>
-          <TextButton state={TextButtonState.LINK} type="button">
-            <NavLink to={'/favorites'}>{t('header.favorites')}</NavLink>
-          </TextButton>
-          {isAuth && (
+        {isAuth && (
+          <div className={styles.links}>
+            <TextButton state={TextButtonState.LINK} type="button">
+              <NavLink to={'/'}>{t('header.home')}</NavLink>
+            </TextButton>
+            <TextButton state={TextButtonState.LINK} type="button">
+              <NavLink to={'/favorites'}>{t('header.favorites')}</NavLink>
+            </TextButton>
+
             <TextButton state={TextButtonState.LINK} type="button">
               <NavLink to={'/profile'}>{t('header.profile')}</NavLink>
             </TextButton>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className={styles.login}>
           <div className={styles.theme}>
@@ -91,21 +112,44 @@ const Header = () => {
           </div>
           <nav className={cn(styles.nav)}>
             {!isAuth && (
-              <TextButton handleClick={openLoginForm} type="button" state={TextButtonState.WHITE}>
+              <TextButton handleClick={showSelectAuthModal} type="button" state={TextButtonState.WHITE}>
                 {t('header.login')}
               </TextButton>
             )}
             {isAuth && (
-              <TextButton type="button" state={TextButtonState.WHITE} handleClick={() => dispatch(logout())}>
+              <TextButton type="button" state={TextButtonState.WHITE} handleClick={() => dispatch(signout())}>
                 {t('header.logout')}
               </TextButton>
             )}
           </nav>
         </div>
       </div>
-      {modal && (
-        <ModalControl backgroundClickHandler={() => setModal(false)}>
-          <LoginForm onAction={() => setModal(false)} />
+      {modalType === ModalType.SELECT && (
+        <ModalControl backgroundClickHandler={closeModal}>
+          <Card className={cn(styles.flex, styles['p-40'])}>
+            <TextButton handleClick={showRegisterForm} type="button" state={TextButtonState.PRIMARY}>
+              🔑 Регистрация
+            </TextButton>
+
+            <TextButton type="button" state={TextButtonState.SECONDARY} handleClick={showLoginForm}>
+              🔓 Вход
+            </TextButton>
+          </Card>
+        </ModalControl>
+      )}
+      {modalType === ModalType.LOGIN && (
+        <ModalControl backgroundClickHandler={closeModal}>
+          <LoginForm onAction={closeModal} />
+        </ModalControl>
+      )}
+      {modalType === ModalType.REGISTER && (
+        <ModalControl backgroundClickHandler={closeModal}>
+          <RegistrationForm onAction={closeModal} />
+        </ModalControl>
+      )}
+      {errorMessage && (
+        <ModalControl backgroundClickHandler={() => dispatch(clearAuthError())}>
+          <Card className={cn(styles['error-message'], styles['p-40'])}>{errorMessage}</Card>
         </ModalControl>
       )}
     </>

@@ -4,7 +4,7 @@ import cn from 'clsx';
 import { CardPropsType } from '../../components/card/types';
 import { useObserver } from '../../hooks/useObserver';
 
-const Card: FC<CardPropsType> = ({ children, width, onIntersect, onClick, isLast = false }) => {
+const Card: FC<CardPropsType> = ({ children, width, onIntersect, onClick, className, isLast = false }) => {
   const cardRef = useRef<HTMLDivElement>();
 
   const [entry] = useObserver(cardRef, { rootMargin: '200px' });
@@ -30,7 +30,7 @@ const Card: FC<CardPropsType> = ({ children, width, onIntersect, onClick, isLast
 
   return (
     <div
-      className={cn(styles.card, inView ? styles.shown : styles.hidden)}
+      className={cn(styles.card, inView ? styles.shown : styles.hidden, className)}
       style={{ width: width }}
       onClick={() => onClick?.()}
       ref={cardRef}

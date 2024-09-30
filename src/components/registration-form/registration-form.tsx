@@ -1,23 +1,27 @@
-import styles from './login-form.module.scss';
+import styles from './registration-form.module.scss';
 import React, { FC } from 'react';
 import cn from 'clsx';
-import { LoginFormPropsType, LoginFormType } from './types';
+import { RegistrationFormType, RegistrationPropsType } from './types';
 import Card from '../card/Card';
 import TextButton from '../../components/text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import { Control, Controller, FieldValues, RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../input-field/input-field';
+import { useAppDispatch } from '../../store/store';
 import { useAuthentication } from '../../hooks/useAuthentication';
+import { SignUp } from '../../store/thunks/authThunk';
 
-const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
-  const { login } = useAuthentication();
+const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
+  const dispatch = useAppDispatch();
+  const { register } = useAuthentication();
+
   const {
     control,
     handleSubmit,
     clearErrors,
     reset,
     formState: { errors },
-  } = useForm<LoginFormType>({
+  } = useForm<RegistrationFormType>({
     defaultValues: {
       username: '',
       password: '',
@@ -30,8 +34,14 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
     onAction?.();
   };
 
-  const onConfirm: SubmitHandler<LoginFormType> = ({ username, password }) => {
-    login({ email: username, password });
+  const onConfirm: SubmitHandler<RegistrationFormType> = ({ username, password }) => {
+    register({ email: username, password });
+
+    onAction?.();
+  };
+
+  const onConfirmByThunk: SubmitHandler<RegistrationFormType> = ({ username, password }) => {
+    dispatch(SignUp({ email: username, password }));
 
     onAction?.();
   };
@@ -41,8 +51,8 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
 
   return (
     <Card>
-      <h1 className={cn(styles.title)}>Вход</h1>
-      <form className={cn(styles.form)} onSubmit={handleSubmit(onConfirm)}>
+      <h1 className={cn(styles.title)}>Регистрация</h1>
+      <form className={cn(styles.form)}>
         <Controller
           name="username"
           control={control as unknown as Control<FieldValues>}
@@ -70,8 +80,11 @@ const LoginForm: FC<LoginFormPropsType> = ({ onAction }) => {
         />
 
         <div className={cn(styles.buttons)}>
-          <TextButton type="submit" state={TextButtonState.PRIMARY}>
-            Войти
+          <TextButton type="button" state={TextButtonState.SECONDARY} handleClick={handleSubmit(onConfirmByThunk)}>
+            AsyncThunk
+          </TextButton>
+          <TextButton type="button" state={TextButtonState.PRIMARY} handleClick={handleSubmit(onConfirm)}>
+            Hook
           </TextButton>
         </div>
       </form>

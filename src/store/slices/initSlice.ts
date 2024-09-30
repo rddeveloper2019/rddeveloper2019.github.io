@@ -13,7 +13,7 @@ const initSlice = createSlice({
   reducers: {
     initApp: (state): void => {
       state.init = true;
-      console.log('(**)=> : app initialized', state.init);
+      console.log('app initialized');
     },
   },
 });
