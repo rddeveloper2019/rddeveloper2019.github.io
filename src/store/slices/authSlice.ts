@@ -49,8 +49,8 @@ const authSlice = createSlice({
       state.profile = payload.profile;
       state.isLoading = false;
     },
-    setAuthError: (state, { payload }: PayloadAction<{ error: unknown }>): void => {
-      const { errors = [] } = payload.error as ServerErrors;
+    setAuthError: (state, { payload }: PayloadAction<unknown>): void => {
+      const { errors = [] } = payload as ServerErrors;
       const message = errors?.[0]?.message || '❌ Неизвестная ошибка';
       state.isAuth = false;
       state.profile = null;

@@ -24,7 +24,7 @@ export const useAuthentication = () => {
       const { token, profile } = (await response.json()) as AuthResult;
       dispatch(signup({ token, profile }));
     } catch (error: unknown) {
-      dispatch(setAuthError(error);
+      dispatch(setAuthError(error));
     }
   };
 
@@ -39,7 +39,7 @@ export const useAuthentication = () => {
       const { token, profile } = (await response.json()) as AuthResult;
       dispatch(signup({ token, profile }));
     } catch (error: unknown) {
-      dispatch(setAuthError({ error }));
+      dispatch(setAuthError(error));
     }
   };
 
