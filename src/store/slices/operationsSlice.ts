@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { Operation } from '../../model/types';
 import { getPhoto } from '../../model/utils';
 import { AddOperation, EditOperation, GetOperations, ToggleOperation } from '../thunks/operationsThunk';
 import { ServerErrors } from '../../model/FetchService';
-import store from '../../store/store';
 
 type operationsStateType = {
   operations: Operation[];
@@ -25,6 +25,10 @@ const operationsSlice = createSlice({
       state.isLoading = false;
       const { errors = [] } = payload as ServerErrors;
       state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
+    },
+    clearOperationsError: (state): void => {
+      state.isLoading = false;
+      state.operationsError = null;
     },
   },
   extraReducers: (builder) => {
@@ -120,5 +124,5 @@ const operationsSlice = createSlice({
   },
 });
 
-export const { setError } = operationsSlice.actions;
+export const { setError, clearOperationsError } = operationsSlice.actions;
 export const operationsReducer = operationsSlice.reducer;

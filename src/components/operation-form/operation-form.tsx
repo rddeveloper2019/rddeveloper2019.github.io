@@ -81,7 +81,7 @@ const OperationForm: FC<OperationFormPropTypes> = ({ operation, onOperationFormS
           name="categoryId"
           control={control as unknown as Control<FieldValues>}
           render={({ field: { onChange, ...rest } }) => (
-            <SelectField onChange={onChange} {...rest} options={categories} value={operation?.category?.id} />
+            <SelectField onChange={onChange} {...rest} options={categories} />
           )}
         />
         <Controller

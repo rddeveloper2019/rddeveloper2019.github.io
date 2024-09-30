@@ -47,7 +47,7 @@ export const ToggleOperation = createAsyncThunk<
   try {
     const response = await FetchService.toggleOperationFavorite(body);
     if (!response?.ok) {
-      return rejectWithValue(response);
+      return rejectWithValue(await response.json());
     }
 
     const data = await response.json();
@@ -64,7 +64,7 @@ export const EditOperation = createAsyncThunk<Operation, OperationFormType, { re
     try {
       const response = await FetchService.editOperation(body);
       if (!response?.ok) {
-        return rejectWithValue(response);
+        return rejectWithValue(await response.json());
       }
 
       const data = await response.json();

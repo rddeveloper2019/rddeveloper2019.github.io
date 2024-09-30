@@ -1,7 +1,7 @@
 import styles from './layout.module.scss';
 import React, { ReactElement, useEffect, useInsertionEffect, useState } from 'react';
 import Header from '../components/header/header';
-import { useAuthSelector } from '../store/selectors';
+import { useAuthSelector, useCategoriesSelector, useOperationsSelector } from '../store/selectors';
 import { useAppDispatch } from '../store/store';
 import { initApp } from '../store/slices/initSlice';
 import FullscreenLoader from '../components/fullscreen-loader/fullscreen-loader';
@@ -13,6 +13,8 @@ export const Layout = ({ children }: { children?: ReactElement }) => {
   const dispatch = useAppDispatch();
   const { isAuth } = useAuthSelector();
   const { isLoading: authLoading } = useAuthSelector();
+  const { isLoading: operationsLoading } = useOperationsSelector();
+  const { isLoading: categoriesLoading } = useCategoriesSelector();
   const [loader, setLoader] = useState(false);
 
   useInsertionEffect(() => {
@@ -28,10 +30,10 @@ export const Layout = ({ children }: { children?: ReactElement }) => {
   }, []);
 
   useEffect(() => {
-    const isLoading = authLoading; //const isLoading = authLoading || operationsLoading ...
+    const isLoading = authLoading || operationsLoading || categoriesLoading; //const isLoading = authLoading || operationsLoading ...
 
     setLoader(isLoading);
-  }, [authLoading]);
+  }, [authLoading, operationsLoading, categoriesLoading]);
 
   return (
     <div className={styles.layout}>
