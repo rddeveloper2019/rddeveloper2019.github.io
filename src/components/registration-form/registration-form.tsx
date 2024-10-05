@@ -28,12 +28,6 @@ const LoginForm: FC<RegistrationPropsType> = ({ onAction }) => {
     },
   });
 
-  const handleCancel = () => {
-    clearErrors();
-    reset();
-    onAction?.();
-  };
-
   const onConfirm: SubmitHandler<RegistrationFormType> = ({ username, password }) => {
     register({ email: username, password });
 
