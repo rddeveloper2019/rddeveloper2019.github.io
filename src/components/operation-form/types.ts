@@ -10,9 +10,10 @@ export type OperationFormType = {
   id?: string;
   name: string;
   desc?: string;
-  createdAt: string;
+  date: string;
   amount: string;
-  category: string;
+  categoryId: string;
   photo?: string;
   isFavorite?: boolean;
+  type?: 'Cost' | 'Profit';
 };

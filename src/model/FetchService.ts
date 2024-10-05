@@ -1,6 +1,8 @@
 import { BaseURL } from '../config/sources';
 import { Profile, setIsLoading } from '../store/slices/authSlice';
 import store from '../store/store';
+import { TokenService } from '../model/TokenService';
+import { OperationFormType } from '../components/operation-form/types';
 
 export type AuthResult = {
   token: string;
@@ -48,7 +50,34 @@ export type ServerErrors = {
   }[];
 };
 
+export type OperationsFilters = {
+  ids?: string[];
+  name?: string;
+  categoryIds?: string[];
+  type?: 'Cost' | 'Profit';
+  pagination?: {
+    pageSize?: number;
+    pageNumber?: number;
+  };
+  date?: {
+    gte?: string; // от - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+    lte?: string; // до - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+  };
+  createdAt?: {
+    gte?: string; // от - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+    lte?: string; // до - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+  };
+  updatedAt?: {
+    gte?: string; // от - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+    lte?: string; // до - дата в виде строки new Date().toISOString() 2023-09-19T10:37:16.389+00:00
+  };
+  sorting?: {
+    type: 'ASC' | 'DESC';
+    field: 'id' | 'createdAt' | 'updatedAt' | 'name' | 'date';
+  };
+};
 export class FetchService {
+  static pageNumber = 1;
   static singup = async (body: SignUpBody): Promise<Response> => {
     store.dispatch(setIsLoading());
     return fetch(`${BaseURL}/signup`, {
@@ -68,6 +97,77 @@ export class FetchService {
       headers: {
         'content-type': 'application/json',
       },
+    });
+  };
+
+  static getCategories = async (): Promise<Response> => {
+    return fetch(
+      `${BaseURL}/categories?${new URLSearchParams({
+        pagination: JSON.stringify({
+          pageSize: 10,
+          pageNumber: 1,
+        }),
+        sorting: JSON.stringify({ type: 'DESC', field: 'id' }),
+      }).toString()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${TokenService.getToken()}`,
+        },
+      }
+    );
+  };
+
+  static getOperations = async (more: boolean): Promise<Response> => {
+    const count = more ? ++FetchService.pageNumber : 1;
+    // store.dispatch(setIsLoading());
+    return fetch(
+      `${BaseURL}/operations?${new URLSearchParams({
+        pagination: JSON.stringify({
+          pageSize: 10,
+          pageNumber: count,
+        }),
+        sorting: JSON.stringify({ type: 'DESC', field: 'updatedAt' }),
+      }).toString()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${TokenService.getToken()}`,
+        },
+        method: 'GET',
+      }
+    );
+  };
+
+  static addOperation = async (body: OperationFormType): Promise<Response> => {
+    body.type = 'Profit';
+    return fetch(`${BaseURL}/operations`, {
+      headers: {
+        Authorization: `Bearer ${TokenService.getToken()}`,
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+  };
+
+  static toggleOperationFavorite = async ({ id, type }: { id: string; type: 'Cost' | 'Profit' }): Promise<Response> => {
+    return fetch(`${BaseURL}/operations/${id}`, {
+      headers: {
+        authorization: `Bearer ${TokenService.getToken()}`,
+        'content-type': 'application/json',
+      },
+      method: 'PATCH',
+      body: JSON.stringify({ type: type === 'Profit' ? 'Cost' : 'Profit' }),
+    });
+  };
+
+  static editOperation = async (operation: OperationFormType): Promise<Response> => {
+    return fetch(`${BaseURL}/operations/${operation.id}`, {
+      headers: {
+        authorization: `Bearer ${TokenService.getToken()}`,
+        'content-type': 'application/json',
+      },
+      method: 'PATCH',
+      body: JSON.stringify(operation),
     });
   };
 }

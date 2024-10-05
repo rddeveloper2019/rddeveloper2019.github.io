@@ -14,7 +14,6 @@ export type Profile = {
 
 type AuthStateType = {
   isAuth: boolean;
-  isAdmin: boolean;
   profile: Profile | null;
   authError?: string;
   isLoading: boolean;
@@ -22,7 +21,6 @@ type AuthStateType = {
 
 const initialState: AuthStateType = {
   isAuth: TokenService.checkToken(),
-  isAdmin: true,
   profile: null,
   authError: null,
   isLoading: false,

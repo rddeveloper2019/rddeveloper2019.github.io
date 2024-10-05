@@ -1,43 +1,128 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { Operation } from '../../model/types';
-import { createRandomOperations } from '../../model/utils';
+import { getPhoto } from '../../model/utils';
+import { AddOperation, EditOperation, GetOperations, ToggleOperation } from '../thunks/operationsThunk';
+import { ServerErrors } from '../../model/FetchService';
 
 type operationsStateType = {
   operations: Operation[];
+  isLoading: boolean;
+  operationsError?: string;
 };
 
 const initialState: operationsStateType = {
-  operations: [...createRandomOperations(10)],
+  operations: [],
+  isLoading: false,
+  operationsError: null,
 };
 
 const operationsSlice = createSlice({
   name: 'operations',
   initialState,
   reducers: {
-    setOperations: (state, action: PayloadAction<Operation[]>): void => {
-      state.operations = action.payload;
+    setError: (state, { payload }: PayloadAction<unknown>): void => {
+      state.isLoading = false;
+      const { errors = [] } = payload as ServerErrors;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
     },
-    addOperation: (state, action: PayloadAction<Operation>): void => {
-      state.operations.unshift(action.payload);
+    clearOperationsError: (state): void => {
+      state.isLoading = false;
+      state.operationsError = null;
     },
-    toggleOperationFavorite: (state, action: PayloadAction<Operation['id']>): void => {
-      const toggled = state.operations.find(({ id }) => id === action.payload);
-      if (toggled) {
-        toggled.isFavorite = !toggled.isFavorite;
-      }
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(GetOperations.pending, (state) => {
+      state.isLoading = true;
+      state.operationsError = null;
+    });
 
-    editOperation: (state, action: PayloadAction<Operation>): void => {
+    builder.addCase(GetOperations.fulfilled, (state, { payload }) => {
+      const { data, more } = payload;
+      state.isLoading = false;
+      state.operationsError = null;
+      if (!data.length) {
+        state.operationsError = '🏁';
+        return;
+      }
+      const newOperations = data.map((operation) => {
+        return { ...operation, isFavorite: operation.type === 'Cost', photo: getPhoto(true) };
+      });
+
+      if (more) {
+        state.operations.push(...newOperations);
+      } else {
+        state.operations = newOperations;
+      }
+    });
+    builder.addCase(GetOperations.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      const { errors = [] } = payload as ServerErrors;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
+    });
+
+    builder.addCase(AddOperation.pending, (state) => {
+      state.isLoading = true;
+      state.operationsError = null;
+    });
+    builder.addCase(AddOperation.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.operationsError = null;
+      state.operations.unshift({ ...payload, isFavorite: payload.type === 'Cost', photo: getPhoto(true) });
+    });
+
+    builder.addCase(AddOperation.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      const { errors = [] } = payload as ServerErrors;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
+    });
+
+    builder.addCase(ToggleOperation.pending, (state) => {
+      state.isLoading = true;
+      state.operationsError = null;
+    });
+    builder.addCase(ToggleOperation.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.operationsError = null;
+      state.operations.forEach((operation) => {
+        if (operation.id === payload.id) {
+          operation.type = payload.type;
+          operation.isFavorite = payload.type === 'Cost';
+        }
+      });
+    });
+
+    builder.addCase(ToggleOperation.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      const { errors = [] } = payload as ServerErrors;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
+    });
+
+    builder.addCase(EditOperation.pending, (state) => {
+      state.isLoading = true;
+      state.operationsError = null;
+    });
+    builder.addCase(EditOperation.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.operationsError = null;
+
+      // TODO мутация обхекта не отрабатывает!!
+
       state.operations = state.operations.map((operation) => {
-        if (operation.id === action.payload.id) {
-          return action.payload;
+        if (operation.id === payload.id) {
+          operation = { ...operation, ...payload };
         }
         return operation;
       });
-    },
+    });
+
+    builder.addCase(EditOperation.rejected, (state, { payload }: PayloadAction<unknown>) => {
+      state.isLoading = false;
+      const { errors = [] } = payload as ServerErrors;
+      state.operationsError = errors?.[0]?.message || '❌ Неизвестная ошибка';
+    });
   },
 });
 
-export const { setOperations, addOperation, toggleOperationFavorite, editOperation } = operationsSlice.actions;
-export const operationsReduser = operationsSlice.reducer;
+export const { setError, clearOperationsError } = operationsSlice.actions;
+export const operationsReducer = operationsSlice.reducer;

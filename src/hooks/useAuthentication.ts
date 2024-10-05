@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AuthResult, FetchService, ServerErrors, SignInBody, SignUpBody } from '../model/FetchService';
+import { AuthResult, FetchService, SignInBody, SignUpBody } from '../model/FetchService';
 import { useAuthSelector } from '../store/selectors';
 import { useAppDispatch } from '../store/store';
 import { setAuthError, signup } from '../store/slices/authSlice';

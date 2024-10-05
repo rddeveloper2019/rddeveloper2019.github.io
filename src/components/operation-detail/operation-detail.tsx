@@ -1,16 +1,16 @@
-import React, { FC, MouseEvent, useState } from 'react';
+import React, { FC, MouseEvent, useMemo, useState } from 'react';
 import { OperationDetailPropsTypes } from './types';
 import styles from './operation-detail.module.scss';
 import cn from 'clsx';
 import TextButton from '../text-button/text-button';
 import { TextButtonState } from '../text-button/types';
 import { OperationFormType } from '../operation-form/types';
-import { editOperation, toggleOperationFavorite } from '../../store/slices/operationsSlice';
-import { sanitizeOperationFormData } from '../../model/utils/sanitizeOperationFormData';
 import { useAppDispatch } from '../../store/store';
 import { ModalControl } from '../modal-control/modal-control';
 import OperationForm from '../operation-form/operation-form';
-import { useAuthSelector, useOperationByIdSelector } from '../../store/selectors';
+import { useAuthSelector, useOperationByIdSelector, useOperationsSelector } from '../../store/selectors';
+import { EditOperation, ToggleOperation } from '../../store/thunks/operationsThunk';
+import { useLocation } from 'react-router-dom';
 
 const OperationDetail: FC<OperationDetailPropsTypes> = ({
   data,
@@ -21,18 +21,28 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
   onClick,
 }) => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const operation = useOperationByIdSelector(data.id);
-
   const [modal, setModal] = useState(false);
-  const { amount, name, desc, category, createdAt, isFavorite } = operation;
-  const { isAdmin } = useAuthSelector();
+  const { id, amount, name, desc, category, createdAt, isFavorite, photo } = data;
+  const { isAuth } = useAuthSelector();
+
+  const isButtonActive = useMemo(() => {
+    return location.pathname.includes('/operation/');
+  }, [location]);
+
   const onItemClick = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     onClick?.(operation);
   };
 
   const onFavoriteItemToggle = () => {
-    dispatch(toggleOperationFavorite(operation.id));
+    if (!isButtonActive) {
+      onClick?.(operation);
+    }
+
+    isButtonActive && dispatch(ToggleOperation({ type: operation.type, id: operation.id }));
+
     onFavoriteToggle?.(data);
   };
 
@@ -40,12 +50,11 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
     setModal(true);
   };
 
-  const changeOperation = (data: OperationFormType) => {
-    const editedOperation = sanitizeOperationFormData({ ...operation, ...data });
-    dispatch(editOperation(editedOperation));
+  const editOperation = (body: OperationFormType) => {
+    isButtonActive && dispatch(EditOperation({ ...body, id }));
     setModal(false);
 
-    onEdit?.(editedOperation);
+    onEdit?.(null);
   };
 
   const operationDate = new Date(createdAt).toLocaleDateString('RU');
@@ -56,7 +65,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
       style={{ width: width || '100%' }}
       onClick={onItemClick}
     >
-      <div className={cn(styles.logo)}>{category?.photo && <img src={category.photo} alt={category.name} />}</div>
+      <div className={cn(styles.logo)}>{photo && <img src={photo} />}</div>
       <div className={cn(styles['operation-detail-content'])}>
         {category?.name && <div className={cn(styles.category)}>{category.name}</div>}
         {name && <div className={cn(styles.title)}>{name}</div>}
@@ -74,7 +83,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
           ★
         </TextButton>
 
-        {isAdmin && (
+        {isAuth && isButtonActive && (
           <TextButton
             type="button"
             state={TextButtonState.PRIMARY}
@@ -86,7 +95,7 @@ const OperationDetail: FC<OperationDetailPropsTypes> = ({
         )}
         {modal && (
           <ModalControl backgroundClickHandler={() => setModal(false)}>
-            <OperationForm operation={data} onOperationFormSubmit={changeOperation} onCancel={() => setModal(false)} />
+            <OperationForm operation={data} onOperationFormSubmit={editOperation} onCancel={() => setModal(false)} />
           </ModalControl>
         )}
       </div>

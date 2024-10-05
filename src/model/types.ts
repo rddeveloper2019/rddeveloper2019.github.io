@@ -19,7 +19,14 @@ export type Customer = {
   isSubscribed: boolean;
 };
 
-export type Category = { id: string; name: string; photo?: string };
+export type Category = {
+  id: string;
+  name: string;
+  photo?: string;
+  commandId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
 
 export type Product = {
   id: string;
@@ -40,6 +47,9 @@ export type BaseOperation = {
   amount: number;
   category: Category;
   isFavorite?: boolean;
+  photo?: string;
+  date?: string;
+  updatedAt: string;
 };
 
 export type Cost = BaseOperation & { type: 'Profit' };

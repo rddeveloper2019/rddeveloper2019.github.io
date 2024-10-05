@@ -10,3 +10,11 @@ $safe-area: variables.$safe-area-top;
     width: 400px;
   }
 }
+.error-message {
+  color: variables.$color-warn;
+
+  text-align: center;
+  &.p-40 {
+    padding: 40px;
+  }
+}

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import OperationsList from '../../components/operations-list';
-import { createRandomOperations } from '../../model/utils';
 import { Operation } from '../../model/types';
 import TextButton from '../../components/text-button/text-button';
 import styles from './main.module.scss';
@@ -12,45 +11,41 @@ import { DualRangeSlider } from '../../components/dual-range-slider';
 import { SlideValues } from '../../components/dual-range-slider/types';
 import { useAppDispatch } from '../../store/store';
 import { useAuthSelector, useOperationsSelector } from '../../store/selectors';
-import { addOperation, setOperations } from '../../store/slices/operationsSlice';
 import { OperationFormType } from '../../components/operation-form/types';
-import { sanitizeOperationFormData } from '../../model/utils/sanitizeOperationFormData';
-import { v4 as uuidv4 } from 'uuid';
+import { AddOperation, GetOperations } from '../../store/thunks/operationsThunk';
+import Card from '../../components/card/Card';
+import cn from 'clsx';
+import { clearOperationsError } from '../../store/slices/operationsSlice';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
-  const [count, setCount] = useState<number>(0);
-  const { operations } = useOperationsSelector();
-  const { isAuth, isAdmin } = useAuthSelector();
+  const { operations, operationsError } = useOperationsSelector();
+  const { isAuth } = useAuthSelector();
   const navigate = useNavigate();
   const [slideValues, setSlideValues] = useState<SlideValues>({ minValue: 0, maxValue: 0 });
 
-  useEffect(() => {
-    if (count) {
-      dispatch(setOperations([...operations, ...createRandomOperations(5)]));
-    }
-  }, [count]);
-
+  const loadMoreOperations = () => {
+    dispatch(GetOperations(true));
+  };
   const onSlide: (data: SlideValues) => void = ({ minValue, maxValue }) => {
     setSlideValues({ minValue, maxValue });
   };
 
   const redirectToDetail = (operation: Operation) => {
-    navigate(`/operation/${operation.id}`, { state: { operation } });
+    navigate(`/operation/${operation.id}`, { state: { id: operation.id } });
   };
 
   const showNewOperationModal = () => {
     setModal(true);
   };
 
-  const addNewOperation = (data: OperationFormType) => {
-    //для демонстрации
-    const operation: Operation = sanitizeOperationFormData(data);
+  const addNewOperation = async (data: OperationFormType) => {
+    dispatch(AddOperation(data));
     setModal(false);
-    dispatch(addOperation({ ...operation, id: uuidv4() }));
+    // dispatch(addOperation(null));
   };
-
+  const clearError = () => dispatch(clearOperationsError());
   if (!isAuth) {
     return null;
   }
@@ -66,11 +61,11 @@ export const MainPage = () => {
           operations={operations.filter(
             (item) => item.amount >= slideValues.minValue && item.amount <= slideValues.maxValue
           )}
-          addMore={() => setCount(count + 1)}
+          addMore={loadMoreOperations}
           onItemSelect={redirectToDetail}
         />
       </div>
-      {isAdmin && (
+      {isAuth && (
         <TextButton
           type="button"
           className={styles['add-button']}
@@ -79,6 +74,11 @@ export const MainPage = () => {
         >
           +
         </TextButton>
+      )}
+      {operationsError && (
+        <ModalControl backgroundClickHandler={clearError}>
+          <Card className={cn(styles['error-message'], styles['p-40'])}>{operationsError}</Card>
+        </ModalControl>
       )}
       {modal && (
         <ModalControl backgroundClickHandler={() => setModal(false)}>

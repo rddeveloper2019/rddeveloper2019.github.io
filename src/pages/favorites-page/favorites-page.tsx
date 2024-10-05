@@ -17,7 +17,7 @@ export const FavoritesPage = () => {
   };
 
   const redirectToDetail = (operation: Operation) => {
-    navigate(`/operation/${operation.id}`, { state: { operation } });
+    navigate(`/operation/${operation.id}`, { state: { id: operation.id } });
   };
 
   if (!isAuth) {
