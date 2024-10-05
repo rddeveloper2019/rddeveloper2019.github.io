@@ -8,7 +8,7 @@ import { OperationFormType } from '../operation-form/types';
 import { useAppDispatch } from '../../store/store';
 import { ModalControl } from '../modal-control/modal-control';
 import OperationForm from '../operation-form/operation-form';
-import { useAuthSelector, useOperationByIdSelector } from '../../store/selectors';
+import { useAuthSelector, useOperationByIdSelector, useOperationsSelector } from '../../store/selectors';
 import { EditOperation, ToggleOperation } from '../../store/thunks/operationsThunk';
 import { useLocation } from 'react-router-dom';
 
