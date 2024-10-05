@@ -23,11 +23,11 @@ export const Layout = ({ children }: { children?: ReactElement }) => {
 
   useEffect(() => {
     dispatch(GetCategories());
-  }, []);
+  }, [isAuth]);
 
   useEffect(() => {
     dispatch(GetOperations(false));
-  }, []);
+  }, [isAuth]);
 
   useEffect(() => {
     const isLoading = authLoading || operationsLoading || categoriesLoading; //const isLoading = authLoading || operationsLoading ...

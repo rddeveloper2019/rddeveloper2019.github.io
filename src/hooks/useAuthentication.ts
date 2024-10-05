@@ -3,6 +3,7 @@ import { AuthResult, FetchService, ServerErrors, SignInBody, SignUpBody } from '
 import { useAuthSelector } from '../store/selectors';
 import { useAppDispatch } from '../store/store';
 import { setAuthError, signup } from '../store/slices/authSlice';
+import { GetCategories } from '../store/thunks/categoriesThunk';
 
 export const useAuthentication = () => {
   const { authError } = useAuthSelector();
